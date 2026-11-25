@@ -98,10 +98,19 @@ The default weapon is the "Gagi" (a poop ball shot from Herbert's snout) with in
 
 ## Prototype status
 
-**Ported:** the core loop, all enemy types with their stats and spawn tiers, all 11 weapons, the 4 items, LSD mode, the protection suit, persistent unlocks, the music-driven speed-ups, the health-tinted sky, parallax clouds and the rainbow, the countdown, pause, game over with highscore, and EN/DE/CH flash messages.
+**Ported from the original source:**
+- the core loop, all enemy types with their stats and spawn tiers, all 11 weapons with their spawn points, fire rates and shoot animations, and the 4 items
+- LSD mode, the protection suit, persistent unlocks, the music-driven speed-ups, and the health-tinted sky
+- the Box2D collision shapes, the bug and bird death effects, speech bubbles, bird poop, the pickup particle ring, and the Übergun darkness
+- parallax clouds and the rainbow, the countdown, pause, game over with highscore, and EN/DE/CH flash messages
 
 **Approximated:**
-- Enemy zig-zag flight, simplified from the per-frame easing.
-- Collision radii. The original used Box2D sprite boxes.
-- Beam damage is ticked per 0.1 s.
-- Weapon muzzle points.
+- Enemy zig-zag flight is simplified from the per-frame easing.
+- Hit detection uses the visible bullet. The original tested at the bullet's pivot, slightly behind it.
+- Rocket explosion radius.
+- In LSD mode, Herbert's hitbox and the pickup area follow the shifted sprite.
+
+**Deliberate changes:**
+- `Bibi2` was merged into `Bibi` as a second look (see Enemies).
+- Tilt on iOS needs a permission prompt, and the left screen edge doubles as a drag-to-steer area for phones without tilt.
+- On high-DPI screens the game renders at 2x for sharper art.
