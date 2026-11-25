@@ -4,6 +4,7 @@ import {
 } from './data.js';
 import { Herbert } from './herbert.js';
 import { settings, store, label, setupCamera, worldPoint } from './ui.js';
+import { debugState } from './debug.js';
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -16,6 +17,7 @@ export class GameScene extends Phaser.Scene {
   create() {
     setupCamera(this);
     this.sound.stopAll();
+    this.debug = debugState;
     this.t = TEXT[settings.lang];
     this.health = MAX_HEALTH;
     this.points = 0;
@@ -100,6 +102,12 @@ export class GameScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-ESC', () => this.togglePause());
     this.input.keyboard.on('keydown-M', () => { if (this.paused) this.quitToMenu(); });
     this.input.addPointer(2);
+    // Tapping Herbert himself drops the current gun, like in the original.
+    this.input.on('pointerup', (pt) => {
+      if (!this.running || this.paused || pt.upTime - pt.downTime > 300) return;
+      const box = new Phaser.Geom.Rectangle(this.player.x - 80, this.player.y - 80, 160, 160);
+      if (box.contains(worldPoint(this, pt, true).x, worldPoint(this, pt, true).y) && box.contains(worldPoint(this, pt).x, worldPoint(this, pt).y)) this.dropWeapon();
+    });
     this.targetY = null;
 
     // Device tilt: the original mapped accelerometer x into a screen position.
@@ -161,7 +169,7 @@ export class GameScene extends Phaser.Scene {
   scheduleSpawn(seconds) {
     this.spawnEvent = this.time.delayedCall(seconds * 1000, () => {
       if (this.dead) return;
-      this.addEnemy();
+      if (!this.debug.noSpawn) this.addEnemy();
       let next = SPAWN_INTERVAL + rand(0, 0.4) - this.spawnBonus;
       if (this.difficulty >= 2) next -= 0.3;
       this.points += 25;
@@ -247,9 +255,9 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- enemies ----------
 
-  addEnemy() {
+  addEnemy(forced) {
     const pool = Object.entries(ENEMIES).filter(([, d]) => this.difficulty >= d.minDifficulty);
-    const [name, def] = pick(pool);
+    const [name, def] = forced ? [forced, ENEMIES[forced]] : pick(pool);
     const variant = def.variants === false ? '' : Math.floor(rand(0, def.variantCount ?? 2));
     const key = `${def.anim}${variant}`;
     const sprite = this.add.sprite(0, rand(30, H - 30), 'clct_bugsgads').play(key).setDepth(D.enemy);
@@ -398,8 +406,28 @@ export class GameScene extends Phaser.Scene {
     this.items.push(item);
   }
 
+  // The item vanishes at once and a ring of particles bursts out (ItemUpParticle).
   collect(item) {
-    const { name, def } = item;
+    const { name, def, sprite } = item;
+    if (!this.lsd && name !== 'LsdStar') this.itemBurst(sprite.x, sprite.y, def.burst ?? [13, 14]);
+    this.removeItem(item);
+    this.applyItem(name);
+  }
+
+  itemBurst(x, y, frames) {
+    const ring = this.add.container(x + 20, y).setDepth(D.fx);
+    for (let i = 1; i <= 12; i++) {
+      const a = Phaser.Math.DegToRad((360 / 12) * i);
+      const speed = rand(60, 100) * S;
+      const p = this.add.image(0, 0, 'clct_ingame', `particle_${pick(frames)}`);
+      ring.add(p);
+      this.tweens.add({ targets: p, x: Math.cos(a) * speed, y: Math.sin(a) * speed, alpha: 0, duration: 1000 });
+    }
+    this.tweens.add({ targets: ring, x: ring.x - 80 * S, duration: 1000, onComplete: () => ring.destroy() });
+  }
+
+  applyItem(name) {
+    const def = ITEMS[name];
     const sfx = (k) => settings.sfx && this.sound.play(k);
     if (name === 'Capushito') { this.health = Math.min(MAX_HEALTH, this.health + 100); this.updateHealth(); sfx(`shitoccino${Math.floor(rand(0, 3))}`); }
     if (name === 'Coin') { this.points += 200; sfx('coin_up'); }
@@ -412,11 +440,6 @@ export class GameScene extends Phaser.Scene {
       this.updateAmmo();
       sfx('weapon_up');
     }
-    if (!this.lsd && name !== 'LsdStar') {
-      const pop = this.add.image(item.sprite.x, item.sprite.y, item.sprite.texture.key, item.sprite.frame.name).setDepth(D.fx);
-      this.tweens.add({ targets: pop, x: pop.x - 80, scale: 1.8, alpha: 0, duration: 600, onComplete: () => pop.destroy() });
-    }
-    this.removeItem(item);
   }
 
   removeItem(item) {
@@ -471,7 +494,7 @@ export class GameScene extends Phaser.Scene {
   // ---------- player ----------
 
   hitPlayer(dmg) {
-    if (this.god || this.dead) return;
+    if (this.god || this.dead || this.debug.god) return;
     this.cameras.main.shake(150, 0.01);
     this.health -= dmg;
     this.updateHealth();
@@ -534,21 +557,22 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- shooting ----------
 
-  muzzle() {
-    const p = this.player;
-    const type = p.weaponType;
-    if (type === 0) return { x: p.x + 60, y: p.y + 46 };
-    const w = WEAPONS[type];
-    const len = p.weapon.width * (1 - w.origin[0]);
-    return { x: p.x + w.offset[0] + len, y: p.y + w.offset[1] };
+  // Original points relative to Herbert (y up) -> world position.
+  fromPlayer([px, py], jitter = 0) {
+    const j = jitter ? [rand(0, jitter), -rand(0, jitter)] : [0, 0];
+    return { x: this.player.x + (px + j[0]) * S, y: this.player.y - (py + j[1]) * S };
+  }
+
+  aimAngle(from, pointer) {
+    const aim = worldPoint(this, pointer);
+    return Phaser.Math.Clamp(Math.atan2(aim.y - from.y, Math.max(20, aim.x - from.x)), -1.3, 1.3);
   }
 
   fire(pointer) {
-    const aim = worldPoint(this, pointer);
     const type = this.player.weaponType;
     const w = WEAPONS[type];
-    const m = this.muzzle();
-    const angle = Phaser.Math.Clamp(Math.atan2(aim.y - m.y, Math.max(20, aim.x - m.x)), -1.3, 1.3);
+    const from = w.spawn ? this.fromPlayer(w.spawn) : { x: this.player.x, y: this.player.y };
+    const angle = this.aimAngle(from, pointer);
     const deg = Phaser.Math.RadToDeg(angle);
     const sfx = (k, cfg) => settings.sfx && this.sound.play(k, cfg);
 
@@ -563,19 +587,18 @@ export class GameScene extends Phaser.Scene {
     this.cooldown = w.reload;
 
     if (w.beam) {
-      this.showBeam(w.beam, m, angle);
-      this.beamHits(m, angle, w.strength);
+      this.beamAngle = this.aimAngle(this.player, pointer);
+      this.updateBeam(w.beam);
+      this.beamHits(w.strength);
       if (!this.beamSound?.isPlaying && settings.sfx) { this.beamSound = this.sound.add(w.sfx, { loop: true, volume: 0.6 }); this.beamSound.play(); }
     } else if (w.lightning) {
       this.lightning();
       sfx(w.sfx);
     } else if (w.homing) {
-      for (let i = 0; i < w.homing; i++) this.time.delayedCall(i * 200, () => this.spawnFly(i, m));
+      for (let i = 0; i < w.homing; i++) this.time.delayedCall(i * 200, () => this.spawnFly(i, this.fromPlayer(w.spawn)));
       sfx(w.sfx);
     } else if (w.spray) {
-      const s = this.add.image(m.x, m.y, 'clct_ingame', `bugspray_poison${Math.floor(rand(0, 2))}`).setDepth(D.spray).setScale(0.6);
-      this.tweens.chain({ targets: s, tweens: [{ x: s.x + 100, scale: 1, duration: 500 }, { x: s.x + 160, alpha: 0, scale: 1.3, duration: 600, onComplete: () => this.removeShot(s) }] });
-      this.shots.push({ sprite: s, strength: w.strength, radius: 40, static: true });
+      this.spawnSpray(from);
       sfx(w.sfx, { volume: 0.5 });
     } else {
       const pellets = w.pellets ?? 1;
@@ -583,31 +606,32 @@ export class GameScene extends Phaser.Scene {
         let a = angle;
         if (pellets > 1) a += Phaser.Math.DegToRad((i - (pellets - 1) / 2) * 4 + rand(-2, 2));
         if (w.spread) a += Phaser.Math.DegToRad(rand(-3, 3));
-        this.spawnBullet(type, w, m, a, w.speed * S * (pellets > 1 ? rand(0.9, 1.1) : 1));
+        const at = w.jitter ? this.fromPlayer(w.spawn, w.jitter) : from;
+        this.spawnBullet(w, at, a, w.speed * S * (pellets > 1 ? rand(0.9, 1.1) : 1));
       }
       sfx(w.sfx, { volume: type === 3 ? 0.35 : 0.7 });
       if (type === 4) this.time.delayedCall(500, () => settings.sfx && this.sound.play('pumpgun_load', { volume: 0.6 }));
     }
 
-    if (type === 0) return;
+    if (type === 0 || this.debug.infiniteAmmo) return;
     this.ammo -= 1;
     this.updateAmmo();
-    if (this.ammo <= 0) {
-      this.time.delayedCall(700, () => {
-        if (this.ammo > 0 || this.player.weaponType !== type) return;
-        this.stopBeam();
-        this.player.dropWeapon();
-        this.ammo = Infinity;
-        this.updateAmmo();
-      });
-    }
+    if (this.ammo <= 0) this.time.delayedCall(700, () => { if (this.ammo <= 0 && this.player.weaponType === type) this.dropWeapon(); });
   }
 
-  spawnBullet(type, w, m, angle, speed) {
+  dropWeapon() {
+    if (this.player.weaponType === 0) return;
+    this.stopBeam();
+    this.player.dropWeapon();
+    this.ammo = Infinity;
+    this.updateAmmo();
+  }
+
+  spawnBullet(w, at, angle, speed) {
     const s = w.projectile === 'rocket'
-      ? this.add.sprite(m.x, m.y, 'clct_bugsgads').play('rocket')
-      : this.add.image(m.x, m.y, 'clct_ingame', w.projectile);
-    s.setDepth(D.shot).setRotation(angle);
+      ? this.add.sprite(at.x, at.y, 'clct_bugsgads').play('rocket')
+      : this.add.image(at.x, at.y, 'clct_ingame', w.projectile);
+    s.setOrigin(w.anchor[0], 1 - w.anchor[1]).setDepth(D.shot).setRotation(angle);
     const shot = { sprite: s, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, strength: w.strength, radius: 14, rocket: !!w.explodes };
     if (shot.rocket) {
       shot.smoke = this.time.addEvent({ delay: 50, loop: true, callback: () => {
@@ -619,28 +643,51 @@ export class GameScene extends Phaser.Scene {
     this.shots.push(shot);
   }
 
-  spawnFly(i, m) {
-    const s = this.add.sprite(m.x, m.y, 'clct_bugsgads').play(`flygun${i}`).setDepth(D.shot).setScale(1.4);
+  // SprayPoison: a cloud that drifts out and back while it rises, grows and fades.
+  spawnSpray(at) {
+    const s = this.add.image(at.x + 5, at.y + 29, 'clct_ingame', `bugspray_poison${Math.floor(rand(0, 2))}`)
+      .setDepth(D.spray).setScale(0.2).setAngle(rand(0, 360));
+    const drift = { dx: 0 };
+    const rise = { x: 0, y: 0 };
+    this.tweens.add({ targets: s, scale: 1, delay: 300, duration: 800 });
+    this.tweens.add({ targets: s, alpha: 0, delay: 600, duration: 500 });
+    this.tweens.add({ targets: rise, x: rand(-30, 10), y: -70, duration: 1100 });
+    this.tweens.chain({ targets: drift, tweens: [{ dx: 100, duration: 500 }, { dx: 60, duration: 600 }], onComplete: () => this.removeShot(s) });
+    this.shots.push({ sprite: s, strength: 1, radius: 30, drift, rise, baseX: s.x, baseY: s.y });
+  }
+
+  spawnFly(i, at) {
+    const s = this.add.sprite(at.x, at.y, 'clct_bugsgads').play(`flygun${i}`).setDepth(D.shot).setScale(1.4);
     this.shots.push({ sprite: s, strength: 2, radius: 20, homing: true, vx: 300, vy: rand(-80, 80), age: 0 });
   }
 
-  showBeam(frame, m, angle) {
-    if (!this.beam) this.beam = this.add.image(0, 0, 'clct_ingame', frame).setOrigin(0, 0.5).setDepth(D.shot);
-    this.beam.setFrame(frame).setPosition(m.x, m.y).setRotation(angle).setVisible(true);
-    this.beamAngle = angle;
+  // One sprite per beam gun, pivoting around the original anchor next to the gun.
+  updateBeam(beam) {
+    this.beams ??= {};
+    let b = this.beams[beam.frame];
+    if (!b) {
+      b = this.beams[beam.frame] = this.add.image(0, 0, 'clct_ingame', beam.frame).setDepth(D.shot);
+      b.setOrigin((beam.pivot[0] * S) / b.width, 0.5 - (beam.pivot[1] * S) / b.height);
+    }
+    const at = this.fromPlayer(beam.at);
+    b.setPosition(at.x, at.y).setRotation(this.beamAngle).setVisible(true);
+    this.beam = b;
   }
 
-  beamHits(m, angle, strength) {
-    const line = new Phaser.Geom.Line(m.x, m.y, m.x + Math.cos(angle) * 1400, m.y + Math.sin(angle) * 1400);
+  beamHits(strength) {
+    const b = this.beam;
+    const start = { x: b.x - b.displayOriginX * Math.cos(b.rotation), y: b.y - b.displayOriginX * Math.sin(b.rotation) };
+    const line = new Phaser.Geom.Line(start.x, start.y, start.x + Math.cos(b.rotation) * b.width, start.y + Math.sin(b.rotation) * b.width);
     for (const e of this.enemies) {
       if (e.dead) continue;
-      const c = new Phaser.Geom.Circle(e.sprite.x, e.sprite.y, e.radius + 16);
+      const c = new Phaser.Geom.Circle(e.sprite.x, e.sprite.y, e.radius + b.height * 0.3);
       if (Phaser.Geom.Intersects.LineToCircle(line, c)) { this.points += 20; this.damage(e, strength); }
     }
   }
 
   stopBeam() {
-    this.beam?.setVisible(false);
+    Object.values(this.beams ?? {}).forEach((b) => b.setVisible(false));
+    this.beam = null;
     this.beamSound?.stop();
     this.beamSound = null;
     this.warm = false;
@@ -681,10 +728,29 @@ export class GameScene extends Phaser.Scene {
     this.shots = this.shots.filter((s) => s.sprite !== sprite);
   }
 
+  // ---------- debug ----------
+
+  killAll() {
+    this.enemies.forEach((e) => this.killEnemy(e, true));
+  }
+
+  drawHitboxes() {
+    if (!this.debug.hitboxes) { this.hitboxGfx?.clear(); return; }
+    this.hitboxGfx ??= this.add.graphics().setDepth(D.hud - 1);
+    const g = this.hitboxGfx.clear().lineStyle(2, 0xff0066, 0.9);
+    const r = this.player.hitRect;
+    g.strokeRect(r.x, r.y, r.width, r.height);
+    this.enemies.forEach((e) => !e.dead && g.strokeCircle(e.sprite.x, e.sprite.y, e.radius));
+    g.lineStyle(2, 0x00aa55, 0.9);
+    this.shots.forEach((s) => { if (s.sprite.active) { const c = s.sprite.getCenter(); g.strokeCircle(c.x, c.y, s.radius); } });
+    this.items.forEach((i) => g.strokeRectShape(i.sprite.getBounds()));
+  }
+
   // ---------- main loop ----------
 
   update(time, deltaMs) {
     if (this.paused) return;
+    this.drawHitboxes();
     const dt = Math.min(deltaMs, 50) / 1000;
 
     this.moveWorld(dt);
@@ -746,10 +812,15 @@ export class GameScene extends Phaser.Scene {
     this.cooldown -= dt;
     const shooter = this.input.manager.pointers.find((pt) => pt.isDown && worldPoint(this, pt, true).x >= 140 && worldPoint(this, pt).y > 80);
     if (!shooter || this.lsd) {
-      if (this.beam?.visible || this.warm) this.stopBeam();
+      if (this.beam || this.warm) this.stopBeam();
       return;
     }
-    if (this.beam?.visible) this.showBeam(this.beam.frame.name, this.muzzle(), this.beamAngle);
+    // The beam follows Herbert and the pointer every frame, not only on fire ticks.
+    const { beam } = WEAPONS[this.player.weaponType];
+    if (this.beam && beam) {
+      this.beamAngle = this.aimAngle(this.player, shooter);
+      this.updateBeam(beam);
+    }
     if (this.cooldown <= 0) this.fire(shooter);
   }
 
@@ -758,12 +829,15 @@ export class GameScene extends Phaser.Scene {
       const sp = s.sprite;
       if (!sp.active) { this.shots = this.shots.filter((x) => x !== s); continue; }
       if (s.homing) this.steerFly(s, dt);
-      if (!s.static) { sp.x += s.vx * dt; sp.y += s.vy * dt; }
-      if (sp.x > W + 100 || sp.x < -100 || sp.y < -100 || sp.y > H + 100) { this.removeShot(sp); continue; }
-      const hit = this.enemies.find((e) => !e.dead && Phaser.Math.Distance.Between(sp.x, sp.y, e.sprite.x, e.sprite.y) < e.radius + s.radius);
+      if (s.drift) sp.setPosition(s.baseX + s.drift.dx + s.rise.x, s.baseY + s.rise.y);
+      else if (!s.static) { sp.x += s.vx * dt; sp.y += s.vy * dt; }
+      // Bullets are drawn ahead of their pivot (anchor outside the sprite), so hit-test the visible center.
+      const c = sp.getCenter();
+      if (c.x > W + 100 || c.x < -100 || c.y < -100 || c.y > H + 100) { this.removeShot(sp); continue; }
+      const hit = this.enemies.find((e) => !e.dead && Phaser.Math.Distance.Between(c.x, c.y, e.sprite.x, e.sprite.y) < e.radius + s.radius);
       if (!hit) continue;
       this.points += 20;
-      if (s.rocket) this.explode(sp.x, sp.y);
+      if (s.rocket) this.explode(c.x, c.y);
       this.damage(hit, s.strength);
       this.removeShot(sp);
     }
@@ -798,7 +872,7 @@ export class GameScene extends Phaser.Scene {
       this.killEnemy(e, true);
       if (this.lsd) continue;
       if (this.player.hasSuit) {
-        this.player.setSuit(false);
+        this.player.setSuit(false, true);
         if (settings.sfx) this.sound.play('protectionsuit_out');
         this.god = true;
         this.player.blink(2000);

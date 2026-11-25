@@ -36,27 +36,45 @@ export const ENEMIES = {
 };
 
 // legs: 0 = none, 1 = small weapon grip, 2 = big weapon grip
-// offset/origin come from Herbert.mm's _globalWeaponInfo (converted to y-down, 2x)
+// offset/origin: the held gun, from Herbert.mm's _globalWeaponInfo (converted to y-down, 2x).
+// spawn/anchor: where projectiles start, in original points relative to Herbert (y up),
+// and their cocos anchorPoint. An anchor outside 0..1 pushes the sprite ahead of its
+// pivot along the aim line, which is how bullets appear at the barrel tip.
+// beam: the laser/rainbow sprite, its position (at) and pivot (points from the beam's
+// left edge, and up from its middle).
+// reload: the original refired held guns every 0.05 s unless a reload delay applied.
 export const WEAPONS = {
-  0:  { key: 'shitball',  name: 'Gagi',          ammo: Infinity, reload: 0.5,  speed: 350,  strength: 2, legs: 0, icon: 'ammoicon_gagi', sfx: 'pewpew', projectile: 'shot_normal' },
-  1:  { key: 'mg',        name: 'Kalaschnikov',  ammo: 25, reload: 0.1,  speed: 300,  strength: 2, legs: 1, icon: 'ammoicon_kalaschnikov', sfx: 'kalaschnikov', projectile: 'kalaschnikov_bullet', frame: 'kalaschnikov',   offset: [16, 28],  origin: [0.318, 0.231] },
-  2:  { key: 'laser',     name: 'Lasergun',      ammo: 30, reload: 0.1,  beam: 'lasershot', strength: 1, legs: 2, icon: 'ammoicon_laser', sfx: 'lasergun', frame: 'lasergun',    offset: [-6, 84],  origin: [0.32, 0.321] },
-  3:  { key: 'minigun',   name: 'Minigun',       ammo: 50, reload: 0.06, speed: 1200, strength: 2, legs: 2, icon: 'ammoicon_minigun', sfx: 'minigun', projectile: 'minigun_shot', spread: 20, warmup: 0.1, frame: 'minigun', offset: [-14, 90], origin: [0.3, 0.5] },
-  4:  { key: 'pumpgun',   name: 'Pumpgun',       ammo: 8,  reload: 1.0,  speed: 1800, strength: 2, legs: 1, icon: 'ammoicon_pumpgun', sfx: 'pumpgun_shot', projectile: 'pumpgun_shot', pellets: 6, frame: 'pumpgun', offset: [10, 46], origin: [0.195, 0.3] },
-  5:  { key: 'rocket',    name: 'Rocketlauncher', ammo: 5, reload: 1.8,  speed: 300,  strength: 8, legs: 2, icon: 'ammoicon_rocket', sfx: 'rocketlauncher', projectile: 'rocket', explodes: true, frame: 'rocketlauncher', offset: [-8, 80], origin: [0.415, 0.386] },
-  6:  { key: 'rainbow',   name: 'Rainbowgun',    ammo: 45, reload: 0.1,  beam: 'rainbowgun_shot', strength: 1, legs: 2, icon: 'ammoicon_rainbow', sfx: 'rainbowgun', frame: 'rainbowgun', offset: [-4, 94], origin: [0.4, 0.391] },
-  7:  { key: 'tabasco',   name: 'Tabasco',       ammo: 15, reload: 0.25, speed: 350,  strength: 2, legs: 2, icon: 'ammoicon_tabasco', sfx: 'pewpew', projectile: 'shot_tabasco', frame: 'tabasco', offset: [-32, 70], origin: [0.232, 0.361] },
-  8:  { key: 'flygun',    name: 'Flygun',        ammo: 5,  reload: 1.0,  strength: 2, legs: 2, icon: 'ammoicon_flygun', sfx: 'flygun', homing: 3, frame: 'flygun', offset: [-20, 80], origin: [0.415, 0.386] },
-  9:  { key: 'ubergun',   name: 'Übergun',       ammo: 3,  reload: 0.8,  legs: 2, icon: 'ammoicon_uebergun', sfx: 'ubergun', lightning: true, frame: 'uebergun', offset: [-6, 92], origin: [0.415, 0.386] },
-  10: { key: 'bugspray',  name: 'Bugspray',      ammo: 30, reload: 0.15, strength: 1, legs: 2, icon: 'ammoicon_bugspray', sfx: 'bugspray', spray: true, frame: 'bugspray', offset: [-6, 92], origin: [0.415, 0.386] },
+  0:  { key: 'shitball', name: 'Gagi', ammo: Infinity, reload: 0.5, speed: 350, strength: 2, legs: 0, icon: 'ammoicon_gagi', sfx: 'pewpew',
+        projectile: 'shot_normal', spawn: [12, -15], anchor: [-60 / 32, 10 / 32] },
+  1:  { key: 'mg', name: 'Kalaschnikov', ammo: 25, reload: 0.1, speed: 300, strength: 2, legs: 1, icon: 'ammoicon_kalaschnikov', sfx: 'kalaschnikov',
+        projectile: 'kalaschnikov_bullet', spawn: [8, -13.5], anchor: [-3, 0.5], frame: 'kalaschnikov', offset: [16, 28], origin: [0.318, 0.231] },
+  2:  { key: 'laser', name: 'Lasergun', ammo: 30, reload: 0.05, strength: 1, legs: 2, icon: 'ammoicon_laser', sfx: 'lasergun',
+        beam: { frame: 'lasershot', at: [-2, -42], pivot: [-32, 5] }, frame: 'lasergun', offset: [-6, 84], origin: [0.32, 0.321] },
+  3:  { key: 'minigun', name: 'Minigun', ammo: 50, reload: 0.05, speed: 1200, strength: 2, legs: 2, icon: 'ammoicon_minigun', sfx: 'minigun',
+        projectile: 'minigun_shot', spawn: [-10, -44], jitter: 10, anchor: [-9, 0.5], spread: 20, warmup: 0.1, frame: 'minigun', offset: [-14, 90], origin: [0.3, 0.5] },
+  4:  { key: 'pumpgun', name: 'Pumpgun', ammo: 8, reload: 1.0, speed: 1800, strength: 2, legs: 1, icon: 'ammoicon_pumpgun', sfx: 'pumpgun_shot',
+        projectile: 'pumpgun_shot', spawn: [0, -20], anchor: [-10, 0.7], pellets: 6, frame: 'pumpgun', offset: [10, 46], origin: [0.195, 0.3] },
+  5:  { key: 'rocket', name: 'Rocketlauncher', ammo: 5, reload: 1.8, speed: 300, strength: 8, legs: 2, icon: 'ammoicon_rocket', sfx: 'rocketlauncher',
+        projectile: 'rocket', spawn: [-5, -45], anchor: [0.5, 0.5], explodes: true, frame: 'rocketlauncher', offset: [-8, 80], origin: [0.415, 0.386] },
+  6:  { key: 'rainbow', name: 'Rainbowgun', ammo: 45, reload: 0.05, strength: 1, legs: 2, icon: 'ammoicon_rainbow', sfx: 'rainbowgun',
+        beam: { frame: 'rainbowgun_shot', at: [-7, -47], pivot: [-30, 0] }, frame: 'rainbowgun', offset: [-4, 94], origin: [0.4, 0.391] },
+  7:  { key: 'tabasco', name: 'Tabasco', ammo: 15, reload: 0.25, speed: 350, strength: 2, legs: 2, icon: 'ammoicon_tabasco', sfx: 'pewpew',
+        projectile: 'shot_tabasco', spawn: [12, -15], anchor: [-60 / 32, 10 / 32], frame: 'tabasco', offset: [-32, 70], origin: [0.232, 0.361] },
+  8:  { key: 'flygun', name: 'Flygun', ammo: 5, reload: 1.0, strength: 2, legs: 2, icon: 'ammoicon_flygun', sfx: 'flygun',
+        homing: 3, spawn: [10, -45], frame: 'flygun', offset: [-20, 80], origin: [0.415, 0.386] },
+  9:  { key: 'ubergun', name: 'Übergun', ammo: 3, reload: 0.4, legs: 2, icon: 'ammoicon_uebergun', sfx: 'ubergun',
+        lightning: true, frame: 'uebergun', offset: [-6, 92], origin: [0.415, 0.386] },
+  10: { key: 'bugspray', name: 'Bugspray', ammo: 30, reload: 0.05, strength: 1, legs: 2, icon: 'ammoicon_bugspray', sfx: 'bugspray',
+        spray: true, spawn: [26, -21], frame: 'bugspray', offset: [-6, 92], origin: [0.415, 0.386] },
 };
 
 // Pickup items. Weapon pickups refill ammo if the same gun is already held.
+// burst = the two particle frames of the pickup ring (ItemUpParticle).
 export const ITEMS = {
-  Capushito:      { frame: 'caposhito', anim: true },
+  Capushito:      { frame: 'caposhito', anim: true, burst: [15, 16] },
   LsdStar:        { frame: 'star', anim: true },
-  ProtectSuit:    { frame: 'prot_', anim: true },
-  Coin:           { frame: 'ring', anim: true },
+  ProtectSuit:    { frame: 'prot_', anim: true, burst: [1, 8] },
+  Coin:           { frame: 'ring', anim: true, burst: [0, 6] },
   Kalaschnikov:   { frame: 'icon_kalaschnikov', weapon: 1 },
   LaserGun:       { frame: 'icon_lasergun', weapon: 2 },
   MiniGun:        { frame: 'icon_minigun', weapon: 3 },

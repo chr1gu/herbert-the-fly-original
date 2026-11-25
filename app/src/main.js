@@ -2,6 +2,7 @@ import { W, H } from './data.js';
 import { BootScene, MenuScene, GameOverScene } from './scenes.js';
 import { GameScene } from './game.js';
 import { ZOOM } from './ui.js';
+import { initDebug } from './debug.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -24,3 +25,4 @@ window.addEventListener('pointerdown', () => {
 }, { once: true });
 
 window.herbert = game;
+initDebug(game);

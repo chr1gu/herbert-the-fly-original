@@ -118,9 +118,14 @@ export class Herbert extends Phaser.GameObjects.Container {
     this.scene.tweens.add({ targets: this.weapon, x: ox - 10, duration: 60, yoyo: true, onComplete: () => this.weapon.setPosition(ox, oy) });
   }
 
-  setSuit(on) {
+  setSuit(on, broken = false) {
+    if (on === this.hasSuit) return;
     this.hasSuit = on;
     this.refreshBody();
+    if (!broken) return;
+    const fail = this.scene.add.image(0, 10, 'clct_herbert', 'herb_protection_fail');
+    this.rig.add(fail);
+    this.scene.tweens.add({ targets: fail, x: -100, duration: 200, onComplete: () => fail.destroy() });
   }
 
   setDrugs(on) {
@@ -131,8 +136,10 @@ export class Herbert extends Phaser.GameObjects.Container {
     this.scene.tweens.add({ targets: this.rig, x: on ? 250 : 0, duration: 500 });
   }
 
-  blink(ms = 2000) {
-    this.scene.tweens.add({ targets: this.rig, alpha: 0.2, duration: 100, yoyo: true, repeat: Math.floor(ms / 200) - 1, onComplete: () => this.rig.setAlpha(1) });
+  // CCBlink: 11 hard on/off blinks over 2 s.
+  blink(ms = 2000, times = 11) {
+    this.scene.time.addEvent({ delay: ms / (times * 2), repeat: times * 2 - 1, callback: () => this.rig.setVisible(!this.rig.visible) });
+    this.scene.time.delayedCall(ms + 20, () => this.rig.setVisible(true));
   }
 
   die() {

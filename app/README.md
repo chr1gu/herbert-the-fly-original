@@ -19,6 +19,22 @@ To regenerate `assets/` from the original resources, run `python3 tools/convert_
 | Shoot | Click or tap and hold; Herbert fires toward the pointer |
 | Pause | `P` or `Esc`, then `M` for the menu |
 
+## Debug mode
+
+Add `?debug` to the URL, for example https://herbert.ebrt.ch/game/?debug or http://localhost:8765/?debug. A panel at the top right lets you:
+
+| Section | Actions |
+|---|---|
+| Run | Start or restart a run, jump to the next speed level, kill all enemies, die |
+| Toggles | God mode, infinite ammo, stop enemy spawns, show hitboxes |
+| Weapons | Equip any of the 11 guns |
+| Items | Apply the protection suit, LSD star, cappuccino or coin directly, or drop pickups to collect |
+| Health | Heal fully, or take 50 damage |
+| Spawn enemy | Spawn any of the 11 enemy types |
+| Save data | Unlock all items, or reset unlocks and highscore |
+
+The bottom of the panel shows HP, points, speed level, gun, ammo and object counts. Click the panel header to collapse it.
+
 ## What the game actually is
 
 It is not a platformer. It's an endless, horizontally scrolling, one-screen shooter in the spirit of a "tilt & tap" arcade game.
