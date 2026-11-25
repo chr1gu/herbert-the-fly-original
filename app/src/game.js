@@ -264,19 +264,19 @@ export class GameScene extends Phaser.Scene {
 
   addEnemy(forced) {
     const pool = Object.entries(ENEMIES).filter(([, d]) => this.difficulty >= d.minDifficulty);
-    const [name, def] = forced ? [forced, ENEMIES[forced]] : pick(pool);
-    const variant = def.variants === false ? '' : Math.floor(rand(0, def.variantCount ?? 2));
+    const [name, def] = forced ? [forced, ENEMIES[forced]] : pick(pool.flatMap((entry) => Array(entry[1].weight ?? 1).fill(entry)));
+    const variant = Math.floor(rand(0, def.variantCount ?? 2));
     const key = `${def.anim}${variant}`;
     const sprite = this.add.sprite(0, rand(30, H - 30), 'clct_bugsgads').play(key).setDepth(D.enemy);
     sprite.x = W + sprite.width / 2;
     if (def.bird && Math.random() < 2 / 3 && settings.sfx) this.sound.play('birdy_coming', { volume: 0.6 });
 
     const e = {
-      sprite, def, name, hp: def.hp, vy: 0, dir: Math.random() < 0.5 ? 1 : -1,
+      sprite, def, name, variant, hp: def.hp, vy: 0, dir: Math.random() < 0.5 ? 1 : -1,
       vx: -(W + sprite.width) / rand(...def.dur),
     };
     if (!def.follows) this.wander(e);
-    if (def.bird && name === 'Bibi' && Math.random() < 0.25) this.time.delayedCall(3000, () => this.birdPoop(e));
+    if (variant === def.poopVariant && Math.random() < 0.25) this.time.delayedCall(3000, () => this.birdPoop(e));
     this.enemies.push(e);
   }
 
@@ -708,7 +708,7 @@ export class GameScene extends Phaser.Scene {
 
   enemyShape(e) {
     const sp = e.sprite;
-    return e.def.hull ? hull(sp.x, sp.y, e.def.hull, S) : box(sp.x, sp.y, sp.width, sp.height);
+    return e.def.hull ? hull(sp.x, sp.y, e.def.hull, S, e.def.hullScale?.[e.variant]) : box(sp.x, sp.y, sp.width, sp.height);
   }
 
   herbShape() {

@@ -31,9 +31,11 @@ export const ENEMIES = {
   BugLina:    { anim: 'buglina',    kill: 'lina',       hp: 6,  strength: 100, points: 575, dur: [4.5, 6],  yRange: 30, yMin: 30, minDifficulty: 0, bubble: [-25, 30] },
   BugGilbert: { anim: 'buggilbert', kill: 'gilbert',    hp: 2,  strength: 50,  points: 55,  dur: [5, 6.5],  yRange: 0,  yMin: 0,  minDifficulty: 2, follows: true, bubble: [-20, 40],
                 hull: [[-8.9, 6.5], [-18.5, -7.3], [-14.6, -18.6], [1.1, -24.8], [13.3, -16.2], [12.8, -4.2]] },
-  Bibi:       { anim: 'bibi0',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100],
+  // The original had Bibi and Bibi2 as copied classes; Bibi2 (look 1) never got the hull or
+  // the pooping. Merged into one bird with two looks; weight 2 keeps the original bird rate.
+  Bibi:       { anim: 'bibi',       kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, weight: 2, bubble: [-20, 100],
+                poopVariant: 0, hullScale: { 1: [233 / 214, 249 / 238] },
                 hull: [[-9, 46.2], [-38.2, 29], [-50.7, -4.5], [-33.2, -42], [12.7, -50], [49.2, -20.5], [42, 25.7], [12.2, 46.2]] },
-  Bibi2:      { anim: 'bibi1',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100] },
   Fuckbutton: { anim: 'fuckbutton', kill: 'fuckbutton', hp: 1,  strength: 50,  points: 251, dur: [5, 6.5],  yRange: 30, yMin: 0,  minDifficulty: 4, variantCount: 3, bubble: [0, 0] },
   LadyBug:    { anim: 'ladybug',    kill: 'ladybug',    hp: 5,  strength: 100, points: 332, dur: [4.5, 5.5], yRange: 150, yMin: 0, minDifficulty: 4, bubble: [-30, 30] },
   FlyBob:     { anim: 'flybob',     kill: 'bob',        hp: 4,  strength: 100, points: 213, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 6, bubble: [-30, 30] },

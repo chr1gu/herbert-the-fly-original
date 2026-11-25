@@ -8,8 +8,8 @@ export function box(cx, cy, w, h, rotation = 0) {
 }
 
 // Hull points are original points relative to the sprite center with y up.
-export function hull(cx, cy, points, scale) {
-  return points.map(([x, y]) => ({ x: cx + x * scale, y: cy - y * scale }));
+export function hull(cx, cy, points, scale, [sx, sy] = [1, 1]) {
+  return points.map(([x, y]) => ({ x: cx + x * scale * sx, y: cy - y * scale * sy }));
 }
 
 function project(poly, ax, ay) {

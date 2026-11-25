@@ -30,7 +30,7 @@ Add `?debug` to the URL, for example https://herbert.ebrt.ch/game/?debug or http
 | Weapons | Equip any of the 11 guns |
 | Items | Apply the protection suit, LSD star, cappuccino or coin directly, or drop pickups to collect |
 | Health | Heal fully, or take 50 damage |
-| Spawn enemy | Spawn any of the 11 enemy types |
+| Spawn enemy | Spawn any of the 10 enemy types |
 | Save data | Unlock all items, or reset unlocks and highscore |
 
 The bottom of the panel shows HP, points, speed level, gun, ammo and object counts. Click the panel header to collapse it.
@@ -49,12 +49,12 @@ It is not a platformer. It's an endless, horizontally scrolling, one-screen shoo
 
 ### Enemies
 
-There are 11 classes. Most come in 2–3 color variants, which explains the App Store's "20 unique enemies".
+The original has 11 enemy classes. Most come in 2–3 color variants, which explains the App Store's "20 unique enemies". `Bibi2` was an unfinished copy of `Bibi`: same stats, but no round hitbox and no pooping. The re-creation merges them into one bird with two looks, so there are 10 types here.
 
 | Enemy | HP | Damage | Points | From level |
 |---|---|---|---|---|
 | FlyFred, FlySina, BugOona, BugLina | 2–6 | 50–100 | 118–575 | 0 |
-| BugGilbert (follows Herbert), Bibi/Bibi2 (birds, can poop) | 2 / 10 | 50 / 150 | 55 / 999 | 2 |
+| BugGilbert (follows Herbert), Bibi (bird, two looks, can poop) | 2 / 10 | 50 / 150 | 55 / 999 | 2 |
 | Fuckbutton, LadyBug | 1 / 5 | 50 / 100 | 251 / 332 | 4 |
 | FlyBob, FlyRobert | 4 / 1 | 100 / 50 | 213 / 69 | 6 |
 
@@ -98,7 +98,7 @@ The default weapon is the "Gagi" (a poop ball shot from Herbert's snout) with in
 
 ## Prototype status
 
-**Ported:** the core loop, all 11 enemy types with their stats and spawn tiers, all 11 weapons, the 4 items, LSD mode, the protection suit, persistent unlocks, the music-driven speed-ups, the health-tinted sky, parallax clouds and the rainbow, the countdown, pause, game over with highscore, and EN/DE/CH flash messages.
+**Ported:** the core loop, all enemy types with their stats and spawn tiers, all 11 weapons, the 4 items, LSD mode, the protection suit, persistent unlocks, the music-driven speed-ups, the health-tinted sky, parallax clouds and the rainbow, the countdown, pause, game over with highscore, and EN/DE/CH flash messages.
 
 **Approximated:**
 - Enemy zig-zag flight, simplified from the per-frame easing.
