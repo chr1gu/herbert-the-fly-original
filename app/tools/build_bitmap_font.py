@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Renders the akaDylan typeface into a BMFont glyph sheet (PNG + XML).
 
-The akaDylan freeware license forbids bundling the font file into another
-product, so only pre-rendered glyph images ship with the game. The .ttf is
-read from the local archive and never copied into app/.
+The game ships rendered glyphs only; the .ttf is read from the local archive
+and never copied into app/.
 """
 from pathlib import Path
 from xml.sax.saxutils import quoteattr

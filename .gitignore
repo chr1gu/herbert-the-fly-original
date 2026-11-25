@@ -1,4 +1,4 @@
-# Original backups stay local: large, and they contain an Apple certificate and provisioning profiles
+# Original 2011 project files: kept locally, read by app/tools
 /archive/
 
 .DS_Store

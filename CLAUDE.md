@@ -14,7 +14,7 @@ This repo re-creates the 2011 iOS game "Herbert – the misanthropical fly" (Eti
 |---|---|
 | `app/` | The game. Phaser 3.80.1, vendored in `app/vendor/`. Plain ES modules, no build step. |
 | `web/` | The site root at https://herbert.ebrt.ch/. Currently a placeholder landing page with Herbert's original first-person story. |
-| `archive/` | Original backups. **Gitignored, local only.** It contains an Apple certificate, provisioning profiles, PSD/AI files, the 12-track OST and `wayback-snapshots/` of the old websites. Never commit it. |
+| `archive/` | The original 2011 project files: Cocos2d source, art sources, the 12-track OST and `wayback-snapshots/` of the old websites. **Gitignored, local only.** Never commit it, and don't describe its contents beyond this in public files. |
 
 | File in `app/src/` | Role |
 |---|---|
@@ -42,7 +42,7 @@ The original ran at 480×320 points with y up, and cocos anchor points. This gam
 - **Scene reuse:** Phaser reuses the scene object on restart. Anything created lazily (sprites, graphics, sounds) must be reset in `GameScene.create()`. See the `Object.assign(this, { ... })` reset block there.
 - **Rig sync:** Herbert's body, snout and legs are separate 8-frame loops. Every animation change must restart them together (`Herbert.refreshBody`).
 - **High-DPI rendering:** high-DPI screens render at 2x through zoomed cameras (`ZOOM` in `ui.js`). Convert pointer positions with `worldPoint()`, never `pointer.x`/`downX` directly.
-- **Font license:** the akaDylan `.ttf` is freeware that must not be bundled into another product. Only the bitmap glyph sheet ships. Never commit the `.ttf`.
+- **Font file:** never commit the akaDylan `.ttf`. The game ships only the rendered glyph sheet built by `app/tools/build_bitmap_font.py`. Keep the lettering credit in `README.md` and on the landing page.
 - **Caching:** GitHub Pages caches each file for 10 minutes. The deploy workflow stamps `?v=<commit>` onto all module URLs, and `asset()` in `ui.js` adds it to assets. New loaders must use `asset()`.
 
 ## Run and verify
