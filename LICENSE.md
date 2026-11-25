@@ -24,7 +24,7 @@ Everything that is not code is **not** licensed for reuse. This includes:
 - music, sound effects and video
 - story and press texts
 
-That covers `app/assets/`, `web/img/` and all of `original/` except `original/source/`. Unless noted below, it is © Etite (Dani Rolli, Christoph Ebert). No reuse, adaptation or redistribution, commercial or otherwise, without written permission.
+That covers `app/assets/`, `web/img/`, `icon.jpg` and all of `original/` except `original/source/`. Unless noted below, it is © Etite (Dani Rolli, Christoph Ebert). No reuse, adaptation or redistribution, commercial or otherwise, without written permission.
 
 ## Third-party content
 
