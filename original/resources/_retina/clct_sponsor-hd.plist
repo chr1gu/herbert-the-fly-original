@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>mm_sponsor_co1_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{358, 764}, {354, 136}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {354, 136}}</string>
+			<key>sourceSize</key>
+			<string>{354, 136}</string>
+		</dict>
+		<key>mm_sponsor_co1_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{358, 902}, {354, 136}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {354, 136}}</string>
+			<key>sourceSize</key>
+			<string>{354, 136}</string>
+		</dict>
+		<key>mm_sponsor_co1_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 764}, {354, 136}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {354, 136}}</string>
+			<key>sourceSize</key>
+			<string>{354, 136}</string>
+		</dict>
+		<key>mm_sponsor_co1_ro.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 902}, {354, 142}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {354, 142}}</string>
+			<key>sourceSize</key>
+			<string>{354, 142}</string>
+		</dict>
+		<key>mm_sponsor_co2_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 602}, {368, 160}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {368, 160}}</string>
+			<key>sourceSize</key>
+			<string>{368, 160}</string>
+		</dict>
+		<key>mm_sponsor_co2_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{376, 438}, {368, 160}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {368, 160}}</string>
+			<key>sourceSize</key>
+			<string>{368, 160}</string>
+		</dict>
+		<key>mm_sponsor_co2_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{372, 602}, {366, 158}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {366, 158}}</string>
+			<key>sourceSize</key>
+			<string>{366, 158}</string>
+		</dict>
+		<key>mm_sponsor_co2_ro.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 438}, {372, 162}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {372, 162}}</string>
+			<key>sourceSize</key>
+			<string>{372, 162}</string>
+		</dict>
+		<key>mm_sponsor_co3_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 62}, {430, 186}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {430, 186}}</string>
+			<key>sourceSize</key>
+			<string>{430, 186}</string>
+		</dict>
+		<key>mm_sponsor_co3_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{434, 62}, {430, 186}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {430, 186}}</string>
+			<key>sourceSize</key>
+			<string>{430, 186}</string>
+		</dict>
+		<key>mm_sponsor_co3_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{432, 250}, {422, 186}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {422, 186}}</string>
+			<key>sourceSize</key>
+			<string>{422, 186}</string>
+		</dict>
+		<key>mm_sponsor_co3_ro.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 250}, {428, 186}}</string>
+			<key>offset</key>
+			<string>{0, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {428, 186}}</string>
+			<key>sourceSize</key>
+			<string>{428, 190}</string>
+		</dict>
+		<key>mm_sponsor_exit_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{740, 602}, {186, 106}}</string>
+			<key>offset</key>
+			<string>{-7, 4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{10, 8}, {186, 106}}</string>
+			<key>sourceSize</key>
+			<string>{220, 130}</string>
+		</dict>
+		<key>mm_sponsor_exit_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{714, 764}, {182, 108}}</string>
+			<key>offset</key>
+			<string>{-9, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{8, 10}, {182, 108}}</string>
+			<key>sourceSize</key>
+			<string>{216, 132}</string>
+		</dict>
+		<key>mm_sponsor_exit_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{746, 438}, {182, 106}}</string>
+			<key>offset</key>
+			<string>{-7, 8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {182, 106}}</string>
+			<key>sourceSize</key>
+			<string>{196, 122}</string>
+		</dict>
+		<key>mm_sponsor_herb.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{856, 250}, {166, 142}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {166, 142}}</string>
+			<key>sourceSize</key>
+			<string>{168, 142}</string>
+		</dict>
+		<key>mm_sponsor_title_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{476, 2}, {438, 58}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {438, 58}}</string>
+			<key>sourceSize</key>
+			<string>{438, 58}</string>
+		</dict>
+		<key>mm_sponsor_title_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 2}, {472, 54}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {472, 54}}</string>
+			<key>sourceSize</key>
+			<string>{474, 54}</string>
+		</dict>
+		<key>mm_sponsor_title_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1046}, {326, 58}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {326, 58}}</string>
+			<key>sourceSize</key>
+			<string>{326, 58}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{1024, 2048}</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>menu_namescreen_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{372, 1454}, {302, 60}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {302, 60}}</string>
+			<key>sourceSize</key>
+			<string>{302, 60}</string>
+		</dict>
+		<key>menu_namescreen_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1454}, {368, 60}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {368, 60}}</string>
+			<key>sourceSize</key>
+			<string>{370, 60}</string>
+		</dict>
+		<key>menu_namescreen_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{320, 1320}, {390, 64}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {390, 64}}</string>
+			<key>sourceSize</key>
+			<string>{394, 64}</string>
+		</dict>
+		<key>mm_gameover_herb.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 2}, {138, 374}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {138, 374}}</string>
+			<key>sourceSize</key>
+			<string>{138, 374}</string>
+		</dict>
+		<key>mm_highscore_cloud.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 988}, {434, 194}}</string>
+			<key>offset</key>
+			<string>{3, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{6, 0}, {434, 194}}</string>
+			<key>sourceSize</key>
+			<string>{440, 200}</string>
+		</dict>
+		<key>mm_highscore_cloud_left.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{550, 378}, {282, 268}}</string>
+			<key>offset</key>
+			<string>{0, -3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 6}, {282, 268}}</string>
+			<key>sourceSize</key>
+			<string>{282, 274}</string>
+		</dict>
+		<key>mm_icon_fb.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{920, 500}, {82, 84}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {82, 84}}</string>
+			<key>sourceSize</key>
+			<string>{82, 84}</string>
+		</dict>
+		<key>mm_icon_sponsor.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{834, 500}, {84, 94}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {84, 94}}</string>
+			<key>sourceSize</key>
+			<string>{84, 94}</string>
+		</dict>
+		<key>mm_info_logo_appetite.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{650, 2}, {304, 152}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {304, 152}}</string>
+			<key>sourceSize</key>
+			<string>{304, 152}</string>
+		</dict>
+		<key>mm_info_logo_nihil.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{834, 378}, {182, 120}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {182, 120}}</string>
+			<key>sourceSize</key>
+			<string>{182, 120}</string>
+		</dict>
+		<key>mm_loading.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{222, 1516}, {226, 50}}</string>
+			<key>offset</key>
+			<string>{-3, 4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 5}, {226, 50}}</string>
+			<key>sourceSize</key>
+			<string>{240, 68}</string>
+		</dict>
+		<key>mm_main_cloud_left.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{142, 2}, {506, 340}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {506, 340}}</string>
+			<key>sourceSize</key>
+			<string>{506, 340}</string>
+		</dict>
+		<key>mm_main_cloud_right.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 378}, {546, 304}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {546, 304}}</string>
+			<key>sourceSize</key>
+			<string>{546, 304}</string>
+		</dict>
+		<key>mm_main_logo.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1184}, {666, 134}}</string>
+			<key>offset</key>
+			<string>{0, 12}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {666, 134}}</string>
+			<key>sourceSize</key>
+			<string>{666, 158}</string>
+		</dict>
+		<key>mm_main_logo_misantropical.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{550, 648}, {454, 34}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {454, 34}}</string>
+			<key>sourceSize</key>
+			<string>{458, 34}</string>
+		</dict>
+		<key>mm_nav_back_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{676, 1454}, {182, 58}}</string>
+			<key>offset</key>
+			<string>{-16, 6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{5, 7}, {182, 58}}</string>
+			<key>sourceSize</key>
+			<string>{224, 84}</string>
+		</dict>
+		<key>mm_nav_back_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1516}, {218, 52}}</string>
+			<key>offset</key>
+			<string>{-16, 10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 5}, {218, 52}}</string>
+			<key>sourceSize</key>
+			<string>{254, 82}</string>
+		</dict>
+		<key>mm_nav_back_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{856, 1108}, {144, 52}}</string>
+			<key>offset</key>
+			<string>{-15, 9}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{5, 8}, {144, 52}}</string>
+			<key>sourceSize</key>
+			<string>{184, 86}</string>
+		</dict>
+		<key>mm_nav_back_hover_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{650, 294}, {182, 58}}</string>
+			<key>offset</key>
+			<string>{-16, 4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{5, 9}, {182, 58}}</string>
+			<key>sourceSize</key>
+			<string>{224, 84}</string>
+		</dict>
+		<key>mm_nav_back_hover_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{438, 1128}, {218, 52}}</string>
+			<key>offset</key>
+			<string>{-16, 7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 8}, {218, 52}}</string>
+			<key>sourceSize</key>
+			<string>{254, 82}</string>
+		</dict>
+		<key>mm_nav_back_hover_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{856, 1054}, {144, 52}}</string>
+			<key>offset</key>
+			<string>{-15, 7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{5, 10}, {144, 52}}</string>
+			<key>sourceSize</key>
+			<string>{184, 86}</string>
+		</dict>
+		<key>mm_nav_gameover_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{712, 1320}, {294, 62}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {294, 62}}</string>
+			<key>sourceSize</key>
+			<string>{294, 64}</string>
+		</dict>
+		<key>mm_nav_gameover_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1390}, {540, 62}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {540, 62}}</string>
+			<key>sourceSize</key>
+			<string>{540, 64}</string>
+		</dict>
+		<key>mm_nav_gameover_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{544, 1390}, {390, 60}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {390, 60}}</string>
+			<key>sourceSize</key>
+			<string>{390, 60}</string>
+		</dict>
+		<key>mm_nav_highscore_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{438, 988}, {416, 68}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {416, 68}}</string>
+			<key>sourceSize</key>
+			<string>{416, 70}</string>
+		</dict>
+		<key>mm_nav_highscore_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{670, 1184}, {332, 68}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {332, 68}}</string>
+			<key>sourceSize</key>
+			<string>{332, 70}</string>
+		</dict>
+		<key>mm_nav_highscore_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{438, 1058}, {352, 68}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {352, 68}}</string>
+			<key>sourceSize</key>
+			<string>{352, 68}</string>
+		</dict>
+		<key>mm_nav_info_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{670, 1254}, {150, 64}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {150, 64}}</string>
+			<key>sourceSize</key>
+			<string>{150, 64}</string>
+		</dict>
+		<key>mm_nav_info_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{856, 988}, {150, 64}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {150, 64}}</string>
+			<key>sourceSize</key>
+			<string>{150, 64}</string>
+		</dict>
+		<key>mm_nav_info_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{822, 1254}, {150, 64}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {150, 64}}</string>
+			<key>sourceSize</key>
+			<string>{150, 64}</string>
+		</dict>
+		<key>mm_nav_options_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{650, 156}, {284, 68}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {284, 68}}</string>
+			<key>sourceSize</key>
+			<string>{284, 68}</string>
+		</dict>
+		<key>mm_nav_options_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 1320}, {316, 68}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {316, 68}}</string>
+			<key>sourceSize</key>
+			<string>{316, 70}</string>
+		</dict>
+		<key>mm_nav_options_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{650, 226}, {278, 66}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {278, 66}}</string>
+			<key>sourceSize</key>
+			<string>{278, 66}</string>
+		</dict>
+		<key>mm_options_cloud.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 684}, {960, 302}}</string>
+			<key>offset</key>
+			<string>{0, -2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 4}, {960, 302}}</string>
+			<key>sourceSize</key>
+			<string>{960, 306}</string>
+		</dict>
+		<key>mm_particle_0.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 514}, {12, 12}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 1}, {12, 12}}</string>
+			<key>sourceSize</key>
+			<string>{16, 14}</string>
+		</dict>
+		<key>mm_particle_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 528}, {12, 12}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {12, 12}}</string>
+			<key>sourceSize</key>
+			<string>{12, 12}</string>
+		</dict>
+		<key>mm_particle_10.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 554}, {12, 10}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {12, 10}}</string>
+			<key>sourceSize</key>
+			<string>{12, 10}</string>
+		</dict>
+		<key>mm_particle_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 500}, {12, 12}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {12, 12}}</string>
+			<key>sourceSize</key>
+			<string>{12, 12}</string>
+		</dict>
+		<key>mm_particle_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{930, 586}, {8, 8}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {8, 8}}</string>
+			<key>sourceSize</key>
+			<string>{8, 10}</string>
+		</dict>
+		<key>mm_particle_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{920, 586}, {8, 8}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {8, 8}}</string>
+			<key>sourceSize</key>
+			<string>{10, 8}</string>
+		</dict>
+		<key>mm_particle_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1008, 988}, {10, 10}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {10, 10}}</string>
+			<key>sourceSize</key>
+			<string>{12, 10}</string>
+		</dict>
+		<key>mm_particle_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 578}, {8, 6}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {8, 6}}</string>
+			<key>sourceSize</key>
+			<string>{8, 6}</string>
+		</dict>
+		<key>mm_particle_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 542}, {12, 10}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {12, 10}}</string>
+			<key>sourceSize</key>
+			<string>{12, 10}</string>
+		</dict>
+		<key>mm_particle_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{940, 586}, {8, 8}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {8, 8}}</string>
+			<key>sourceSize</key>
+			<string>{10, 8}</string>
+		</dict>
+		<key>mm_particle_9.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1004, 566}, {10, 10}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {10, 10}}</string>
+			<key>sourceSize</key>
+			<string>{12, 12}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{1024, 2048}</string>
+	</dict>
+</dict>
+</plist>

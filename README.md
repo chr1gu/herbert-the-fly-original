@@ -6,9 +6,10 @@ This repo re-creates the 2011 iOS game by Etite, a two-person studio from Bern: 
 |---|---|
 | `app/` | Playable web re-creation of the game, using the original art and audio. See [app/README.md](app/README.md). |
 | `web/` | The website: a placeholder landing page for now. The re-creations of the original herbert.etite.ch site and the remix album page are planned. |
-| `archive/` | The original 2011 project files. Not part of this repo; the tools in `app/tools/` read from it. |
+| `original/` | The parts of the 2011 project the re-creation uses: game code, sprite sheets, audio, art, press kit, old websites and soundtrack. See [original/README.md](original/README.md). |
+| `archive/` | The full original backups. Kept locally, not part of this repo. |
 
-`app/tools/convert_assets.py` rebuilds `app/assets/` from `archive/`. The converted assets are committed, so the game runs without the archive.
+`app/tools/convert_assets.py` rebuilds `app/assets/` from `original/resources/`.
 
 ## Publishing
 

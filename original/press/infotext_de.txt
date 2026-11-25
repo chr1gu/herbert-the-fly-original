@@ -1,0 +1,40 @@
+Kurz & Knapp
+Herbert ist ein kleines farbenfrohes Abenteuer für dein iPhone oder iPod Touch. 
+
+Du übernimmst die Kontrolle über Herbert, eine fette Eintagesfliege, die, nun ja, sagen wir, nicht gerade den besten Tag erwischt hat. Denn irgendwie lief für ihn Heute alles schief...
+Darum würde er sich um so mehr freuen wenn du ihm helfen würdest. Flieg mit ihm, schiesse wild um dich und erspiele neben der mächtigen Regenbogenkanone und der mysteriösen Übergun viele weitere Hilfsmittel um noch grösseres Chaos anzurichten.
+
+Das Ganze Projekt wurde in schweizer Eigenproduktion entwickelt, untermalt mit einem exklusiven Soundtrack von Justin Lassen (Remixer für NIN, Madonna, Linkin Park, ...).
+Du holst dir für 1.10.- also nicht nur jede menge Spass, sondern leistest auch einen wertvollen Beitrag an die schweizer Gameentwicklung.
+
+Merci
+
+
+
+Ein bisschen ausführlicher
+Einleitung
+Im Spätherbst 2010 entstand im heimischen Computerzimmer irgendwo in der Länggasse in Bern die Idee zum iPhone Spiel, das später Herbert heissen sollte.
+Die Faszination zu Technik und Spielen war vorhanden. Die fehlende Erfahrung und das Know-how wurde durch Tatendrang und Neugierde wett gemacht. Schon wenige Wochen später stapelten sich neben Pizzaschachteln die Skizzenbücher und Blätter voll mit Ideen, Gekritzel, Konzepten und den ersten Charakteren für unser Spiel.
+
+Und so entstand aus der Idee ein Projekt, das uns nun fast ein Jahr begleitet hat. Aus Zeichnungen entstanden liebevoll animierte Figuren, das Computerzimmer glich je länger je mehr einem ansehnlichen Grafikbüro, Ideen verwandelten sich in nächtlichen learning-by-doing Sessions in Code und dieser wiederum in steuerbare Bewegungen und Logiken auf dem Touchscreen. 
+
+Story
+Die Idee zu Herbert ist schnell erzählt… Es gibt ja kaum jemanden der „ihn“ nicht schon einmal erleben musste. Man steht auf… Und kracht als erstes seine Zehen gegen eine Kante die vorher noch nie dort gewesen war. Dann, spätestens beim Morgenkaffee, der brühend heiss ist, weil die Milch durchgefallen ist und man darum auf dem letzten frisch gewaschenen Shirt verteilt hat, wird einem klar: Man hat ihn erwischt…  den „Scheisstag“. 
+Was das jedoch für eine Eintagsfliege bedeuten muss genau diesen Tag zu erwischen, ist eine Vorstellung, die Tragik und Komik gleichermassen bedient.
+
+Im Vordergrund bei Herbert steht der kurzweilige Spielspass. Trotzdem drückt dieser schwarzhumorige Umstand immer wieder hervor und begleitete uns bei vielen Details, Ideen und Entscheidungen. So schlüpft der Spieler nicht in die Rolle von Herbert, sondern übernimmt lediglich dessen Kontrolle. So kann jeder selber entscheiden ob aus Herberts Tag ein brutaler Racheakt oder ein kurvenreiches Abenteuer in einer farbenfrohen Welt werden soll.
+
+Eigenwillige Produktion
+Uns war bewusst, dass wir weder studierte Entwickler, noch erfahrene Gamedesigner sind.
+Aber diese Erkenntnis vereinfachte auch einiges. Wir brauchten uns nicht gross anzustellen anders zu sein. Die Herangehensweise und Prioritäten unterschieden sich wohl so oder so von Profis.
+ Was uns während der ganzen Zeit erstaunte und immer wieder aufs neue anspornte, war die Erkenntnis, dass es in der Schweiz kaum Spielentwickler hat. Mittlerweile ist es wenigstens ein bisschen im Umbruch und klar, der iPhone und App-Boom kam mit ein bis zwei Jahren Verspätung in der Schweiz an. Und ein bisschen später auch noch in Bern. 
+Aber das wir im dichtbesiedeltsten iPhone Land der Welt nur wenige heimische Spielentwickler für dieses Gerät haben, fivnden wir einen verbesserungswürdigen Zustand.
+
+Dem wollten wir ein Zeichen entgegensetzen. Und so ist Herbert das vielleicht erste Spiel das neben Englisch und Deutsch auch komplett auf Berndeutsch gespielt werden kann.
+
+Der Umstand das wir die ganze Produktion selber finanziert haben, hatte zur folge, dass wir uns mit Gelegenheitsaufträgen über Wasser halten mussten, was den Entwicklungsprozess des Spieles abbremste. Wiederum hatte es den Vorteil, dass wir ohne Deadlines und Druck von Publishern oder Geldgebern arbeiten konnten.  
+Eigenwillige Musik
+Wir hatten das grosse Glück, dass uns der amerikanische Komponist, Musiker und Remixer Justin Lassen noch einen Gefallen schuldig war. So fragten wir diesen an, eine Titelmelodie für unser Spiel zu kreieren. 
+Im Endeffekt fand er das Spiel und unsere Idee Kindermusik mit Elektro, Dubstep und 8Bit Elementen zu mischen so amüsant, dass Justin Lassen, der ansonsten mit Bands und Persönlichkeiten wie David Bowie, Nine inch Nails, Linkin Park, Madonna, Robert Miles und vielen anderen arbeitet, uns nicht nur einen Track komponierte, sondern einen ganzen Soundtrack bestehend aus 12 Liedern. Auch dies ist für ein iPhone Spiel sehr unüblich.
+Da Herbert ein Gelegenheitsspiel ist und meistens nur wenige Minuten Spielzeit in Anspruch nimmt, würden die eigens Produzierten Tracks viel zu kurz kommen.   Darum entschieden wir uns kurzerhand den gesamten Soundtrack als kostenlosen Download auf unserer Facebook Seite zu stellen.
+

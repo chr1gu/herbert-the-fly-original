@@ -1,0 +1,565 @@
+body {
+    /*width: 2742px;
+    height: 1500px;*/
+    padding: 0;
+    margin: 0;
+    background: url(../images/bg.png) top left repeat-x #EFF8FB;
+    font-family:'Helvetica-Neue',sans-serif;
+}
+
+a {
+    color:#00A2C5;
+    text-decoration:none;
+}
+
+a:hover {
+    color:#00404E;
+}
+
+#wrapper {
+    /*border:1px solid green;
+    background:url(../images/screenshit_herb_grey.jpg) top center;*/
+    display: block;
+    overflow:hidden;
+    min-width: 1005px;
+    position: relative;
+    text-align:center;
+}
+
+#content {
+    position: absolute;
+    top: 190px;
+    left: 107px;
+    width: 781px;
+    height: 503px;
+    background-image: url(../images/iphone_bg.png);
+    background-repeat: no-repeat;
+    background-position: center 40%;
+}
+
+#txt-left {
+    position: absolute;
+    top: 833px;
+    left: 92px;
+    width: 400px;
+    height: 350px;
+}
+
+#txt-right {
+    position: absolute;
+    top: 833px;
+    left: 520px;
+    width: 400px;
+    height: 350px;
+}
+
+#txt-right li {
+    list-style: none;
+    padding-bottom:20px;
+    padding-left:60px;
+    position: relative;
+}
+
+#txt-right img {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#txt-right .meta {
+    font-size:90%;
+}
+
+.txt-wrapper {
+}
+
+.video iframe {
+    
+}
+
+#txt-right p, #txt-left p {
+    padding-bottom:10px;
+}
+
+#container {
+    /*border: 1px solid red;*/
+    width: 1005px;
+    position:relative;
+    height: 1500px;
+    margin: auto;
+    margin-bottom:30px;
+    text-align:left;
+}
+
+#newsBox {
+    position: absolute;
+    top: 248px;
+    left: 248px;
+}
+
+
+#footer {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    height: 122px;
+    background-color:#3D3D3F;
+    z-index: 1000;
+}
+
+#footer .wrapper {
+    width: 1005px;
+    margin: auto;
+    position: relative;
+}
+
+#footer .fbframe {
+    position: absolute;
+    top: 25px;
+    left: 520px;
+	padding: 10px 10px 10px 10px;
+	background-color: #999;
+}
+
+#footer .fbframe iframe {
+    border:none;
+    overflow:hidden;
+    width:450px;
+    height:80px;
+}
+
+#footer p {
+    color: #FFF;
+    margin-top: 100px;
+    text-transform: uppercase;
+    font-size:80%;
+}
+
+#footer a {
+    color: #FFF;
+    text-decoration:none;
+}
+#footer a:hover {
+    color: #CCC;
+}
+
+
+/* footer clouds */
+.cloud_footer1-png {
+    position: absolute;
+    bottom: 92px;
+    left: -680px;
+    width:923px;
+    height:298px;
+    background-image:url(../images/cloud_footer1.png);
+    background-repeat: no-repeat;
+}
+.cloud_footer2-png {
+    position: absolute;
+    bottom: 92px;
+    right: -340px;
+    width:691px;
+    height:294px;
+    background-image:url(../images/cloud_footer2.png);
+    background-repeat: no-repeat;
+}
+
+
+/*** SPRITESHEET POSITIONS ***/
+.btn_fb-png {
+    top: 50px;
+    right: 278px;
+}
+.btn_tw-png {
+    top: 50px;
+    right: 200px;
+}
+.display_nav_left_rollover-png {
+    left: -170px;
+    top: 170px;
+}
+.display_nav_right_rollover-png {
+    right: -170px;
+    top: 170px;
+}
+.bug_gilbert-png {
+    top: 225px;
+    left: 73px;
+}
+.bugs_bee-png {
+    top: 867px;
+    left: 1302px;
+}
+.bugs_birdy-png {
+    top: 120px;
+    left: 712px;
+}
+.bugs_bob-png {
+    top: 1182px;
+    left: 930px;
+}
+.bugs_herbert-png {
+    top: 670px;
+    left: 265px;
+}
+.bugs_herbert_shot-png {
+    top: 1143px;
+    left: 830px;
+}
+.cloud_1-png {
+    top: 0;
+    left: -204px;
+}
+.cloud_2-png {
+    top: 809px;
+    left: -407px;
+}
+.cloud_3-png {
+    top: 0;
+    left: 860px;
+}
+.cloud_4-png {
+    top: 777px;
+    left: 935px;
+}
+.cloud_5-png {
+    top: 1094px;
+    left: 1542px;
+}
+.cloud_6-png {
+    top: 649px;
+    left: -54px;
+}
+.cloud_7-png {
+    top: 485px;
+    left: 892px;
+}
+.cloud_bg_1-png {
+    top: 944px;
+    left: -445px;
+}
+.cloud_bg_2-png {
+    top: 1003px;
+    left: 765px;
+}
+.cloud_bg_3-png {
+    top: 401px;
+    left: 966px;
+}
+.cloud_bg_4-png {
+    top: 1040px;
+    left: -49px;
+}
+.cloud_bg_5-png {
+    top: 1199px;
+    left: 1362px;
+}
+.cloud_bg_6-png {
+    top: 584px;
+    left: -214px;
+}
+.cloud_bg_7-png {
+    top: 32px;
+    left: 544px;
+}
+.display_appstore-png {
+    top: 652px;
+    left: 550px;
+}
+.display_appstore_arrow-png {
+    top: 626px;
+    left: 815px;
+}
+.footer_herbert-png {
+    z-index: 1001;
+    bottom: 62px;
+    left: 61px;
+}
+.footer_herbert_facebook-png {
+    bottom: 115px;
+    left: 265px;
+}
+.footer_logo-png {
+    left: 90px;
+    top: 68px;
+}
+.particle_1-png {
+    top: 146px;
+    left: 27px;
+}
+.particle_2-png {
+    top: 475px;
+    left: 1038px;
+}
+.particle_3-png {
+    top: 723px;
+    left: -79px;
+}
+.particle_4-png {
+    top: 708px;
+    left: 215px;
+}
+.particle_5-png {
+    top: 1166px;
+    left: 392px;
+}
+.particle_6-png {
+    top: 946px;
+    left: 112px;
+}
+.particle_7-png {
+    top: 1093px;
+    left: 782px;
+}
+.title_news-png {
+    top: 797px;
+    left: 521px;
+}
+.title_welcome-png {
+    top: 797px;
+    left: 90px;
+}
+.top_bar_1etite-png {
+    top: 62px;
+    left: 578px;
+}
+.top_bar_2info-png {
+    top: 62px;
+    left: 651px;
+}
+.top_bar_3games-png {
+    top: 62px;
+    left: 716px;
+}
+.top_bar_4contact-png {
+    top: 62px;
+    left: 803px;
+}
+.top_bar_bg-png {
+    top: 62px;
+    left: 580px;
+}
+.top_logo-png {
+    top: 39px;
+    left: 93px;
+}
+.sprite {
+    position: absolute;
+}
+
+/*** AUTOGEN. SPRITESHEET CLASSES ***/
+.sprite {
+    display:block;
+    background-image:url(../images/spritesheet.png);
+}
+.btn_fb-png {
+    width:59px;
+    height:60px;
+    background-position:-894px -208px;
+}
+.btn_tw-png {
+    width:58px;
+    height:60px;
+    background-position:-516px -779px;
+}
+.bug_gilbert-png {
+    width:100px;
+    height:112px;
+    background-position:-894px -2px;
+}
+.bugs_bee-png {
+    width:382px;
+    height:194px;
+    background-position:-281px -329px;
+}
+.bugs_birdy-png {
+    width:277px;
+    height:215px;
+    background-position:-2px -329px;
+}
+.bugs_birdy_rollover-png {
+    width:289px;
+    height:225px;
+    background-position:-603px -2px;
+}
+.bugs_bob-png {
+    width:66px;
+    height:90px;
+    background-position:-894px -116px;
+}
+.bugs_herbert-png {
+    width:147px;
+    height:157px;
+    background-position:-874px -329px;
+}
+.bugs_herbert_shot-png {
+    width:62px;
+    height:44px;
+    background-position:-748px -779px;
+}
+.cloud_1-png {
+    width:186px;
+    height:99px;
+    background-position:-166px -675px;
+}
+.cloud_2-png {
+    width:179px;
+    height:115px;
+    background-position:-433px -546px;
+}
+.cloud_3-png {
+    width:145px;
+    height:81px;
+    background-position:-2px -779px;
+}
+.cloud_4-png {
+    width:141px;
+    height:89px;
+    background-position:-747px -675px;
+}
+.cloud_5-png {
+    width:203px;
+    height:127px;
+    background-position:-2px -546px;
+}
+.cloud_6-png {
+    width:162px;
+    height:102px;
+    background-position:-2px -675px;
+}
+.cloud_7-png {
+    width:599px;
+    height:325px;
+    background-position:-2px -2px;
+}
+.cloud_bg_1-png {
+    width:84px;
+    height:58px;
+    background-position:-576px -779px;
+}
+.cloud_bg_2-png {
+    width:84px;
+    height:58px;
+    background-position:-662px -779px;
+}
+.cloud_bg_3-png {
+    width:84px;
+    height:61px;
+    background-position:-430px -779px;
+}
+.cloud_bg_4-png {
+    width:61px;
+    height:42px;
+    background-position:-812px -779px;
+}
+.cloud_bg_5-png {
+    width:61px;
+    height:42px;
+    background-position:-875px -779px;
+}
+.cloud_bg_6-png {
+    width:224px;
+    height:127px;
+    background-position:-207px -546px;
+}
+.cloud_bg_7-png {
+    width:68px;
+    height:48px;
+    background-position:-943px -488px;
+}
+.display_appstore-png {
+    width:290px;
+    height:107px;
+    background-position:-614px -546px;
+}
+.display_appstore_arrow-png {
+    width:131px;
+    height:74px;
+    background-position:-149px -779px;
+}
+.display_nav_left-png {
+    width:72px;
+    height:72px;
+    background-position:-282px -779px;
+}
+.display_nav_left_rollover-png {
+    width:86px;
+    height:86px;
+    background-position:-906px -546px;
+}
+.display_nav_right-png {
+    width:72px;
+    height:72px;
+    background-position:-356px -779px;
+}
+.display_nav_right_rollover-png {
+    width:86px;
+    height:86px;
+    background-position:-890px -675px;
+}
+.footer_herbert-png {
+    width:207px;
+    height:172px;
+    background-position:-665px -329px;
+}
+.footer_herbert_facebook-png {
+    width:230px;
+    height:96px;
+    background-position:-603px -229px;
+}
+.footer_logo-png {
+    width:167px;
+    height:22px;
+    background-position:-2px -862px;
+}
+.particle_1-png {
+    width:15px;
+    height:14px;
+    background-position:-890px -763px;
+}
+.particle_2-png {
+    width:17px;
+    height:17px;
+    background-position:-614px -655px;
+}
+.particle_3-png {
+    width:18px;
+    height:18px;
+    background-position:-906px -659px;
+}
+.particle_4-png {
+    width:12px;
+    height:11px;
+    background-position:-747px -766px;
+}
+.particle_5-png {
+    width:16px;
+    height:16px;
+    background-position:-633px -655px;
+}
+.particle_6-png {
+    width:15px;
+    height:15px;
+    background-position:-665px -529px;
+}
+.particle_7-png {
+    width:13px;
+    height:14px;
+    background-position:-907px -763px;
+}
+.title_news-png {
+    width:86px;
+    height:23px;
+    background-position:-906px -634px;
+}
+.title_welcome-png {
+    width:154px;
+    height:24px;
+    background-position:-665px -503px;
+}
+.top_logo-png {
+    width:391px;
+    height:93px;
+    background-position:-354px -675px;
+}
+/*** END SPRITESHEET CLASSES ***/

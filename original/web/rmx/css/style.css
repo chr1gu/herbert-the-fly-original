@@ -1,0 +1,114 @@
+/* GENERAL */
+html, body {
+    background-color: #161616;
+    color: #FFF;
+    font-family:Helvatica, Sans-Serif;
+    font-size: 1em;
+    /*min-width: 1022px;*/
+}
+
+p {
+    padding-left: 35px;
+    padding-bottom: 15px;
+}
+
+.small {
+    font-size: 80%;
+    line-height: 110%;
+}
+
+.quote {
+    font-style: italic;
+}
+
+h1 {
+    display: none;
+}
+
+#container .leftcol, #container .rightcol {
+    margin-top: 291px;
+    position: relative;
+}
+
+#container {
+    min-height: 1200px;
+}
+
+.topcenter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 0;
+}
+.topcenter img {
+    margin: auto;
+}
+
+#container .rmx-download {
+    position: absolute;
+    top: 370px;
+    left: 5px;
+}
+
+#container .cover {
+    position: absolute;
+    top: -300px;
+    left: -50px;
+}
+
+.socialize {
+    height: 82px;
+    width: 100px;
+    overflow: hidden;
+    float: left;
+}
+
+.facebook {
+
+}
+.twitter {
+    margin-left: 36px;
+    padding-top: 42px;
+    height: 40px;
+    width: 72px;
+}
+.plusone {
+    padding-top: 42px;
+    height: 40px;
+    width: 78px;
+}
+
+#footer {
+    background-color: #f5d94a;
+    height: 105px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+#footer div {
+    position: relative;
+}
+#footer iframe {
+    margin-top: 10px;
+}
+#footer .offset {
+    position: absolute;
+    top: -76px;
+    right: 0;
+    z-index: 100;
+}
+
+.iblock {
+    
+}
+.grid768 {
+    width: 768px;
+    margin: auto;
+}
+.grid384 {
+    width: 384px;
+    float: left;
+}

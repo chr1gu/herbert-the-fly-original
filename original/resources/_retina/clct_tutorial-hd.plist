@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>tut_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{56, 2}, {106, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {106, 56}}</string>
+			<key>sourceSize</key>
+			<string>{106, 56}</string>
+		</dict>
+		<key>tut_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{402, 2}, {118, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {118, 56}}</string>
+			<key>sourceSize</key>
+			<string>{118, 56}</string>
+		</dict>
+		<key>tut_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{164, 2}, {116, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {116, 56}}</string>
+			<key>sourceSize</key>
+			<string>{118, 56}</string>
+		</dict>
+		<key>tut_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{522, 2}, {118, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {118, 56}}</string>
+			<key>sourceSize</key>
+			<string>{118, 56}</string>
+		</dict>
+		<key>tut_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{282, 2}, {118, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {118, 56}}</string>
+			<key>sourceSize</key>
+			<string>{118, 56}</string>
+		</dict>
+		<key>tut_herb.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 510}, {294, 362}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {294, 362}}</string>
+			<key>sourceSize</key>
+			<string>{294, 362}</string>
+		</dict>
+		<key>tut_title_ch.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{270, 60}, {266, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {266, 56}}</string>
+			<key>sourceSize</key>
+			<string>{266, 56}</string>
+		</dict>
+		<key>tut_title_de.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{722, 380}, {266, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {266, 56}}</string>
+			<key>sourceSize</key>
+			<string>{266, 56}</string>
+		</dict>
+		<key>tut_title_en.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 60}, {266, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {266, 56}}</string>
+			<key>sourceSize</key>
+			<string>{266, 56}</string>
+		</dict>
+		<key>tut_x.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 2}, {52, 56}}</string>
+			<key>offset</key>
+			<string>{-6, -6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{19, 31}, {52, 56}}</string>
+			<key>sourceSize</key>
+			<string>{102, 106}</string>
+		</dict>
+		<key>tutorial1_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{642, 2}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{2, -2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 12}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial1_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{482, 380}, {238, 128}}</string>
+			<key>offset</key>
+			<string>{1, -6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{16, 14}, {238, 128}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial1_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 254}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{2, -2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 12}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial1_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{242, 380}, {238, 126}}</string>
+			<key>offset</key>
+			<string>{3, 5}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 4}, {238, 126}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial2_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{478, 254}, {238, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{17, 10}, {238, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial2_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{718, 254}, {238, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{17, 10}, {238, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial2_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 380}, {238, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{17, 10}, {238, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial2_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{478, 128}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 10}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial3_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{240, 254}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{3, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{19, 10}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial3_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{716, 128}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 10}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial3_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2, 128}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{18, 10}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+		<key>tutorial3_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{240, 128}, {236, 124}}</string>
+			<key>offset</key>
+			<string>{3, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{19, 10}, {236, 124}}</string>
+			<key>sourceSize</key>
+			<string>{268, 144}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{1024, 1024}</string>
+	</dict>
+</dict>
+</plist>

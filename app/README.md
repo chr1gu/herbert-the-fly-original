@@ -1,6 +1,6 @@
 # Herbert – the misanthropical fly (web prototype)
 
-A browser rebuild of the 2011 iOS game (Etite, Bern; v1.2, Oct 2011), using the original art and audio. The gameplay numbers come from the Cocos2d source in `../archive/Herbert the Fly/Cocos 1.0.1/herbert` (Oct 15 2011, the newest of the four copies).
+A browser rebuild of the 2011 iOS game (Etite, Bern; v1.2, Oct 2011), using the original art and audio. The gameplay numbers come from the original Cocos2d source in `../original/source/` (Oct 15 2011).
 
 ## Run
 
@@ -9,7 +9,7 @@ cd ~/Development/herbert-the-fly-original/app
 python3 -m http.server 8765    # then open http://localhost:8765
 ```
 
-To regenerate `assets/` from the original resources, run `python3 tools/convert_assets.py` (needs `ffmpeg`) and `python3 tools/build_bitmap_font.py` (needs Pillow). Both read from `../archive/`.
+To regenerate `assets/` from the original resources, run `python3 tools/convert_assets.py` (needs `ffmpeg`) which reads from `../original/resources/`. The glyph sheet comes from `python3 tools/build_bitmap_font.py` (needs Pillow and the font file in the local `../archive/`).
 
 **Controls**
 

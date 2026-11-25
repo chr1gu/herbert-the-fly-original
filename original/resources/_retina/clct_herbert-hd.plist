@@ -1,0 +1,1641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>ani_herb_down_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{779, 275}, {129, 102}}</string>
+			<key>offset</key>
+			<string>{-1, -7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 16}, {129, 102}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{126, 158}, {127, 116}}</string>
+			<key>offset</key>
+			<string>{-1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 2}, {127, 116}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{131, 275}, {129, 106}}</string>
+			<key>offset</key>
+			<string>{-2, -6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 13}, {129, 106}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{334, 382}, {127, 96}}</string>
+			<key>offset</key>
+			<string>{-2, -11}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 23}, {127, 96}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1454, 275}, {125, 100}}</string>
+			<key>offset</key>
+			<string>{-3, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 18}, {125, 100}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{384, 158}, {127, 114}}</string>
+			<key>offset</key>
+			<string>{-1, -2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 5}, {127, 114}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1834, 158}, {129, 106}}</string>
+			<key>offset</key>
+			<string>{0, -6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 13}, {129, 106}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_down_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1836, 275}, {127, 98}}</string>
+			<key>offset</key>
+			<string>{-1, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 21}, {127, 98}}</string>
+			<key>sourceSize</key>
+			<string>{133, 120}</string>
+		</dict>
+		<key>ani_herb_gover1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1441, 158}, {138, 107}}</string>
+			<key>offset</key>
+			<string>{1, 6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {138, 107}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{982, 382}, {140, 95}}</string>
+			<key>offset</key>
+			<string>{0, -2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 14}, {140, 95}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1629, 382}, {136, 85}}</string>
+			<key>offset</key>
+			<string>{-2, -6}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 23}, {136, 85}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1123, 382}, {128, 93}}</string>
+			<key>offset</key>
+			<string>{1, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{7, 21}, {128, 93}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1199, 275}, {126, 101}}</string>
+			<key>offset</key>
+			<string>{1, -9}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{8, 18}, {126, 101}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1500, 382}, {128, 87}}</string>
+			<key>offset</key>
+			<string>{0, -7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{6, 23}, {128, 87}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 382}, {110, 97}}</string>
+			<key>offset</key>
+			<string>{-1, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{14, 21}, {110, 97}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_gover8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{512, 158}, {124, 111}}</string>
+			<key>offset</key>
+			<string>{7, -4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{15, 8}, {124, 111}}</string>
+			<key>sourceSize</key>
+			<string>{140, 119}</string>
+		</dict>
+		<key>ani_herb_up_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{261, 275}, {129, 105}}</string>
+			<key>offset</key>
+			<string>{0, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 20}, {129, 105}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1449, 1}, {129, 123}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 2}, {129, 123}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1179, 158}, {129, 109}}</string>
+			<key>offset</key>
+			<string>{-1, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 16}, {129, 109}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1326, 275}, {127, 101}}</string>
+			<key>offset</key>
+			<string>{-2, -12}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 24}, {127, 101}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1710, 275}, {125, 99}}</string>
+			<key>offset</key>
+			<string>{-2, -11}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 24}, {125, 99}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1709, 1}, {129, 117}}</string>
+			<key>offset</key>
+			<string>{0, -4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 8}, {129, 117}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1309, 158}, {131, 109}}</string>
+			<key>offset</key>
+			<string>{0, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 16}, {131, 109}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>ani_herb_up_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{521, 275}, {129, 103}}</string>
+			<key>offset</key>
+			<string>{0, -11}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 22}, {129, 103}}</string>
+			<key>sourceSize</key>
+			<string>{131, 125}</string>
+		</dict>
+		<key>bugspray.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 480}, {106, 72}}</string>
+			<key>offset</key>
+			<string>{1, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{9, 1}, {106, 72}}</string>
+			<key>sourceSize</key>
+			<string>{122, 80}</string>
+		</dict>
+		<key>flygun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{203, 480}, {100, 70}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {100, 70}}</string>
+			<key>sourceSize</key>
+			<string>{100, 70}</string>
+		</dict>
+		<key>herb_body_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 275}, {129, 106}}</string>
+			<key>offset</key>
+			<string>{0, -7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 14}, {129, 106}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1579, 1}, {129, 120}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {129, 120}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{767, 158}, {129, 110}}</string>
+			<key>offset</key>
+			<string>{-1, -5}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 10}, {129, 110}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1580, 275}, {129, 100}}</string>
+			<key>offset</key>
+			<string>{-1, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 20}, {129, 100}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{651, 275}, {127, 102}}</string>
+			<key>offset</key>
+			<string>{-2, -7}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 16}, {127, 102}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{254, 158}, {129, 116}}</string>
+			<key>offset</key>
+			<string>{1, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 3}, {129, 116}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{637, 158}, {129, 110}}</string>
+			<key>offset</key>
+			<string>{1, -5}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 10}, {129, 110}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{391, 275}, {129, 104}}</string>
+			<key>offset</key>
+			<string>{0, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 16}, {129, 104}}</string>
+			<key>sourceSize</key>
+			<string>{131, 120}</string>
+		</dict>
+		<key>herb_body_prot_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{202, 1}, {136, 148}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {136, 148}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{756, 1}, {138, 148}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {138, 148}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{617, 1}, {138, 148}}</string>
+			<key>offset</key>
+			<string>{-1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {138, 148}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1036, 1}, {140, 146}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {140, 146}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1177, 1}, {140, 146}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {140, 146}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{895, 1}, {140, 146}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 2}, {140, 146}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{478, 1}, {138, 148}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {138, 148}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_body_prot_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{339, 1}, {138, 148}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {138, 148}}</string>
+			<key>sourceSize</key>
+			<string>{140, 148}</string>
+		</dict>
+		<key>herb_drugz1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1038, 158}, {140, 110}}</string>
+			<key>offset</key>
+			<string>{2, 8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 0}, {140, 110}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz10.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{909, 275}, {144, 102}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 11}, {144, 102}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz11.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1766, 382}, {138, 84}}</string>
+			<key>offset</key>
+			<string>{-2, -5}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 26}, {138, 84}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz12.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{462, 382}, {128, 96}}</string>
+			<key>offset</key>
+			<string>{1, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{9, 23}, {128, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz13.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1580, 158}, {126, 106}}</string>
+			<key>offset</key>
+			<string>{1, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{10, 20}, {126, 106}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz14.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{720, 382}, {130, 96}}</string>
+			<key>offset</key>
+			<string>{0, -11}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{7, 26}, {130, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz15.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{223, 382}, {110, 96}}</string>
+			<key>offset</key>
+			<string>{-1, -9}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{16, 24}, {110, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz16.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1839, 1}, {124, 116}}</string>
+			<key>offset</key>
+			<string>{6, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{16, 6}, {124, 116}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1054, 275}, {144, 102}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 11}, {144, 102}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1905, 382}, {138, 84}}</string>
+			<key>offset</key>
+			<string>{-2, -5}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 26}, {138, 84}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{591, 382}, {128, 96}}</string>
+			<key>offset</key>
+			<string>{1, -8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{9, 23}, {128, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1707, 158}, {126, 106}}</string>
+			<key>offset</key>
+			<string>{1, -10}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{10, 20}, {126, 106}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{851, 382}, {130, 96}}</string>
+			<key>offset</key>
+			<string>{0, -11}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{7, 26}, {130, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{112, 382}, {110, 96}}</string>
+			<key>offset</key>
+			<string>{-1, -9}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{16, 24}, {110, 96}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 158}, {124, 116}}</string>
+			<key>offset</key>
+			<string>{6, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{16, 6}, {124, 116}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_drugz9.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{897, 158}, {140, 110}}</string>
+			<key>offset</key>
+			<string>{2, 8}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 0}, {140, 110}}</string>
+			<key>sourceSize</key>
+			<string>{144, 126}</string>
+		</dict>
+		<key>herb_leg_norm2_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1706, 480}, {44, 56}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {44, 56}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 553}, {44, 54}}</string>
+			<key>offset</key>
+			<string>{1, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {44, 54}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1948, 480}, {42, 54}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {42, 54}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{257, 553}, {40, 52}}</string>
+			<key>offset</key>
+			<string>{-2, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {40, 52}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{483, 553}, {38, 50}}</string>
+			<key>offset</key>
+			<string>{-2, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {38, 50}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{298, 553}, {42, 52}}</string>
+			<key>offset</key>
+			<string>{0, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {42, 52}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1991, 480}, {42, 54}}</string>
+			<key>offset</key>
+			<string>{1, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{3, 0}, {42, 54}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm2_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1661, 480}, {44, 56}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {44, 56}}</string>
+			<key>sourceSize</key>
+			<string>{46, 56}</string>
+		</dict>
+		<key>herb_leg_norm_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{912, 480}, {52, 60}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 1}, {52, 60}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{808, 480}, {50, 60}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 1}, {50, 60}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1348, 480}, {50, 58}}</string>
+			<key>offset</key>
+			<string>{-1, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {50, 58}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1399, 480}, {50, 58}}</string>
+			<key>offset</key>
+			<string>{-3, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {50, 58}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1751, 480}, {48, 56}}</string>
+			<key>offset</key>
+			<string>{-4, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {48, 56}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1450, 480}, {52, 58}}</string>
+			<key>offset</key>
+			<string>{-1, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {52, 58}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{757, 480}, {50, 60}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 1}, {50, 60}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_norm_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{859, 480}, {52, 60}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{3, 1}, {52, 60}}</string>
+			<key>sourceSize</key>
+			<string>{56, 62}</string>
+		</dict>
+		<key>herb_leg_wbg1_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 287}, {32, 70}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {32, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1993, 216}, {30, 70}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 1}, {30, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 216}, {28, 70}}</string>
+			<key>offset</key>
+			<string>{-1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {28, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1989, 74}, {26, 70}}</string>
+			<key>offset</key>
+			<string>{-2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {26, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 74}, {24, 70}}</string>
+			<key>offset</key>
+			<string>{-3, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {24, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2016, 74}, {28, 70}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 1}, {28, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 145}, {28, 70}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{3, 1}, {28, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg1_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1993, 145}, {30, 70}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 1}, {30, 70}}</string>
+			<key>sourceSize</key>
+			<string>{32, 72}</string>
+		</dict>
+		<key>herb_leg_wbg2_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{595, 480}, {28, 62}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {28, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{568, 480}, {26, 62}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {26, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{464, 480}, {24, 62}}</string>
+			<key>offset</key>
+			<string>{-1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {24, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{541, 480}, {26, 62}}</string>
+			<key>offset</key>
+			<string>{-1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {26, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{439, 480}, {24, 62}}</string>
+			<key>offset</key>
+			<string>{-2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {24, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1997, 287}, {24, 62}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {24, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{489, 480}, {24, 62}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{3, 0}, {24, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wbg2_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{514, 480}, {26, 62}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {26, 62}}</string>
+			<key>sourceSize</key>
+			<string>{28, 62}</string>
+		</dict>
+		<key>herb_leg_wsm1_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1040, 480}, {74, 60}}</string>
+			<key>offset</key>
+			<string>{2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 0}, {74, 60}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1115, 480}, {76, 60}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {76, 60}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1269, 480}, {78, 60}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {78, 60}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1503, 480}, {78, 58}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {78, 58}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1869, 480}, {78, 56}}</string>
+			<key>offset</key>
+			<string>{0, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {78, 56}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1582, 480}, {78, 58}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {78, 58}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1192, 480}, {76, 60}}</string>
+			<key>offset</key>
+			<string>{1, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {76, 60}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm1_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{965, 480}, {74, 60}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{2, 0}, {74, 60}}</string>
+			<key>sourceSize</key>
+			<string>{78, 60}</string>
+		</dict>
+		<key>herb_leg_wsm2_1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1800, 480}, {68, 56}}</string>
+			<key>offset</key>
+			<string>{-2, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {68, 56}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{186, 553}, {70, 54}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {70, 54}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{412, 553}, {70, 52}}</string>
+			<key>offset</key>
+			<string>{-1, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {70, 52}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_4.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{522, 553}, {70, 50}}</string>
+			<key>offset</key>
+			<string>{0, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {70, 50}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_5.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{704, 553}, {72, 48}}</string>
+			<key>offset</key>
+			<string>{0, 4}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {72, 48}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_6.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{341, 553}, {70, 52}}</string>
+			<key>offset</key>
+			<string>{0, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {70, 52}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_7.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{115, 553}, {70, 54}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {70, 54}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_leg_wsm2_8.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{46, 553}, {68, 54}}</string>
+			<key>offset</key>
+			<string>{-2, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {68, 54}}</string>
+			<key>sourceSize</key>
+			<string>{72, 56}</string>
+		</dict>
+		<key>herb_protection_fail.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1318, 1}, {130, 134}}</string>
+			<key>offset</key>
+			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 2}, {130, 134}}</string>
+			<key>sourceSize</key>
+			<string>{132, 136}</string>
+		</dict>
+		<key>herbert_shooting.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 358}, {54, 22}}</string>
+			<key>offset</key>
+			<string>{19, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{45, 5}, {54, 22}}</string>
+			<key>sourceSize</key>
+			<string>{106, 30}</string>
+		</dict>
+		<key>kalaschnikov.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{593, 553}, {110, 50}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {110, 50}}</string>
+			<key>sourceSize</key>
+			<string>{110, 52}</string>
+		</dict>
+		<key>lasergun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{624, 480}, {132, 62}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{1, 0}, {132, 62}}</string>
+			<key>sourceSize</key>
+			<string>{134, 62}</string>
+		</dict>
+		<key>minigun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{304, 480}, {134, 66}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {134, 66}}</string>
+			<key>sourceSize</key>
+			<string>{134, 66}</string>
+		</dict>
+		<key>mm_pause_herb.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 1}, {200, 156}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {200, 156}}</string>
+			<key>sourceSize</key>
+			<string>{200, 156}</string>
+		</dict>
+		<key>pumpgun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{777, 553}, {118, 40}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {118, 40}}</string>
+			<key>sourceSize</key>
+			<string>{118, 40}</string>
+		</dict>
+		<key>rainbowgun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1385, 382}, {114, 90}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 1}, {114, 90}}</string>
+			<key>sourceSize</key>
+			<string>{114, 92}</string>
+		</dict>
+		<key>rocketlauncher.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{108, 480}, {94, 70}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {94, 70}}</string>
+			<key>sourceSize</key>
+			<string>{94, 70}</string>
+		</dict>
+		<key>snout41.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1893, 118}, {28, 36}}</string>
+			<key>offset</key>
+			<string>{15, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{32, 0}, {28, 36}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout42.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1866, 118}, {26, 36}}</string>
+			<key>offset</key>
+			<string>{14, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{32, 0}, {26, 36}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout43.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1839, 118}, {26, 36}}</string>
+			<key>offset</key>
+			<string>{11, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{29, 0}, {26, 36}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout44.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1709, 119}, {26, 38}}</string>
+			<key>offset</key>
+			<string>{9, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{27, 0}, {26, 38}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout45.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1736, 119}, {28, 38}}</string>
+			<key>offset</key>
+			<string>{8, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{25, 0}, {28, 38}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout46.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1765, 119}, {28, 38}}</string>
+			<key>offset</key>
+			<string>{11, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{28, 0}, {28, 38}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout47.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1794, 119}, {26, 36}}</string>
+			<key>offset</key>
+			<string>{13, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{31, 0}, {26, 36}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>snout48.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1579, 122}, {26, 34}}</string>
+			<key>offset</key>
+			<string>{13, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{31, 0}, {26, 34}}</string>
+			<key>sourceSize</key>
+			<string>{62, 40}</string>
+		</dict>
+		<key>tabasco.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1964, 1}, {82, 72}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {82, 72}}</string>
+			<key>sourceSize</key>
+			<string>{82, 72}</string>
+		</dict>
+		<key>uebergun.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1252, 382}, {132, 92}}</string>
+			<key>offset</key>
+			<string>{0, -0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {132, 92}}</string>
+			<key>sourceSize</key>
+			<string>{132, 92}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{2048, 1024}</string>
+	</dict>
+</dict>
+</plist>

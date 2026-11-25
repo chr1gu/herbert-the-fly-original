@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SRC = ROOT / "archive/Herbert the Fly/Cocos 1.0.1/herbert/herbert/Resources"
+SRC = ROOT / "original/resources"
 OUT = Path(__file__).resolve().parents[1] / "assets"
 
 ATLASES = ["clct_herbert", "clct_bugsgads", "clct_ingame", "clct_mm", "clct_tutorial"]

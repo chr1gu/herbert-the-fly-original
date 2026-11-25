@@ -1,0 +1,139 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>app.etite</title>
+
+    <!-- METAS -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="publisher" content="ETITE">
+    <meta name="copyright" content="ETITE">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="content-language" content="en-us">
+    <meta property="og:image" content="img/facebook_ico1.png" />
+    <meta property="og:image" content="img/facebook_ico2.png" />
+    <meta property="og:image" content="img/facebook_ico3.png" />
+    <link rel="image_src" href="img/facebook_ico1.png" />
+    <link rel="image_src" href="img/facebook_ico2.png" />
+    <link rel="image_src" href="img/facebook_ico3.png" />
+
+    <link rel="icon" type="image/png"  href="favicon.ico"/>
+
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/spritesheets.css">
+    <link rel="stylesheet" href="css/appetite.css">
+    <!-- end CSS-->
+</head>
+<body>
+
+<!-- add class mobile to switch mobile layout -->
+<div id="container">
+
+    <header>
+        <a href="#" class="sprite header_logo" title="app.etite.ch logo">app.etite.ch</a>
+        <ul id="selected-page" style="display: none">
+            <li class="sprite header_o_blubb first"></li>
+            <li class="sprite header_o"></li>
+            <li class="sprite header_o"></li>
+        </ul>
+    </header>
+    <div id="main" role="main">
+
+        <a href="#" id="navi-left" class="sprite nav_left_dark" style="display: none" title="previous">navigate to previous</a>
+        <a href="#" id="navi-right" class="sprite nav_right_bright" style="display: none" title="next">navigate to next</a>
+
+        <ul id="maincarousel">
+                        <li>
+                <div class="milo-l-ita center slide">
+                    <p>Hey, nice to meet you!</p>
+                    <p>We’re a small two-man-studio based in Bern, Switzerland. App.Etite is a sidekick Project from our Web- & Graphicdesign studio called Etite.</p>
+                    <p>We love to design and develop App’s and Games. And App.Etite is something like our digital playground to release and work on personal Projects. </p>
+                    <p>Feel free to contact us or hit us on facebook or twitter. We would love to hear from you!</p>
+                    <p>We hope you enjoy our App’s as much as we do.</p>
+                    <p>Stay hungry, stay foolish.<br/>with App.Etite</p>
+                </div>
+            </li>
+            <li>
+                <div class="milo-l-ita center slide">
+                    <div style="width: 484px; margin: auto">
+                        <span class="app_slot_banner_title">Herbert the misanthropical fly</span>
+                        <span class="app_slot_icon_title">Buy app</span>
+
+                        <div class="sprite apps_slot">
+                            <a href="http://app.etite.ch/herbert/" class="sprite apps_banner_herbert" target="_blank" title=""></a>
+                            <a href="http://itunes.apple.com/us/app/herbert-misanthropical-fly/id450452356?ls=1&mt=8" target="_blank" class="sprite icon apps_icon_herbert" title=""></a>
+                        </div>
+
+                        <span class="sprite apps_slot"></span>
+                        <span class="sprite apps_slot"></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="milo-l-ita center slide">
+                    <div style="width:480px;margin:auto;">
+                        <form action="mailer.php" method="post">
+                            <div>Your Name</div>
+                            <div class="sprite contact_area_namemail">
+                                <div class="inline">
+                                    <input type="text" name="name" id="name"/>
+                                </div>
+                            </div>
+                            <div>E-mail</div>
+                            <div class="sprite contact_area_namemail">
+                                <div class="inline">
+                                    <input type="text" name="email" id="email"/>
+                                </div>
+                            </div>
+                            <div>Message</div>
+                            <div class="sprite contact_area_message">
+                                <div class="inline">
+                                    <textarea name="message" id="message"></textarea>
+                                </div>
+                            </div>
+                            <input type="hidden" name="ref" value="main-nojs"/>
+                            <input type="submit" id="submitform" class="sprite contact_send" value=""/>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+
+    </div>
+    <footer>
+        <a href="http://etite.ch?ref=app.etite.ch" class="sprite footer_etite" title="Powered by etite.ch">Powered by etite.ch</a>
+    </footer>
+</div>
+
+<!-- JS -->
+<script src="js/libs/modernizr-2.0.6.min.js"></script>
+<script src="js/libs/jquery-1.6.2.min.js"></script>
+<!-- scripts concatenated and minified via ant build script-->
+    <script defer src="js/plugins.js"></script>
+    <script defer src="js/script.js"></script>
+<!-- end scripts-->
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-25176108-1']);
+    _gaq.push(['_setDomainName', '.etite.ch']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+<!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+<![endif]-->
+</body>
+</html>

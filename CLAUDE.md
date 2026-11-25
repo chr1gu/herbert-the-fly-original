@@ -4,7 +4,7 @@ This repo re-creates the 2011 iOS game "Herbert – the misanthropical fly" (Eti
 
 ## Principles
 
-- **Faithful to the original.** Gameplay values, positions, timings and animations come from the 2011 Cocos2d source in `archive/Herbert the Fly/Cocos 1.0.1/herbert/` (Oct 2011, the newest of the four copies). Before guessing how something worked, read the original code. Name the original file or method in a comment when the "why" isn't obvious.
+- **Faithful to the original.** Gameplay values, positions, timings and animations come from the 2011 Cocos2d source in `original/source/` (Oct 2011, v1.2). Before guessing how something worked, read the original code. Name the original file or method in a comment when the "why" isn't obvious.
 - **Deviations need a decision.** If the original has a bug or an unfinished part (for example `Bibi2`), explain it and ask the owner before changing behavior. Record the decision in `app/README.md` → Prototype status.
 - **Verify visually.** Most bugs here are visual: misplaced sprites, desynced animations. Check with screenshots, not only state.
 
@@ -14,7 +14,8 @@ This repo re-creates the 2011 iOS game "Herbert – the misanthropical fly" (Eti
 |---|---|
 | `app/` | The game. Phaser 3.80.1, vendored in `app/vendor/`. Plain ES modules, no build step. |
 | `web/` | The site root at https://herbert.ebrt.ch/. Currently a placeholder landing page with Herbert's original first-person story. |
-| `archive/` | The original 2011 project files: Cocos2d source, art sources, the 12-track OST and `wayback-snapshots/` of the old websites. **Gitignored, local only.** Never commit it, and don't describe its contents beyond this in public files. |
+| `original/` | The parts of the 2011 project that are still used: game code, sprite sheets and audio, iPad 3 art, press kit, old websites, soundtrack. See `original/README.md`. |
+| `archive/` | The full original backups, including iOS project files and art sources. **Gitignored, local only.** Never commit it, and don't describe its contents in public files. Copy anything newly needed into `original/`, after checking it for secrets and personal data. |
 
 | File in `app/src/` | Role |
 |---|---|
@@ -26,7 +27,7 @@ This repo re-creates the 2011 iOS game "Herbert – the misanthropical fly" (Eti
 | `debug.js` | The `?debug` panel |
 | `ui.js` | Settings, storage, labels, camera zoom, asset versioning |
 
-`app/tools/convert_assets.py` and `app/tools/build_bitmap_font.py` regenerate `app/assets/` from `archive/`.
+`app/tools/convert_assets.py` regenerates `app/assets/` from `original/resources/`. `app/tools/build_bitmap_font.py` needs the akaDylan `.ttf`, which exists only in the local `archive/`.
 
 ## Converting original values
 
@@ -60,6 +61,6 @@ The original ran at 480×320 points with y up, and cocos anchor points. This gam
 
 ## Backlog
 
-- **Website re-creation in `web/`:** rebuild the original landing page (`archive/web`) and the remix album page at `/rmx` (`archive/herbert_rmx`, with mouse-parallax layers). Add the 12 OST MP3s as downloads at that point, from `archive/Justin Lassen Presents Herbert Original Soundtrack`; the owner wants them added then, not before. The remix album audio isn't in the backups and still has to be found.
+- **Website re-creation in `web/`:** rebuild the original landing page (`original/web/`) and the remix album page at `/rmx` (`original/web-rmx/`, with mouse-parallax layers; specs in `LAYOUT.md`). Offer the soundtrack from `original/soundtrack/` as downloads there. The remix album audio isn't in the backups and still has to be found. `original/art-ipad3/` could later give the game sharper art.
 - **Original features not ported yet:** the 3-part tutorial (`TutorialBriefing`), options, credits, named highscores and the language-choice screen.
 - **Long-term platform:** web vs native/engine is still undecided. Ask before committing to one.
