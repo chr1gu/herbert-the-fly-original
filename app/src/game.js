@@ -1,0 +1,758 @@
+import {
+  W, H, S, PLAYER_X, MAX_HEALTH, SPAWN_INTERVAL, ITEM_INTERVAL, MAX_DIFFICULTY, LSD_SECONDS,
+  SPEED_TABLE, ENEMIES, WEAPONS, ITEMS, INITIAL_ITEMS, UNLOCKS, SKY_BY_HEALTH, TEXT,
+} from './data.js';
+import { Herbert } from './herbert.js';
+import { settings, store, label } from './scenes.js';
+
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const LOOP_SECONDS = 14.715;
+const D = { sky: 0, drug: 1, rainbow: 1.5, bgCloud: 2, groundCloud: 5, midCloud: 8, item: 9, shot: 9, enemy: 10, spray: 11, herb: 12, fx: 20, fgCloud: 25, hud: 100 };
+
+export class GameScene extends Phaser.Scene {
+  constructor() { super('game'); }
+
+  create() {
+    this.t = TEXT[settings.lang];
+    this.health = MAX_HEALTH;
+    this.points = 0;
+    this.shownPoints = 0;
+    this.gameSpeed = 1;
+    this.baseSpeed = 1;
+    this.healthW = null;
+    this.spawnBonus = 0;
+    this.difficulty = 0;
+    this.ammo = Infinity;
+    this.cooldown = 0;
+    this.lsd = false;
+    this.god = false;
+    this.dead = false;
+    this.running = false;
+    this.paused = false;
+    this.unlocked = store.get('unlockedItems', INITIAL_ITEMS);
+    this.itemLevel = UNLOCKS.findIndex(([, items]) => !items.every((i) => this.unlocked.includes(i)));
+    if (this.itemLevel < 0) this.itemLevel = UNLOCKS.length;
+
+    this.enemies = [];
+    this.shots = [];
+    this.items = [];
+    this.scrollers = [];
+
+    this.createSky();
+    this.player = new Herbert(this, -150, H / 2 + 28).setDepth(D.herb);
+    this.createHud();
+    this.createInput();
+
+    for (let i = 0; i < 3; i++) this.addCloud(rand(0, W));
+    this.groundClouds();
+    this.time.addEvent({ delay: 2900, loop: true, callback: () => this.addCloud() });
+    this.time.addEvent({ delay: 600, loop: true, callback: () => this.addParticle() });
+
+    this.countdown();
+  }
+
+  // ---------- setup ----------
+
+  createSky() {
+    this.sky = this.add.graphics().setDepth(D.sky);
+    this.skyColors = { top: SKY_BY_HEALTH[0][1], bottom: SKY_BY_HEALTH[0][2] };
+    this.drawSky();
+    this.drugBg = this.add.image(W / 2, H / 2, 'drugmode').setDepth(D.drug).setVisible(false).setScale(1.3);
+  }
+
+  drawSky() {
+    const { top, bottom } = this.skyColors;
+    this.sky.clear().fillGradientStyle(top, top, bottom, bottom, 1).fillRect(0, 0, W, H);
+  }
+
+  fadeSky() {
+    const [, top, bottom] = SKY_BY_HEALTH.find(([min]) => this.health >= min) ?? SKY_BY_HEALTH.at(-1);
+    const from = { ...this.skyColors };
+    const mix = (a, b, t) => Phaser.Display.Color.Interpolate.ColorWithColor(
+      Phaser.Display.Color.ValueToColor(a), Phaser.Display.Color.ValueToColor(b), 100, t * 100);
+    this.tweens.addCounter({
+      from: 0, to: 1, duration: 1000,
+      onUpdate: (tw) => {
+        const v = tw.getValue();
+        const c1 = mix(from.top, top, v), c2 = mix(from.bottom, bottom, v);
+        this.skyColors = { top: Phaser.Display.Color.GetColor(c1.r, c1.g, c1.b), bottom: Phaser.Display.Color.GetColor(c2.r, c2.g, c2.b) };
+        this.drawSky();
+      },
+    });
+  }
+
+  createHud() {
+    this.healthLife = this.add.image(34, 38, 'health_life').setOrigin(0, 0.5).setDepth(D.hud);
+    this.add.image(30, 38, 'clct_ingame', 'health_bar').setOrigin(0, 0.5).setDepth(D.hud);
+    this.pauseBtn = this.add.image(150, 38, 'clct_ingame', 'btn_pause').setDepth(D.hud).setInteractive({ useHandCursor: true });
+    this.pauseBtn.on('pointerdown', (p, x, y, e) => { e.stopPropagation(); this.togglePause(); });
+    this.ammoIcon = this.add.image(W / 2 - 30, 38, 'clct_ingame', 'ammoicon_gagi').setDepth(D.hud);
+    this.ammoText = label(this, W / 2 + 10, 40, '', 34).setOrigin(0, 0.5).setDepth(D.hud);
+    this.pointsText = label(this, W - 24, 40, '0', 40).setOrigin(1, 0.5).setDepth(D.hud);
+  }
+
+  createInput() {
+    this.keys = this.input.keyboard.addKeys('W,S,UP,DOWN,P,ESC,M');
+    this.input.keyboard.on('keydown-P', () => this.togglePause());
+    this.input.keyboard.on('keydown-ESC', () => this.togglePause());
+    this.input.keyboard.on('keydown-M', () => { if (this.paused) this.quitToMenu(); });
+    this.input.addPointer(2);
+    this.targetY = null;
+
+    // Device tilt: the original mapped accelerometer x into a screen position.
+    // Calibrates against the first reading, like the original's "moved zero point".
+    this.tiltY = null;
+    this.tiltZero = null;
+    this.onTilt = (e) => {
+      if (e.beta === null || e.gamma === null) return;
+      const angle = ((screen.orientation?.angle ?? window.orientation ?? 0) + 360) % 360;
+      const v = angle === 90 ? -e.gamma : angle === 270 ? e.gamma : e.beta;
+      this.tiltZero ??= v;
+      this.tiltY = Phaser.Math.Clamp(H / 2 + (v - this.tiltZero) * 16, 60, H - 60);
+    };
+    window.addEventListener('deviceorientation', this.onTilt);
+    this.events.once('shutdown', () => window.removeEventListener('deviceorientation', this.onTilt));
+  }
+
+  countdown() {
+    this.tweens.add({ targets: this.player, x: PLAYER_X, duration: 1600, ease: 'Sine.out' });
+    if (settings.sfx) this.sound.play('herbert_bzzt1');
+    const frames = ['cntdwn_3', 'cntdwn_2', 'cntdwn_1', 'cntdwn_0'];
+    frames.forEach((f, i) => this.time.delayedCall(i * 600, () => {
+      const img = this.add.image(W / 2, H / 2, 'clct_ingame', f).setDepth(D.hud).setScale(0.4);
+      this.tweens.add({ targets: img, scale: 1.2, alpha: 0, duration: 600, ease: 'Quad.out', onComplete: () => img.destroy() });
+    }));
+    this.time.delayedCall(frames.length * 600, () => this.startRun());
+  }
+
+  startRun() {
+    this.running = true;
+    this.playLoop();
+    this.levelTimer = this.time.addEvent({ delay: LOOP_SECONDS * 1000, loop: true, callback: () => this.levelUp() });
+    this.scheduleSpawn(SPAWN_INTERVAL);
+    this.time.addEvent({ delay: ITEM_INTERVAL * 1000, loop: true, callback: () => Math.random() < 0.5 && this.addItem() });
+  }
+
+  // ---------- difficulty / music ----------
+
+  playLoop() {
+    if (!settings.music || this.lsd) return;
+    this.music?.stop();
+    const track = `bg_loop${Math.min(10, Math.floor(this.difficulty / 2))}`;
+    this.music = this.sound.add(track, { volume: 0.7, loop: this.difficulty >= MAX_DIFFICULTY - 1 });
+    this.music.play();
+  }
+
+  levelUp() {
+    if (this.dead || this.difficulty >= MAX_DIFFICULTY) return;
+    this.difficulty++;
+    const step = SPEED_TABLE[this.difficulty];
+    if (step) {
+      [this.baseSpeed, this.spawnBonus] = step;
+      if (!this.lsd) this.gameSpeed = this.baseSpeed;
+      this.flash(`msg_speed_${settings.lang}`);
+    }
+    this.playLoop();
+  }
+
+  scheduleSpawn(seconds) {
+    this.spawnEvent = this.time.delayedCall(seconds * 1000, () => {
+      if (this.dead) return;
+      this.addEnemy();
+      let next = SPAWN_INTERVAL + rand(0, 0.4) - this.spawnBonus;
+      if (this.difficulty >= 2) next -= 0.3;
+      this.points += 25;
+      this.checkUnlocks();
+      this.scheduleSpawn(next);
+    });
+  }
+
+  checkUnlocks() {
+    const tier = UNLOCKS[this.itemLevel];
+    if (!tier || this.points <= tier[0]) return;
+    this.itemLevel++;
+    const fresh = tier[1].filter((i) => !this.unlocked.includes(i));
+    if (!fresh.length) return;
+    const item = pick(fresh);
+    this.unlocked = [...this.unlocked, item];
+    store.set('unlockedItems', this.unlocked);
+    this.addItem(item, true);
+    this.flash(`msg_wpn_${settings.lang}`);
+  }
+
+  flash(frame) {
+    const img = this.add.image(W / 2, H / 2 - 60, 'clct_ingame', frame).setDepth(D.hud).setScale(0.2);
+    this.tweens.chain({
+      targets: img,
+      tweens: [
+        { scale: 1.1, duration: 250, ease: 'Back.out' },
+        { scale: 1, duration: 900 },
+        { alpha: 0, y: img.y - 40, duration: 300, onComplete: () => img.destroy() },
+      ],
+    });
+  }
+
+  // ---------- environment ----------
+
+  scroll(obj, crossSeconds, opts = {}) {
+    const width = obj.displayWidth || 0;
+    obj.vx = -(W + width) / crossSeconds;
+    obj.endX = opts.endX ?? -width / 2;
+    this.scrollers.push(obj);
+    return obj;
+  }
+
+  addCloud(x) {
+    if (Math.random() < 1 / 3 && !this.rainbow && x === undefined) {
+      this.rainbow = this.add.image(0, H / 2, 'rainbow_start').setDepth(D.rainbow).setAlpha(this.lsd ? 0 : 0.9);
+      this.rainbow.x = W + this.rainbow.width / 2;
+      this.scroll(this.rainbow, 16, { endX: -1500 }).onGone = () => { this.rainbow = null; };
+      return;
+    }
+    const r = Math.floor(Math.random() * 6);
+    let c;
+    if (r === 0 && x === undefined) {
+      c = this.add.image(0, rand(0, H), 'clct_ingame', `cloud_25_${Math.floor(rand(0, 5))}`).setDepth(D.fgCloud).setAlpha(0.85);
+      this.scroll(c, rand(3, 5));
+    } else if (r > 3) {
+      c = this.add.image(0, rand(100 * S, H), 'clct_ingame', `cloud_10_${Math.floor(rand(0, 6))}`).setDepth(D.midCloud);
+      this.tweens.add({ targets: c, scale: 0.95, duration: 400, yoyo: true, repeat: -1, hold: 300 });
+      this.scroll(c, rand(10, 13));
+    } else {
+      c = this.add.image(0, rand(0, H), 'clct_ingame', `cloud_3_${Math.floor(rand(0, 5))}`).setDepth(D.bgCloud);
+      this.scroll(c, rand(18, 24));
+    }
+    c.x = x ?? W + c.width / 2;
+  }
+
+  groundClouds() {
+    let x = 0;
+    while (x < W + 600) {
+      const c = this.add.image(0, 0, 'clct_ingame', `cloud_ground${Math.floor(rand(0, 4))}`).setDepth(D.groundCloud);
+      c.setPosition(x + c.width / 2, H - c.height / 2 + 6);
+      this.scroll(c, 13.5);
+      x += c.width * 0.5;
+    }
+    this.lastGround = this.scrollers.at(-1);
+  }
+
+  addParticle() {
+    const p = this.add.image(W + 10, rand(0, H), 'clct_ingame', `particle_${Math.floor(rand(0, 17))}`)
+      .setDepth(pick([D.bgCloud, D.midCloud])).setAlpha(rand(0.5, 1));
+    this.scroll(p, rand(6, 14));
+  }
+
+  // ---------- enemies ----------
+
+  addEnemy() {
+    const pool = Object.entries(ENEMIES).filter(([, d]) => this.difficulty >= d.minDifficulty);
+    const [name, def] = pick(pool);
+    const variant = def.variants === false ? '' : Math.floor(rand(0, def.variantCount ?? 2));
+    const key = `${def.anim}${variant}`;
+    const sprite = this.add.sprite(0, rand(30, H - 30), 'clct_bugsgads').play(key).setDepth(D.enemy);
+    sprite.x = W + sprite.width / 2;
+    if (def.bird && Math.random() < 2 / 3 && settings.sfx) this.sound.play('birdy_coming', { volume: 0.6 });
+
+    const e = {
+      sprite, def, name, hp: def.hp, vy: 0, dir: Math.random() < 0.5 ? 1 : -1,
+      radius: Math.min(sprite.width, sprite.height) * (def.bird ? 0.36 : 0.34),
+      vx: -(W + sprite.width) / rand(...def.dur),
+    };
+    if (!def.follows) this.wander(e);
+    if (def.bird && name === 'Bibi' && Math.random() < 0.25) this.time.delayedCall(3000, () => this.birdPoop(e));
+    this.enemies.push(e);
+  }
+
+  // Zig-zag flight: alternating direction with a minimum swing (flightYMinRange).
+  wander(e) {
+    if (e.dead) return;
+    e.dir *= -1;
+    const swing = (e.def.yMin + rand(0, e.def.yRange)) * S * e.dir;
+    const y = Phaser.Math.Clamp(e.sprite.y + swing, 40, H - 40);
+    e.wanderTween = this.tweens.add({
+      targets: e.sprite, y, duration: 1600, ease: 'Sine.inOut',
+      onComplete: () => this.time.delayedCall(400, () => this.wander(e)),
+    });
+  }
+
+  birdPoop(e) {
+    if (e.dead || !e.sprite.active) return;
+    e.sprite.play('bibi0_shit');
+    this.time.delayedCall(500, () => {
+      if (e.dead || !e.sprite.active) return;
+      const poop = this.add.image(e.sprite.x - 20, e.sprite.y + 90, 'clct_bugsgads', 'birdshit').setDepth(D.enemy);
+      this.scroll(poop, 5);
+      this.tweens.add({ targets: poop, y: H + 40, angle: 45, duration: 2000, ease: 'Quad.in' });
+    });
+    this.time.delayedCall(800, () => e.sprite.active && !e.dead && e.sprite.play('bibi0'));
+  }
+
+  damage(e, amount) {
+    if (e.dead) return;
+    e.hp -= amount;
+    if (e.hp <= 0) { this.killEnemy(e, true); return; }
+    e.sprite.setTintFill(0xffffff);
+    this.time.delayedCall(60, () => e.sprite.active && e.sprite.clearTint());
+    if (Math.random() < 1 / 12) {
+      const b = this.add.image(e.sprite.x - 20, e.sprite.y - e.sprite.height / 2, 'clct_bugsgads', `bubble${Math.floor(rand(0, 3))}`).setDepth(D.fx);
+      this.tweens.add({ targets: b, x: b.x - 120, alpha: 0, delay: 500, duration: 500, onComplete: () => b.destroy() });
+    }
+  }
+
+  killEnemy(e, scored) {
+    if (e.dead) return;
+    e.dead = true;
+    e.wanderTween?.stop();
+    if (scored) this.points += e.def.points;
+    if (settings.sfx && Math.random() < (e.def.bird ? 0.5 : 2 / 3)) {
+      this.sound.play(e.def.bird ? 'birdy_death' : `bug_hit${Math.floor(rand(0, 3))}`);
+    }
+    const { x, y } = e.sprite;
+    e.sprite.destroy();
+    const corpse = this.add.sprite(x, y, 'clct_bugsgads').play(`kill_${e.def.kill}`).setDepth(D.enemy);
+    this.scroll(corpse, 4);
+    corpse.on('animationcomplete', () => this.tweens.add({ targets: corpse, alpha: 0, y: y + 60, duration: 400, onComplete: () => corpse.destroy() }));
+    for (let i = 0; i < 6; i++) {
+      const p = this.add.image(x, y, 'clct_ingame', `particle_${Math.floor(rand(0, 17))}`).setDepth(D.fx);
+      this.tweens.add({ targets: p, x: x + rand(-90, 90), y: y + rand(-90, 90), alpha: 0, scale: 0.3, duration: rand(300, 600), onComplete: () => p.destroy() });
+    }
+  }
+
+  // ---------- items ----------
+
+  addItem(name, force = false) {
+    if (!force && this.items.length >= 2) return;
+    name ??= pick(this.unlocked);
+    const def = ITEMS[name];
+    const sprite = def.anim
+      ? this.add.sprite(0, 0, 'clct_bugsgads').play(def.frame)
+      : this.add.image(0, 0, 'clct_bugsgads', def.frame);
+    sprite.setDepth(D.item);
+    sprite.setPosition(W + sprite.width / 2, rand(sprite.height / 2, H - sprite.height / 2));
+    const item = { sprite, name, def, phase: rand(0, Math.PI * 2), vx: -(W + sprite.width) / 10, baseY: sprite.y };
+    this.items.push(item);
+  }
+
+  collect(item) {
+    const { name, def } = item;
+    const sfx = (k) => settings.sfx && this.sound.play(k);
+    if (name === 'Capushito') { this.health = Math.min(MAX_HEALTH, this.health + 100); this.updateHealth(); sfx(`shitoccino${Math.floor(rand(0, 3))}`); }
+    if (name === 'Coin') { this.points += 200; sfx('coin_up'); }
+    if (name === 'LsdStar') this.startLsd();
+    if (name === 'ProtectSuit' && !this.player.hasSuit && !this.lsd) { this.player.setSuit(true); sfx('protectionsuit_on'); }
+    if (def.weapon && !this.lsd) {
+      const w = WEAPONS[def.weapon];
+      if (this.player.weaponType === def.weapon) this.ammo += w.ammo;
+      else { this.stopBeam(); this.player.changeWeapon(def.weapon); this.ammo = w.ammo; }
+      this.updateAmmo();
+      sfx('weapon_up');
+    }
+    if (!this.lsd && name !== 'LsdStar') {
+      const pop = this.add.image(item.sprite.x, item.sprite.y, item.sprite.texture.key, item.sprite.frame.name).setDepth(D.fx);
+      this.tweens.add({ targets: pop, x: pop.x - 80, scale: 1.8, alpha: 0, duration: 600, onComplete: () => pop.destroy() });
+    }
+    this.removeItem(item);
+  }
+
+  removeItem(item) {
+    item.sprite.destroy();
+    this.items = this.items.filter((i) => i !== item);
+  }
+
+  // ---------- LSD star ----------
+
+  startLsd() {
+    if (this.lsd) return;
+    this.lsd = true;
+    this.stopBeam();
+    this.player.setSuit(false);
+    this.player.setDrugs(true);
+    this.ammo = Infinity;
+    this.gameSpeed = (this.baseSpeed ?? 1) * 2;
+    this.drugBg.setVisible(true).setAngle(0);
+    this.drugTween = this.tweens.add({ targets: this.drugBg, angle: 120, duration: LSD_SECONDS * 1000 });
+    if (this.rainbow) this.rainbow.setAlpha(0);
+    this.music?.pause();
+    if (settings.music) {
+      this.drugMusic = this.sound.add('bg_drugmode', { loop: true, volume: 0.8 });
+      this.drugMusic.play();
+    }
+    this.lsdLeft = LSD_SECONDS;
+    this.ammoIcon.setVisible(false);
+    this.ammoText.setText(this.lsdLeft);
+    this.lsdTick = this.time.addEvent({ delay: 1000, repeat: LSD_SECONDS - 1, callback: () => this.ammoText.setText(--this.lsdLeft) });
+    this.trail = this.time.addEvent({ delay: 40, loop: true, callback: () => {
+      const r = this.add.image(this.player.x + 200, this.player.y + 10, 'clct_ingame', 'drugmode_rainbow').setDepth(D.herb - 1);
+      this.scroll(r, 3);
+      this.tweens.add({ targets: r, alpha: 0, duration: 1000 });
+    } });
+    this.time.delayedCall(LSD_SECONDS * 1000, () => this.endLsd());
+  }
+
+  endLsd() {
+    if (!this.lsd) return;
+    this.lsd = false;
+    this.trail.remove();
+    this.drugBg.setVisible(false);
+    this.player.setDrugs(false);
+    this.gameSpeed = this.baseSpeed ?? 1;
+    this.drugMusic?.stop();
+    if (this.rainbow) this.rainbow.setAlpha(0.9);
+    if (settings.music) this.music ? this.music.resume() : this.playLoop();
+    this.ammoIcon.setVisible(true);
+    this.updateAmmo();
+  }
+
+  // ---------- player ----------
+
+  hitPlayer(dmg) {
+    if (this.god || this.dead) return;
+    this.cameras.main.shake(150, 0.01);
+    this.health -= dmg;
+    this.updateHealth();
+    if (this.health > 0) return;
+    this.health = 0;
+    this.dead = true;
+    this.running = false;
+    this.stopBeam();
+    this.player.die();
+    this.gameSpeed /= 2;
+    this.music?.stop();
+    this.spawnEvent?.remove();
+    this.levelTimer?.remove();
+    this.time.delayedCall(1500, () => this.scene.start('gameover', { points: this.points }));
+  }
+
+  updateHealth() {
+    const ratio = Phaser.Math.Clamp(this.health / MAX_HEALTH, 0, 1);
+    const { width, height } = this.healthLife.frame;
+    this.tweens.addCounter({
+      from: this.healthW ?? width, to: width * ratio, duration: 200,
+      onUpdate: (tw) => { this.healthW = tw.getValue(); this.healthLife.setCrop(0, 0, this.healthW, height); },
+    });
+    this.fadeSky();
+  }
+
+  updateAmmo() {
+    const w = WEAPONS[this.player.weaponType];
+    this.ammoIcon.setFrame(w.icon);
+    this.ammoText.setText(this.ammo === Infinity ? '' : Math.max(0, this.ammo));
+  }
+
+  togglePause() {
+    if (this.dead || !this.running) return;
+    this.paused = !this.paused;
+    if (this.paused) {
+      this.stopBeam();
+      this.tweens.pauseAll();
+      this.time.paused = true;
+      this.anims.pauseAll();
+      this.sound.pauseAll();
+      this.pauseLayer = this.add.container(0, 0, [
+        this.add.rectangle(W / 2, H / 2, W, H, 0x000000, 0.45),
+        label(this, W / 2, H / 2 - 30, this.t.paused, 72),
+        label(this, W / 2, H / 2 + 50, 'P = continue   M = menu', 26),
+      ]).setDepth(D.hud + 1);
+    } else {
+      this.pauseLayer.destroy();
+      this.tweens.resumeAll();
+      this.time.paused = false;
+      this.anims.resumeAll();
+      this.sound.resumeAll();
+    }
+  }
+
+  quitToMenu() {
+    this.sound.stopAll();
+    this.scene.start('menu');
+  }
+
+  // ---------- shooting ----------
+
+  muzzle() {
+    const p = this.player;
+    const type = p.weaponType;
+    if (type === 0) return { x: p.x + 60, y: p.y + 46 };
+    const w = WEAPONS[type];
+    const len = p.weapon.width * (1 - w.origin[0]);
+    return { x: p.x + w.offset[0] + len, y: p.y + w.offset[1] };
+  }
+
+  fire(pointer) {
+    const type = this.player.weaponType;
+    const w = WEAPONS[type];
+    const m = this.muzzle();
+    const angle = Phaser.Math.Clamp(Math.atan2(pointer.worldY - m.y, Math.max(20, pointer.worldX - m.x)), -1.3, 1.3);
+    const deg = Phaser.Math.RadToDeg(angle);
+    const sfx = (k, cfg) => settings.sfx && this.sound.play(k, cfg);
+
+    if (w.warmup && !this.warm) {
+      this.warmStart ??= this.time.now;
+      this.player.aim(deg);
+      if (this.time.now - this.warmStart < w.warmup * 1000) return;
+      this.warm = true;
+    }
+
+    this.player.shootFx(deg);
+    this.cooldown = w.reload;
+
+    if (w.beam) {
+      this.showBeam(w.beam, m, angle);
+      this.beamHits(m, angle, w.strength);
+      if (!this.beamSound?.isPlaying && settings.sfx) { this.beamSound = this.sound.add(w.sfx, { loop: true, volume: 0.6 }); this.beamSound.play(); }
+    } else if (w.lightning) {
+      this.lightning();
+      sfx(w.sfx);
+    } else if (w.homing) {
+      for (let i = 0; i < w.homing; i++) this.time.delayedCall(i * 200, () => this.spawnFly(i, m));
+      sfx(w.sfx);
+    } else if (w.spray) {
+      const s = this.add.image(m.x, m.y, 'clct_ingame', `bugspray_poison${Math.floor(rand(0, 2))}`).setDepth(D.spray).setScale(0.6);
+      this.tweens.chain({ targets: s, tweens: [{ x: s.x + 100, scale: 1, duration: 500 }, { x: s.x + 160, alpha: 0, scale: 1.3, duration: 600, onComplete: () => this.removeShot(s) }] });
+      this.shots.push({ sprite: s, strength: w.strength, radius: 40, static: true });
+      sfx(w.sfx, { volume: 0.5 });
+    } else {
+      const pellets = w.pellets ?? 1;
+      for (let i = 0; i < pellets; i++) {
+        let a = angle;
+        if (pellets > 1) a += Phaser.Math.DegToRad((i - (pellets - 1) / 2) * 4 + rand(-2, 2));
+        if (w.spread) a += Phaser.Math.DegToRad(rand(-3, 3));
+        this.spawnBullet(type, w, m, a, w.speed * S * (pellets > 1 ? rand(0.9, 1.1) : 1));
+      }
+      sfx(w.sfx, { volume: type === 3 ? 0.35 : 0.7 });
+      if (type === 4) this.time.delayedCall(500, () => settings.sfx && this.sound.play('pumpgun_load', { volume: 0.6 }));
+    }
+
+    if (type === 0) return;
+    this.ammo -= 1;
+    this.updateAmmo();
+    if (this.ammo <= 0) {
+      this.time.delayedCall(700, () => {
+        if (this.ammo > 0 || this.player.weaponType !== type) return;
+        this.stopBeam();
+        this.player.dropWeapon();
+        this.ammo = Infinity;
+        this.updateAmmo();
+      });
+    }
+  }
+
+  spawnBullet(type, w, m, angle, speed) {
+    const s = w.projectile === 'rocket'
+      ? this.add.sprite(m.x, m.y, 'clct_bugsgads').play('rocket')
+      : this.add.image(m.x, m.y, 'clct_ingame', w.projectile);
+    s.setDepth(D.shot).setRotation(angle);
+    const shot = { sprite: s, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, strength: w.strength, radius: 14, rocket: !!w.explodes };
+    if (shot.rocket) {
+      shot.smoke = this.time.addEvent({ delay: 50, loop: true, callback: () => {
+        if (!s.active) return;
+        const puff = this.add.image(s.x - Math.cos(angle) * 40, s.y - Math.sin(angle) * 40, 'clct_ingame', 'cloud_rocket').setDepth(D.shot - 0.1);
+        this.tweens.add({ targets: puff, alpha: 0, scale: 1.8, duration: 500, onComplete: () => puff.destroy() });
+      } });
+    }
+    this.shots.push(shot);
+  }
+
+  spawnFly(i, m) {
+    const s = this.add.sprite(m.x, m.y, 'clct_bugsgads').play(`flygun${i}`).setDepth(D.shot).setScale(1.4);
+    this.shots.push({ sprite: s, strength: 2, radius: 20, homing: true, vx: 300, vy: rand(-80, 80), age: 0 });
+  }
+
+  showBeam(frame, m, angle) {
+    if (!this.beam) this.beam = this.add.image(0, 0, 'clct_ingame', frame).setOrigin(0, 0.5).setDepth(D.shot);
+    this.beam.setFrame(frame).setPosition(m.x, m.y).setRotation(angle).setVisible(true);
+    this.beamAngle = angle;
+  }
+
+  beamHits(m, angle, strength) {
+    const line = new Phaser.Geom.Line(m.x, m.y, m.x + Math.cos(angle) * 1400, m.y + Math.sin(angle) * 1400);
+    for (const e of this.enemies) {
+      if (e.dead) continue;
+      const c = new Phaser.Geom.Circle(e.sprite.x, e.sprite.y, e.radius + 16);
+      if (Phaser.Geom.Intersects.LineToCircle(line, c)) { this.points += 20; this.damage(e, strength); }
+    }
+  }
+
+  stopBeam() {
+    this.beam?.setVisible(false);
+    this.beamSound?.stop();
+    this.beamSound = null;
+    this.warm = false;
+    this.warmStart = null;
+  }
+
+  lightning() {
+    const imgs = ['uber-lightning0', 'uber-lightning2', 'uber-lightning3'];
+    imgs.forEach((k, i) => this.time.delayedCall(300 + i * 100, () => {
+      const img = this.add.image(W / 2, H / 2, k).setDepth(i === 2 ? D.midCloud : D.fgCloud).setAlpha(0);
+      this.tweens.add({ targets: img, alpha: 1, duration: 50, yoyo: true, onComplete: () => img.destroy() });
+      if (i === 0) this.cameras.main.shake(200, 0.015);
+      if (i === 1) this.enemies.forEach((e) => this.killEnemy(e, true));
+    }));
+    this.sky.setAlpha(1);
+    this.tweens.chain({ targets: this.sky, tweens: [{ alpha: 0, duration: 200 }, { alpha: 1, delay: 500, duration: 200 }] });
+  }
+
+  explode(x, y) {
+    if (settings.sfx) this.sound.play('boom');
+    this.points += 150;
+    const i = Math.floor(rand(0, 6));
+    const cloud = this.add.image(x, y, 'clct_ingame', `boom_cloud${i}`).setDepth(D.fx).setScale(0.5);
+    const word = this.add.image(x, y - 40, 'clct_ingame', `boom_label${Math.floor(rand(0, 6))}`).setDepth(D.fx + 1).setScale(0.2);
+    this.tweens.add({ targets: cloud, scale: 2.2, alpha: 0, duration: 600, onComplete: () => cloud.destroy() });
+    this.tweens.add({ targets: word, scale: 0.6, duration: 200, ease: 'Back.out' });
+    this.tweens.add({ targets: word, alpha: 0, delay: 600, duration: 300, onComplete: () => word.destroy() });
+    this.cameras.main.shake(180, 0.012);
+    for (const e of this.enemies) {
+      if (!e.dead && Phaser.Math.Distance.Between(x, y, e.sprite.x, e.sprite.y) < 170) this.damage(e, 8);
+    }
+  }
+
+  removeShot(sprite) {
+    const shot = this.shots.find((s) => s.sprite === sprite);
+    shot?.smoke?.remove();
+    sprite.destroy();
+    this.shots = this.shots.filter((s) => s.sprite !== sprite);
+  }
+
+  // ---------- main loop ----------
+
+  update(time, deltaMs) {
+    if (this.paused) return;
+    const dt = Math.min(deltaMs, 50) / 1000;
+
+    this.moveWorld(dt);
+    if (this.dead) return;
+    this.movePlayer(dt);
+    if (!this.running) return;
+
+    this.handleShooting(dt);
+    this.moveShots(dt);
+    this.moveEnemies(dt);
+    this.moveItems(dt);
+
+    if (this.shownPoints !== this.points) {
+      this.shownPoints += Math.ceil((this.points - this.shownPoints) * 0.2);
+      this.pointsText.setText(this.shownPoints);
+    }
+  }
+
+  moveWorld(dt) {
+    for (const o of this.scrollers) {
+      o.x += o.vx * this.gameSpeed * dt;
+      if (o.x < o.endX || !o.active) o.gone = true;
+    }
+    const gone = this.scrollers.filter((o) => o.gone);
+    if (gone.length) {
+      gone.forEach((o) => { o.onGone?.(); if (o.active) o.destroy(); });
+      this.scrollers = this.scrollers.filter((o) => !o.gone);
+    }
+    if (this.lastGround && this.lastGround.x + this.lastGround.width / 2 < W + 300) {
+      const c = this.add.image(0, 0, 'clct_ingame', `cloud_ground${Math.floor(rand(0, 4))}`).setDepth(D.groundCloud);
+      c.setPosition(this.lastGround.x + this.lastGround.width * 0.5, H - c.height / 2 + 6);
+      this.scroll(c, 13.5);
+      this.lastGround = c;
+    }
+  }
+
+  movePlayer(dt) {
+    const p = this.player;
+    const up = this.keys.W.isDown || this.keys.UP.isDown;
+    const down = this.keys.S.isDown || this.keys.DOWN.isDown;
+    const steer = this.input.manager.pointers.find((pt) => pt.isDown && pt.downX < 140);
+    let target = null;
+    if (steer) target = steer.worldY;
+    else if (up || down) target = p.y + (down ? 1 : -1) * 400;
+    else if (this.tiltY !== null) target = this.tiltY;
+
+    // Carrying a weapon makes Herbert heavier (kFilterFactor 0.07 -> 0.045).
+    const maxSpeed = (p.weaponType ? 650 : 900);
+    let vy = 0;
+    if (target !== null) {
+      const diff = target - p.y;
+      vy = Phaser.Math.Clamp(diff * 8, -maxSpeed, maxSpeed);
+    }
+    p.y = Phaser.Math.Clamp(p.y + vy * dt, 50, H - 70);
+    p.setTilt(vy < -250 ? -1 : vy > 250 ? 1 : 0);
+  }
+
+  handleShooting(dt) {
+    this.cooldown -= dt;
+    const shooter = this.input.manager.pointers.find((pt) => pt.isDown && pt.downX >= 140 && pt.worldY > 80);
+    if (!shooter || this.lsd) {
+      if (this.beam?.visible || this.warm) this.stopBeam();
+      return;
+    }
+    if (this.beam?.visible) this.showBeam(this.beam.frame.name, this.muzzle(), this.beamAngle);
+    if (this.cooldown <= 0) this.fire(shooter);
+  }
+
+  moveShots(dt) {
+    for (const s of [...this.shots]) {
+      const sp = s.sprite;
+      if (!sp.active) { this.shots = this.shots.filter((x) => x !== s); continue; }
+      if (s.homing) this.steerFly(s, dt);
+      if (!s.static) { sp.x += s.vx * dt; sp.y += s.vy * dt; }
+      if (sp.x > W + 100 || sp.x < -100 || sp.y < -100 || sp.y > H + 100) { this.removeShot(sp); continue; }
+      const hit = this.enemies.find((e) => !e.dead && Phaser.Math.Distance.Between(sp.x, sp.y, e.sprite.x, e.sprite.y) < e.radius + s.radius);
+      if (!hit) continue;
+      this.points += 20;
+      if (s.rocket) this.explode(sp.x, sp.y);
+      this.damage(hit, s.strength);
+      this.removeShot(sp);
+    }
+  }
+
+  steerFly(s, dt) {
+    s.age += dt;
+    if (s.age < 0.3) return;
+    const target = this.enemies.filter((e) => !e.dead)
+      .sort((a, b) => Phaser.Math.Distance.Between(s.sprite.x, s.sprite.y, a.sprite.x, a.sprite.y) - Phaser.Math.Distance.Between(s.sprite.x, s.sprite.y, b.sprite.x, b.sprite.y))[0];
+    if (!target) { s.vx = 500; s.vy *= 0.9; return; }
+    const a = Phaser.Math.Angle.Between(s.sprite.x, s.sprite.y, target.sprite.x, target.sprite.y);
+    s.vx = Phaser.Math.Linear(s.vx, Math.cos(a) * 600, 0.1);
+    s.vy = Phaser.Math.Linear(s.vy, Math.sin(a) * 600, 0.1);
+  }
+
+  moveEnemies(dt) {
+    const herb = this.player.hitRect;
+    for (const e of this.enemies) {
+      if (e.dead) continue;
+      const sp = e.sprite;
+      sp.x += e.vx * this.gameSpeed * dt;
+      if (e.def.follows && !this.player.hasSuit) {
+        if (sp.y < this.player.y - 20) sp.y += 60 * dt;
+        else if (sp.y > this.player.y + 20) sp.y -= 60 * dt;
+      }
+      if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); sp.destroy(); continue; }
+
+      const circle = new Phaser.Geom.Circle(sp.x, sp.y, e.radius);
+      if (!Phaser.Geom.Intersects.CircleToRectangle(circle, herb)) continue;
+      this.killEnemy(e, true);
+      if (this.lsd) continue;
+      if (this.player.hasSuit) {
+        this.player.setSuit(false);
+        if (settings.sfx) this.sound.play('protectionsuit_out');
+        this.god = true;
+        this.player.blink(2000);
+        this.time.delayedCall(2000, () => { this.god = false; });
+      } else {
+        this.hitPlayer(e.def.strength);
+      }
+    }
+    this.enemies = this.enemies.filter((e) => !e.dead);
+  }
+
+  moveItems(dt) {
+    const herb = this.player.hitRect;
+    for (const item of [...this.items]) {
+      const sp = item.sprite;
+      sp.x += item.vx * this.gameSpeed * dt;
+      item.phase += dt * 5;
+      sp.y = item.baseY + Math.sin(item.phase) * 14;
+      if (sp.x < -sp.width / 2) { this.removeItem(item); continue; }
+      if (Phaser.Geom.Intersects.RectangleToRectangle(herb, sp.getBounds())) this.collect(item);
+    }
+  }
+}

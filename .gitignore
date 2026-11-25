@@ -1,0 +1,5 @@
+# Original backups stay local: large, and they contain an Apple certificate and provisioning profiles
+/archive/
+
+.DS_Store
+node_modules/

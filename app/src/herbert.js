@@ -1,0 +1,140 @@
+import { WEAPONS } from './data.js';
+
+// Herbert is a rig of separately animated parts (body, snout, two legs, gun),
+// exactly like the original batch node. Offsets are from Herbert.mm, y-down, 2x.
+const LEGS = {
+  0: { back: 'herb_leg_norm_', front: 'herb_leg_norm2_', b: [-40, 60], f: [-16, 60] },
+  1: { back: 'herb_leg_wsm1_', front: 'herb_leg_wsm2_', b: [-32, 58], f: [-8, 58] },
+  2: { back: 'herb_leg_wbg1_', front: 'herb_leg_wbg2_', b: [-28, 66], f: [-4, 66] },
+};
+
+export class Herbert extends Phaser.GameObjects.Container {
+  constructor(scene, x, y) {
+    super(scene, x, y);
+    this.rig = scene.add.container(0, 0);
+    this.add(this.rig);
+
+    this.legFront = scene.add.sprite(0, 0, 'clct_herbert');
+    this.weapon = scene.add.sprite(0, 0, 'clct_herbert').setVisible(false);
+    this.bodySprite = scene.add.sprite(0, -6, 'clct_herbert').play('herbert');
+    this.snout = scene.add.sprite(16, 36, 'clct_herbert').play('herbert_trunk');
+    this.snoutShoot = scene.add.sprite(32, 26, 'clct_herbert', 'herbert_shooting').setVisible(false);
+    this.legBack = scene.add.sprite(0, 0, 'clct_herbert');
+    this.rig.add([this.legFront, this.weapon, this.bodySprite, this.snout, this.snoutShoot, this.legBack]);
+
+    this.weaponType = 0;
+    this.tilt = 0;
+    this.hasSuit = false;
+    this.onDrugs = false;
+    this.setLegs(0);
+    scene.add.existing(this);
+  }
+
+  get bodyAnim() {
+    if (this.onDrugs) return 'herbert_drugz';
+    if (this.hasSuit) return 'herbert_prot';
+    if (this.tilt < 0) return 'herbert_up';
+    if (this.tilt > 0) return 'herbert_down';
+    return 'herbert';
+  }
+
+  refreshBody() {
+    const key = this.bodyAnim;
+    if (this.bodySprite.anims.currentAnim?.key !== key) this.bodySprite.play(key);
+  }
+
+  setLegs(type) {
+    const l = LEGS[type];
+    this.legGrip = type;
+    this.legBack.play(l.back.replace(/_$/, '') + '_anim', true);
+    this.legFront.play(l.front.replace(/_$/, '') + '_anim', true);
+    this.placeLegs();
+  }
+
+  placeLegs() {
+    const l = LEGS[this.legGrip];
+    let b = l.b, f = l.f;
+    if (this.legGrip === 0 && this.tilt < 0) { b = [-40, 56]; f = [-16, 64]; }
+    if (this.legGrip === 0 && this.tilt > 0) { b = [-40, 64]; f = [-16, 56]; }
+    this.legBack.setPosition(...b);
+    this.legFront.setPosition(...f);
+  }
+
+  setTilt(dir) {
+    if (dir === this.tilt) return;
+    this.tilt = dir;
+    this.refreshBody();
+    this.placeLegs();
+  }
+
+  changeWeapon(type) {
+    if (this.onDrugs) return;
+    if (this.weaponType !== 0) this.dropWeapon(false);
+    this.weaponType = type;
+    const w = WEAPONS[type];
+    this.setLegs(w.legs);
+    if (type === 0) return;
+    this.weapon.setFrame(w.frame).setOrigin(...w.origin).setPosition(...w.offset).setAngle(0).setVisible(true);
+  }
+
+  dropWeapon(animate = true) {
+    if (this.weaponType === 0) return;
+    if (animate) {
+      const m = this.getWorldTransformMatrix();
+      const ghost = this.scene.add.image(m.tx + this.weapon.x, m.ty + this.weapon.y, 'clct_herbert', this.weapon.frame.name)
+        .setOrigin(this.weapon.originX, this.weapon.originY).setAngle(this.weapon.angle).setDepth(this.depth);
+      this.scene.tweens.add({ targets: ghost, y: ghost.y + 600, angle: ghost.angle + 90, duration: 1000, onComplete: () => ghost.destroy() });
+    }
+    this.weapon.setVisible(false);
+    this.weaponType = 0;
+    this.setLegs(0);
+  }
+
+  aim(angleDeg) {
+    // Beam/spray guns don't rotate in the original, only the projectile guns do.
+    if ([1, 4, 5].includes(this.weaponType)) this.weapon.setAngle(angleDeg);
+  }
+
+  shootFx(angleDeg) {
+    if (this.weaponType === 0) {
+      this.snout.setVisible(false);
+      this.snoutShoot.setVisible(true).setAngle(angleDeg * 0.5);
+      this.scene.time.delayedCall(120, () => { this.snout.setVisible(!this.onDrugs); this.snoutShoot.setVisible(false); });
+      return;
+    }
+    this.aim(angleDeg);
+    const [ox, oy] = WEAPONS[this.weaponType].offset;
+    this.scene.tweens.add({ targets: this.weapon, x: ox - 10, duration: 60, yoyo: true, onComplete: () => this.weapon.setPosition(ox, oy) });
+  }
+
+  setSuit(on) {
+    this.hasSuit = on;
+    this.refreshBody();
+  }
+
+  setDrugs(on) {
+    this.onDrugs = on;
+    [this.legBack, this.legFront, this.snout].forEach((p) => p.setVisible(!on));
+    if (on) this.dropWeapon(false);
+    this.refreshBody();
+    this.scene.tweens.add({ targets: this.rig, x: on ? 250 : 0, duration: 500 });
+  }
+
+  blink(ms = 2000) {
+    this.scene.tweens.add({ targets: this.rig, alpha: 0.2, duration: 100, yoyo: true, repeat: Math.floor(ms / 200) - 1, onComplete: () => this.rig.setAlpha(1) });
+  }
+
+  die() {
+    this.dropWeapon();
+    [this.legBack, this.legFront, this.snout, this.snoutShoot].forEach((p) => p.setVisible(false));
+    this.bodySprite.play('herbert_gover');
+    this.scene.tweens.add({ targets: this.rig, angle: 60, duration: 1000 });
+    this.scene.tweens.add({ targets: this.rig, x: 800, y: 800, duration: 4000 });
+  }
+
+  // Hit box roughly matching the 30x60pt rect used for item pickups.
+  get hitRect() {
+    const ox = this.onDrugs ? 250 : 0;
+    return new Phaser.Geom.Rectangle(this.x + ox - 50, this.y - 50, 100, 90);
+  }
+}

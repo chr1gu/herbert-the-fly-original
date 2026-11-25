@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herbert – the misanthropical fly</title>
+  <meta name="description" content="Herbert, the fat mayfly having the worst day of his one-day life. A 2011 iPhone game from Bern, re-created for the browser.">
+  <link rel="icon" href="favicon.ico">
+  <style>
+    :root { --sky-top: #f6fdff; --sky-bottom: #ade0f5; --ink: #222; --accent: #f5d94a; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 16px; text-align: center; color: var(--ink);
+      font: 18px/1.5 ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+      background: linear-gradient(var(--sky-top), var(--sky-bottom)) fixed;
+    }
+    .logo { width: min(560px, 100%); height: auto; }
+    .cast { display: flex; gap: 24px; align-items: flex-end; justify-content: center; margin: 24px 0; }
+    .cast img { height: clamp(120px, 24vw, 200px); width: auto; }
+    .cast img:first-child { animation: bob 1.4s ease-in-out infinite; }
+    @keyframes bob { 50% { transform: translateY(-10px); } }
+    p { max-width: 34em; margin: 0 auto 24px; }
+    .play {
+      display: inline-block; padding: 14px 40px; border: 4px solid var(--ink); border-radius: 999px;
+      background: var(--accent); color: var(--ink); font-size: 24px; font-weight: 800; text-decoration: none;
+      box-shadow: 0 6px 0 var(--ink); transition: transform .1s, box-shadow .1s;
+    }
+    .play:hover { transform: translateY(2px); box-shadow: 0 4px 0 var(--ink); }
+    footer { margin-top: 40px; font-size: 14px; opacity: .7; }
+    @media (prefers-reduced-motion: reduce) { .cast img:first-child { animation: none; } }
+  </style>
+</head>
+<body>
+  <img class="logo" src="img/logo.png" alt="Herbert – the misanthropical fly">
+  <div class="cast">
+    <img src="img/herbert.png" alt="Herbert, a fat red fly">
+    <img src="img/birdy.png" alt="Bibi, a round yellow bird">
+  </div>
+  <p>Herbert is a fat mayfly having the worst day of his one-day life. His wife just left him for one of those yellow balloonheads. Fly, shoot and grab the mighty rainbow gun to help him cause as much chaos as possible.</p>
+  <a class="play" href="game/">Play</a>
+  <footer>Originally an iPhone game made in Bern in 2011 · Soundtrack by Justin Lassen</footer>
+</body>
+</html>
