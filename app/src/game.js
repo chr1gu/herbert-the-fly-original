@@ -291,11 +291,26 @@ export class GameScene extends Phaser.Scene {
     e.sprite.play('bibi0_shit');
     this.time.delayedCall(500, () => {
       if (e.dead || !e.sprite.active) return;
-      const poop = this.add.image(e.sprite.x - 20, e.sprite.y + 90, 'clct_bugsgads', 'birdshit').setDepth(D.enemy);
-      this.scroll(poop, 5);
-      this.tweens.add({ targets: poop, y: H + 40, angle: 45, duration: 2000, ease: 'Quad.in' });
+      e.poop = { img: this.add.image(0, 0, 'clct_bugsgads', 'birdshit').setDepth(D.enemy - 0.1), t: 0 };
+      this.placePoop(e);
     });
     this.time.delayedCall(800, () => e.sprite.active && !e.dead && e.sprite.play('bibi0'));
+  }
+
+  // The poop is a child of the bird (Monster.mm startShit): it starts at (83.5, 24.5)pt
+  // from the bird's bottom-left, and its anchor sits (-583, -356)pt away from it.
+  // Rotating it 45° over 2 s around that distant pivot swings it down in an arc
+  // while it keeps flying along with the bird.
+  placePoop(e, dt = 0) {
+    e.poop.t += dt;
+    const { img, t } = e.poop;
+    const { x, y, width, height } = e.sprite;
+    const start = { x: x - width / 2 + 83.5 * S, y: y + height / 2 - 24.5 * S };
+    const pivot = { x: start.x - 583 * S, y: start.y + 356 * S };
+    const angle = Phaser.Math.DegToRad(45 * Math.min(1, t / 2));
+    const vx = start.x - pivot.x, vy = start.y - pivot.y;
+    img.setPosition(pivot.x + vx * Math.cos(angle) - vy * Math.sin(angle), pivot.y + vx * Math.sin(angle) + vy * Math.cos(angle));
+    img.setRotation(angle);
   }
 
   damage(e, amount) {
@@ -330,6 +345,7 @@ export class GameScene extends Phaser.Scene {
     e.sprite.destroy();
     e.bubble?.destroy();
     e.bubble = null;
+    e.poop?.img.destroy();
     if (e.def.bird) this.birdBreakup(x, y);
     else this.bugBurst(e.def.kill, x, y);
   }
@@ -865,7 +881,8 @@ export class GameScene extends Phaser.Scene {
         else if (sp.y > this.player.y + 20) sp.y -= 60 * dt;
       }
       if (e.bubble) this.placeBubble(e);
-      if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); e.bubble?.destroy(); sp.destroy(); continue; }
+      if (e.poop) this.placePoop(e, dt);
+      if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); e.bubble?.destroy(); e.poop?.img.destroy(); sp.destroy(); continue; }
 
       const circle = new Phaser.Geom.Circle(sp.x, sp.y, e.radius);
       if (!Phaser.Geom.Intersects.CircleToRectangle(circle, herb)) continue;
