@@ -2,6 +2,8 @@
 
 This repo re-creates the 2011 iOS game by Etite, a two-person studio from Bern: Dani Rolli (design) and Christoph Ebert (code). It also aims to rebuild the game's websites.
 
+**Play it:** https://herbert.ebrt.ch/game/ · Website: https://herbert.ebrt.ch/
+
 | Folder | Contents |
 |---|---|
 | `app/` | Playable web re-creation of the game, using the original art and audio. See [app/README.md](app/README.md). |
