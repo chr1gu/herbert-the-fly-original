@@ -1,5 +1,5 @@
 import { W, H, LANGS, TEXT } from './data.js';
-import { settings, store, label, setupCamera, ZOOM } from './ui.js';
+import { settings, store, label, setupCamera, ZOOM, asset } from './ui.js';
 import { Herbert } from './herbert.js';
 
 const ATLASES = ['clct_herbert', 'clct_bugsgads', 'clct_ingame', 'clct_mm', 'clct_tutorial'];
@@ -21,11 +21,11 @@ export class BootScene extends Phaser.Scene {
     this.add.rectangle(W / 2, H / 2, 404, 20).setStrokeStyle(2, 0x222222);
     this.load.on('progress', (p) => { bar.width = 400 * p; });
 
-    ATLASES.forEach((a) => this.load.atlas(a, `assets/atlas/${a}.png`, `assets/atlas/${a}.json`));
-    IMAGES.forEach((i) => this.load.image(i, `assets/img/${i}.png`));
-    this.load.bitmapFont('akadylan', 'assets/font/akadylan.png', 'assets/font/akadylan.xml');
-    MUSIC.forEach((m) => this.load.audio(m, `assets/audio/music/${m}.mp3`));
-    Object.entries(SFX).forEach(([dir, list]) => list.forEach((s) => this.load.audio(s, `assets/audio/sfx/${dir}/${s}.mp3`)));
+    ATLASES.forEach((a) => this.load.atlas(a, asset(`assets/atlas/${a}.png`), asset(`assets/atlas/${a}.json`)));
+    IMAGES.forEach((i) => this.load.image(i, asset(`assets/img/${i}.png`)));
+    this.load.bitmapFont('akadylan', asset('assets/font/akadylan.png'), asset('assets/font/akadylan.xml'));
+    MUSIC.forEach((m) => this.load.audio(m, asset(`assets/audio/music/${m}.mp3`)));
+    Object.entries(SFX).forEach(([dir, list]) => list.forEach((s) => this.load.audio(s, asset(`assets/audio/sfx/${dir}/${s}.mp3`))));
   }
 
   create() {

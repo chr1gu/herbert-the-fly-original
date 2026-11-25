@@ -27,6 +27,16 @@ jobs:
           rsync -a --exclude README.md web/ _site/
           rsync -a app/index.html app/src app/assets app/vendor _site/game/
 
+      # GitHub Pages caches every file for 10 minutes and each ES module separately, so a
+      # phone could mix old and new modules. Stamping the commit onto every script URL
+      # makes each deploy load as one consistent set (assets pick it up via ui.js).
+      - name: Stamp version for cache busting
+        run: |
+          V="${GITHUB_SHA::8}"
+          perl -pi -e "s#((?:src|vendor)/[a-z.]+\.js)\"#\$1?v=$V\"#g" _site/game/index.html
+          perl -pi -e "s#from '(\./[a-z]+\.js)'#from '\$1?v=$V'#g" _site/game/src/*.js
+          grep -c "?v=$V" _site/game/index.html _site/game/src/*.js
+
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

@@ -1,5 +1,10 @@
 import { W, H } from './data.js';
 
+// Deploys stamp ?v=<commit> onto every module URL (see .github/workflows/pages.yml).
+// Assets reuse it so a new deploy never mixes with cached files from the last one.
+const VERSION = new URL(import.meta.url).searchParams.get('v');
+export const asset = (path) => (VERSION ? `${path}?v=${VERSION}` : path);
+
 // Game logic runs in 960x640 world units. On high-DPI screens the canvas renders at 2x
 // and every camera zooms in, so text and sprites stay sharp instead of being upscaled.
 export const ZOOM = Math.min(2, Math.max(1, Math.round(window.devicePixelRatio || 1)));

@@ -876,7 +876,13 @@ export class GameScene extends Phaser.Scene {
 
   handleShooting(dt) {
     this.cooldown -= dt;
-    const shooter = this.input.manager.pointers.find((pt) => pt.isDown && worldPoint(this, pt, true).x >= 140 && worldPoint(this, pt).y > 80);
+    // Everything right of the steering edge fires, except a press that started on the pause button.
+    const pauseArea = this.pauseBtn.getBounds();
+    const shooter = this.input.manager.pointers.find((pt) => {
+      if (!pt.isDown) return false;
+      const down = worldPoint(this, pt, true);
+      return down.x >= 140 && !pauseArea.contains(down.x, down.y);
+    });
     const type = this.player.weaponType;
     if (!shooter || this.lsd) {
       if (this.beam || this.warm) this.stopBeam();
