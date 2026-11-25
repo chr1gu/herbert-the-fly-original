@@ -22,3 +22,7 @@ On every push to `main`, GitHub Pages publishes `web/` at the site root and `app
 - Original game: Etite, Bern (2011)
 - Soundtrack: Justin Lassen
 - Lettering: akaDylan by James Milligan (akaType)
+
+## License
+
+The code is free for non-commercial use under the [PolyForm Noncommercial License 1.0.0](LICENSES/PolyForm-Noncommercial-1.0.0.md). The illustrations, sound and all other content are all rights reserved. Details and third-party credits are in [LICENSE.md](LICENSE.md).
