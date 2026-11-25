@@ -7,6 +7,8 @@ export const H = 640;
 export const S = 2;
 
 export const PLAYER_X = 40 * S;
+// Herbert's Box2D hull (points, y up, relative to his center).
+export const HERB_HULL = [[24.7, 18], [-1.2, 25], [-20, 11.7], [-16.7, -13.2], [1.2, -14.7], [21.5, -2.7]];
 export const MAX_HEALTH = 300;
 export const SPAWN_INTERVAL = 1.2;
 export const ITEM_INTERVAL = 5.0;
@@ -21,13 +23,16 @@ export const SPEED_TABLE = {
 
 // minDifficulty = from which difficulty level the enemy joins the spawn pool
 // bubble = speech bubble position in points from the sprite's bottom-left corner (y up)
+// hull = Box2D polygon (points, y up, from the center); enemies without one use a frame-sized box
 export const ENEMIES = {
   FlyFred:    { anim: 'flyfred',    kill: 'fred',       hp: 4,  strength: 50,  points: 127, dur: [4.5, 6],  yRange: 30, yMin: 0,  minDifficulty: 0, bubble: [-25, 38] },
   FlySina:    { anim: 'flysina',    kill: 'sina',       hp: 2,  strength: 50,  points: 118, dur: [4, 5],    yRange: 10, yMin: 30, minDifficulty: 0, bubble: [-15, 35] },
   BugOona:    { anim: 'bugoona',    kill: 'oona',       hp: 4,  strength: 100, points: 207, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 0, bubble: [-25, 30] },
   BugLina:    { anim: 'buglina',    kill: 'lina',       hp: 6,  strength: 100, points: 575, dur: [4.5, 6],  yRange: 30, yMin: 30, minDifficulty: 0, bubble: [-25, 30] },
-  BugGilbert: { anim: 'buggilbert', kill: 'gilbert',    hp: 2,  strength: 50,  points: 55,  dur: [5, 6.5],  yRange: 0,  yMin: 0,  minDifficulty: 2, follows: true, bubble: [-20, 40] },
-  Bibi:       { anim: 'bibi0',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100] },
+  BugGilbert: { anim: 'buggilbert', kill: 'gilbert',    hp: 2,  strength: 50,  points: 55,  dur: [5, 6.5],  yRange: 0,  yMin: 0,  minDifficulty: 2, follows: true, bubble: [-20, 40],
+                hull: [[-8.9, 6.5], [-18.5, -7.3], [-14.6, -18.6], [1.1, -24.8], [13.3, -16.2], [12.8, -4.2]] },
+  Bibi:       { anim: 'bibi0',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100],
+                hull: [[-9, 46.2], [-38.2, 29], [-50.7, -4.5], [-33.2, -42], [12.7, -50], [49.2, -20.5], [42, 25.7], [12.2, 46.2]] },
   Bibi2:      { anim: 'bibi1',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100] },
   Fuckbutton: { anim: 'fuckbutton', kill: 'fuckbutton', hp: 1,  strength: 50,  points: 251, dur: [5, 6.5],  yRange: 30, yMin: 0,  minDifficulty: 4, variantCount: 3, bubble: [0, 0] },
   LadyBug:    { anim: 'ladybug',    kill: 'ladybug',    hp: 5,  strength: 100, points: 332, dur: [4.5, 5.5], yRange: 150, yMin: 0, minDifficulty: 4, bubble: [-30, 30] },

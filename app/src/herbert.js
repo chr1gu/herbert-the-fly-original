@@ -101,21 +101,46 @@ export class Herbert extends Phaser.GameObjects.Container {
     this.setLegs(0);
   }
 
+  // aimGun: while the finger moves, only MG, pumpgun and rocketlauncher follow it.
   aim(angleDeg) {
-    // Beam/spray guns don't rotate in the original, only the projectile guns do.
     if ([1, 4, 5].includes(this.weaponType)) this.weapon.setAngle(angleDeg);
   }
 
+  // Per-gun shoot animations from Herbert.mm shoot:. Moves are original points (2x).
   shootFx(angleDeg) {
-    if (this.weaponType === 0) {
+    const type = this.weaponType;
+    if (type === 0 || type === 7) {
       this.snout.setVisible(false);
-      this.snoutShoot.setVisible(true).setAngle(angleDeg * 0.5);
-      this.scene.time.delayedCall(120, () => { this.snout.setVisible(!this.onDrugs); this.snoutShoot.setVisible(false); });
+      this.snoutShoot.setVisible(true).setAngle(angleDeg);
+      this.snoutTimer?.remove();
+      this.snoutTimer = this.scene.time.delayedCall(200, () => {
+        this.snoutShoot.setVisible(false);
+        this.snout.setVisible(!this.onDrugs && this.legBack.visible);
+      });
       return;
     }
-    this.aim(angleDeg);
-    const [ox, oy] = WEAPONS[this.weaponType].offset;
-    this.scene.tweens.add({ targets: this.weapon, x: ox - 10, duration: 60, yoyo: true, onComplete: () => this.weapon.setPosition(ox, oy) });
+    const w = this.weapon;
+    const [ox, oy] = WEAPONS[type].offset;
+    const tweens = this.scene.tweens;
+    const moves = (steps, ms) => tweens.chain({ targets: w, tweens: steps.map(([dx, dy]) => ({ x: ox + dx * 2, y: oy - dy * 2, duration: ms })) });
+    const rotateBack = (delay) => tweens.add({ targets: w, angle: 0, delay, duration: 200 });
+
+    if ([1, 2, 4, 5].includes(type)) tweens.killTweensOf(w);
+    if ([1, 2, 3, 4, 5, 6].includes(type)) w.setAngle(angleDeg);
+    w.setPosition(ox, oy);
+    if (type === 1) { moves([[-2, 0], [2, 0]], 100); rotateBack(900); }
+    if (type === 3) moves([[-0.5, -0.2], [0.5, 0.2]], 50);
+    if (type === 4) { moves([[-5, 0], [0, 0]], 100); rotateBack(1200); }
+    if (type === 5) { moves([[-5, 0], [0, 0]], 100); rotateBack(1900); }
+    if (type === 6 || type === 10) moves([[-5, 0], [0, 0]], 100);
+    if (type === 8) moves([[-5, -1], [1, 2], [-3, 5], [0, -2], [0, 3], [3, -2], [0, 0]], 100);
+    if (type === 9) moves([[0, -1], [0, 1], [0, -1], [0, 1], [0, 1], [0, -1], [0, 1], [0, -2], [0, 1], [0, -2], [0, 1], [0, -2], [0, 1], [0, -2], [0, 1], [0, -2], [0, 3], [0, -1]], 50);
+  }
+
+  // Letting go: beam guns and the minigun swing back level.
+  stopShooting() {
+    if ([2, 3, 6].includes(this.weaponType)) this.scene.tweens.add({ targets: this.weapon, angle: 0, duration: 200 });
+    if (this.weaponType === 9) this.scene.tweens.killTweensOf(this.weapon);
   }
 
   setSuit(on, broken = false) {
@@ -150,9 +175,4 @@ export class Herbert extends Phaser.GameObjects.Container {
     this.scene.tweens.add({ targets: this.rig, x: 800, y: 800, duration: 4000 });
   }
 
-  // Hit box roughly matching the 30x60pt rect used for item pickups.
-  get hitRect() {
-    const ox = this.onDrugs ? 250 : 0;
-    return new Phaser.Geom.Rectangle(this.x + ox - 50, this.y - 50, 100, 90);
-  }
 }

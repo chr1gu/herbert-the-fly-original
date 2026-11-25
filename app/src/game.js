@@ -1,10 +1,11 @@
 import {
   W, H, S, PLAYER_X, MAX_HEALTH, SPAWN_INTERVAL, ITEM_INTERVAL, MAX_DIFFICULTY, LSD_SECONDS,
-  SPEED_TABLE, ENEMIES, WEAPONS, ITEMS, INITIAL_ITEMS, UNLOCKS, SKY_BY_HEALTH, TEXT,
+  SPEED_TABLE, ENEMIES, WEAPONS, ITEMS, INITIAL_ITEMS, UNLOCKS, SKY_BY_HEALTH, TEXT, HERB_HULL,
 } from './data.js';
 import { Herbert } from './herbert.js';
 import { settings, store, label, setupCamera, worldPoint } from './ui.js';
 import { debugState } from './debug.js';
+import { box, hull, overlaps } from './collide.js';
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -42,6 +43,12 @@ export class GameScene extends Phaser.Scene {
     this.shots = [];
     this.items = [];
     this.scrollers = [];
+    // Phaser reuses the scene object on restart, so drop references to last run's objects.
+    Object.assign(this, {
+      beams: {}, beam: null, beamSound: null, hitboxGfx: null, music: null, drugMusic: null,
+      rainbow: null, trail: null, pauseLayer: null, warm: false, warmStart: null, shooting: false, lightningActive: false,
+    });
+    this.cameras.main.setBackgroundColor(0x000000);
 
     this.createSky();
     this.player = new Herbert(this, -150, H / 2 + 28).setDepth(D.herb);
@@ -266,7 +273,6 @@ export class GameScene extends Phaser.Scene {
 
     const e = {
       sprite, def, name, hp: def.hp, vy: 0, dir: Math.random() < 0.5 ? 1 : -1,
-      radius: Math.min(sprite.width, sprite.height) * (def.bird ? 0.36 : 0.34),
       vx: -(W + sprite.width) / rand(...def.dur),
     };
     if (!def.follows) this.wander(e);
@@ -449,6 +455,7 @@ export class GameScene extends Phaser.Scene {
     if (name === 'Coin') { this.points += 200; sfx('coin_up'); }
     if (name === 'LsdStar') this.startLsd();
     if (name === 'ProtectSuit' && !this.player.hasSuit && !this.lsd) { this.player.setSuit(true); sfx('protectionsuit_on'); }
+    if (def.weapon !== 9 && this.sky.alpha < 1 && !this.lightningActive) this.dimSky(false);
     if (def.weapon && !this.lsd) {
       const w = WEAPONS[def.weapon];
       if (this.player.weaponType === def.weapon) this.ammo += w.ammo;
@@ -637,6 +644,7 @@ export class GameScene extends Phaser.Scene {
 
   dropWeapon() {
     if (this.player.weaponType === 0) return;
+    if (this.player.weaponType === 9 && !this.lightningActive) this.dimSky(false);
     this.stopBeam();
     this.player.dropWeapon();
     this.ammo = Infinity;
@@ -648,7 +656,7 @@ export class GameScene extends Phaser.Scene {
       ? this.add.sprite(at.x, at.y, 'clct_bugsgads').play('rocket')
       : this.add.image(at.x, at.y, 'clct_ingame', w.projectile);
     s.setOrigin(w.anchor[0], 1 - w.anchor[1]).setDepth(D.shot).setRotation(angle);
-    const shot = { sprite: s, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, strength: w.strength, radius: 14, rocket: !!w.explodes };
+    const shot = { sprite: s, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, strength: w.strength, rocket: !!w.explodes };
     if (shot.rocket) {
       shot.smoke = this.time.addEvent({ delay: 50, loop: true, callback: () => {
         if (!s.active) return;
@@ -669,17 +677,16 @@ export class GameScene extends Phaser.Scene {
     this.tweens.add({ targets: s, alpha: 0, delay: 600, duration: 500 });
     this.tweens.add({ targets: rise, x: rand(-30, 10), y: -70, duration: 1100 });
     this.tweens.chain({ targets: drift, tweens: [{ dx: 100, duration: 500 }, { dx: 60, duration: 600 }], onComplete: () => this.removeShot(s) });
-    this.shots.push({ sprite: s, strength: 1, radius: 30, drift, rise, baseX: s.x, baseY: s.y });
+    this.shots.push({ sprite: s, strength: 1, size: 60, drift, rise, baseX: s.x, baseY: s.y });
   }
 
   spawnFly(i, at) {
     const s = this.add.sprite(at.x, at.y, 'clct_bugsgads').play(`flygun${i}`).setDepth(D.shot).setScale(1.4);
-    this.shots.push({ sprite: s, strength: 2, radius: 20, homing: true, vx: 300, vy: rand(-80, 80), age: 0 });
+    this.shots.push({ sprite: s, strength: 2, homing: true, vx: 300, vy: rand(-80, 80), age: 0 });
   }
 
   // One sprite per beam gun, pivoting around the original anchor next to the gun.
   updateBeam(beam) {
-    this.beams ??= {};
     let b = this.beams[beam.frame];
     if (!b) {
       b = this.beams[beam.frame] = this.add.image(0, 0, 'clct_ingame', beam.frame).setDepth(D.shot);
@@ -691,14 +698,43 @@ export class GameScene extends Phaser.Scene {
   }
 
   beamHits(strength) {
-    const b = this.beam;
-    const start = { x: b.x - b.displayOriginX * Math.cos(b.rotation), y: b.y - b.displayOriginX * Math.sin(b.rotation) };
-    const line = new Phaser.Geom.Line(start.x, start.y, start.x + Math.cos(b.rotation) * b.width, start.y + Math.sin(b.rotation) * b.width);
+    const shape = this.beamShape();
     for (const e of this.enemies) {
-      if (e.dead) continue;
-      const c = new Phaser.Geom.Circle(e.sprite.x, e.sprite.y, e.radius + b.height * 0.3);
-      if (Phaser.Geom.Intersects.LineToCircle(line, c)) { this.points += 20; this.damage(e, strength); }
+      if (!e.dead && overlaps(shape, this.enemyShape(e))) { this.points += 20; this.damage(e, strength); }
     }
+  }
+
+  // ---------- collision shapes (the original's Box2D fixtures) ----------
+
+  enemyShape(e) {
+    const sp = e.sprite;
+    return e.def.hull ? hull(sp.x, sp.y, e.def.hull, S) : box(sp.x, sp.y, sp.width, sp.height);
+  }
+
+  herbShape() {
+    return hull(this.player.x + (this.lsd ? 250 : 0), this.player.y, HERB_HULL, S);
+  }
+
+  // Bullets are drawn ahead of their pivot (anchor outside the sprite), so use the visible center.
+  shotShape(s) {
+    const sp = s.sprite;
+    const c = sp.getCenter();
+    if (s.size) return box(c.x, c.y, s.size, s.size);
+    return box(c.x, c.y, sp.displayWidth, sp.displayHeight, sp.rotation);
+  }
+
+  // The beam's fixture is the visible beam, 20pt thick.
+  beamShape() {
+    const b = this.beam;
+    const dx = Math.cos(b.rotation), dy = Math.sin(b.rotation);
+    const startX = b.x - b.displayOriginX * dx, startY = b.y - b.displayOriginX * dy;
+    return box(startX + dx * b.width / 2, startY + dy * b.width / 2, b.width, 20 * S, b.rotation);
+  }
+
+  // Item pickup used a plain rect, (x, y-20, 30, 60)pt from Herbert's center.
+  pickupRect() {
+    const x = this.player.x + (this.lsd ? 250 : 0);
+    return new Phaser.Geom.Rectangle(x, this.player.y - 40 * S, 30 * S, 60 * S);
   }
 
   stopBeam() {
@@ -710,16 +746,28 @@ export class GameScene extends Phaser.Scene {
     this.warmStart = null;
   }
 
+  // ueberlightening: the sky layer fades out to black, three lightning layers flash
+  // at different depths, and everything on screen dies with the second flash.
   lightning() {
-    const imgs = ['uber-lightning0', 'uber-lightning2', 'uber-lightning3'];
-    imgs.forEach((k, i) => this.time.delayedCall(300 + i * 100, () => {
-      const img = this.add.image(W / 2, H / 2, k).setDepth(i === 2 ? D.midCloud : D.fgCloud).setAlpha(0);
-      this.tweens.add({ targets: img, alpha: 1, duration: 50, yoyo: true, onComplete: () => img.destroy() });
-      if (i === 0) this.cameras.main.shake(200, 0.015);
-      if (i === 1) this.enemies.forEach((e) => this.killEnemy(e, true));
-    }));
-    this.sky.setAlpha(1);
+    this.lightningActive = true;
+    [['uber-lightning0', D.bgCloud, 300], [null, 0, 400], ['uber-lightning2', D.fgCloud, 500], ['uber-lightning3', D.midCloud, 600]]
+      .forEach(([key, depth, at], i) => this.time.delayedCall(at, () => {
+        if (i === 0) this.cameras.main.shake(200, 0.015);
+        if (i === 1) this.killAll();
+        if (!key) return;
+        const img = this.add.image(W / 2, H / 2, key).setDepth(depth).setAlpha(0);
+        this.tweens.add({ targets: img, alpha: 1, duration: 50, yoyo: true, onComplete: () => img.destroy() });
+      }));
+    this.tweens.killTweensOf(this.sky);
     this.tweens.chain({ targets: this.sky, tweens: [{ alpha: 0, duration: 200 }, { alpha: 1, delay: 500, duration: 200 }] });
+    this.time.delayedCall(700, () => { this.lightningActive = false; });
+  }
+
+  // Holding the Übergun dims the sky to 100/255 over black; letting go restores it.
+  dimSky(on) {
+    this.tweens.killTweensOf(this.sky);
+    if (on) this.sky.setAlpha(240 / 255);
+    this.tweens.add({ targets: this.sky, alpha: on ? 100 / 255 : 1, duration: on ? 400 : 200 });
   }
 
   explode(x, y) {
@@ -752,13 +800,15 @@ export class GameScene extends Phaser.Scene {
 
   drawHitboxes() {
     if (!this.debug.hitboxes) { this.hitboxGfx?.clear(); return; }
-    this.hitboxGfx ??= this.add.graphics().setDepth(D.hud - 1);
+    if (!this.hitboxGfx) this.hitboxGfx = this.add.graphics().setDepth(D.hud - 1);
     const g = this.hitboxGfx.clear().lineStyle(2, 0xff0066, 0.9);
-    const r = this.player.hitRect;
-    g.strokeRect(r.x, r.y, r.width, r.height);
-    this.enemies.forEach((e) => !e.dead && g.strokeCircle(e.sprite.x, e.sprite.y, e.radius));
+    g.strokePoints(this.herbShape(), true);
+    this.enemies.forEach((e) => !e.dead && e.sprite.active && g.strokePoints(this.enemyShape(e), true));
     g.lineStyle(2, 0x00aa55, 0.9);
-    this.shots.forEach((s) => { if (s.sprite.active) { const c = s.sprite.getCenter(); g.strokeCircle(c.x, c.y, s.radius); } });
+    this.shots.forEach((s) => s.sprite.active && g.strokePoints(this.shotShape(s), true));
+    if (this.beam) g.strokePoints(this.beamShape(), true);
+    g.lineStyle(2, 0x2277ff, 0.9);
+    g.strokeRectShape(this.pickupRect());
     this.items.forEach((i) => g.strokeRectShape(i.sprite.getBounds()));
   }
 
@@ -766,7 +816,6 @@ export class GameScene extends Phaser.Scene {
 
   update(time, deltaMs) {
     if (this.paused) return;
-    this.drawHitboxes();
     const dt = Math.min(deltaMs, 50) / 1000;
 
     this.moveWorld(dt);
@@ -778,6 +827,7 @@ export class GameScene extends Phaser.Scene {
     this.moveShots(dt);
     this.moveEnemies(dt);
     this.moveItems(dt);
+    this.drawHitboxes();
 
     if (this.shownPoints !== this.points) {
       this.shownPoints += Math.ceil((this.points - this.shownPoints) * 0.2);
@@ -827,9 +877,19 @@ export class GameScene extends Phaser.Scene {
   handleShooting(dt) {
     this.cooldown -= dt;
     const shooter = this.input.manager.pointers.find((pt) => pt.isDown && worldPoint(this, pt, true).x >= 140 && worldPoint(this, pt).y > 80);
+    const type = this.player.weaponType;
     if (!shooter || this.lsd) {
       if (this.beam || this.warm) this.stopBeam();
+      if (this.shooting) {
+        this.shooting = false;
+        this.player.stopShooting();
+        if (type === 9 && !this.lightningActive) this.dimSky(false);
+      }
       return;
+    }
+    if (!this.shooting) {
+      this.shooting = true;
+      if (type === 9) this.dimSky(true);
     }
     // The beam follows Herbert and the pointer every frame, not only on fire ticks.
     const { beam } = WEAPONS[this.player.weaponType];
@@ -850,7 +910,8 @@ export class GameScene extends Phaser.Scene {
       // Bullets are drawn ahead of their pivot (anchor outside the sprite), so hit-test the visible center.
       const c = sp.getCenter();
       if (c.x > W + 100 || c.x < -100 || c.y < -100 || c.y > H + 100) { this.removeShot(sp); continue; }
-      const hit = this.enemies.find((e) => !e.dead && Phaser.Math.Distance.Between(c.x, c.y, e.sprite.x, e.sprite.y) < e.radius + s.radius);
+      const shape = this.shotShape(s);
+      const hit = this.enemies.find((e) => !e.dead && overlaps(shape, this.enemyShape(e)));
       if (!hit) continue;
       this.points += 20;
       if (s.rocket) this.explode(c.x, c.y);
@@ -871,7 +932,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   moveEnemies(dt) {
-    const herb = this.player.hitRect;
+    const herb = this.herbShape();
     for (const e of this.enemies) {
       if (e.dead) continue;
       const sp = e.sprite;
@@ -884,8 +945,7 @@ export class GameScene extends Phaser.Scene {
       if (e.poop) this.placePoop(e, dt);
       if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); e.bubble?.destroy(); e.poop?.img.destroy(); sp.destroy(); continue; }
 
-      const circle = new Phaser.Geom.Circle(sp.x, sp.y, e.radius);
-      if (!Phaser.Geom.Intersects.CircleToRectangle(circle, herb)) continue;
+      if (!overlaps(herb, this.enemyShape(e))) continue;
       this.killEnemy(e, true);
       if (this.lsd) continue;
       if (this.player.hasSuit) {
@@ -902,7 +962,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   moveItems(dt) {
-    const herb = this.player.hitRect;
+    const herb = this.pickupRect();
     for (const item of [...this.items]) {
       const sp = item.sprite;
       sp.x += item.vx * this.gameSpeed * dt;
