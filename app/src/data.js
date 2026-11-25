@@ -20,18 +20,19 @@ export const SPEED_TABLE = {
 };
 
 // minDifficulty = from which difficulty level the enemy joins the spawn pool
+// bubble = speech bubble position in points from the sprite's bottom-left corner (y up)
 export const ENEMIES = {
-  FlyFred:    { anim: 'flyfred',    kill: 'fred',       hp: 4,  strength: 50,  points: 127, dur: [4.5, 6],  yRange: 30, yMin: 0,  minDifficulty: 0 },
-  FlySina:    { anim: 'flysina',    kill: 'sina',       hp: 2,  strength: 50,  points: 118, dur: [4, 5],    yRange: 10, yMin: 30, minDifficulty: 0 },
-  BugOona:    { anim: 'bugoona',    kill: 'oona',       hp: 4,  strength: 100, points: 207, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 0 },
-  BugLina:    { anim: 'buglina',    kill: 'lina',       hp: 6,  strength: 100, points: 575, dur: [4.5, 6],  yRange: 30, yMin: 30, minDifficulty: 0 },
-  BugGilbert: { anim: 'buggilbert', kill: 'gilbert',    hp: 2,  strength: 50,  points: 55,  dur: [5, 6.5],  yRange: 0,  yMin: 0,  minDifficulty: 2, follows: true },
-  Bibi:       { anim: 'bibi0',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false },
-  Bibi2:      { anim: 'bibi1',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false },
-  Fuckbutton: { anim: 'fuckbutton', kill: 'fuckbutton', hp: 1,  strength: 50,  points: 251, dur: [5, 6.5],  yRange: 30, yMin: 0,  minDifficulty: 4, variantCount: 3 },
-  LadyBug:    { anim: 'ladybug',    kill: 'ladybug',    hp: 5,  strength: 100, points: 332, dur: [4.5, 5.5], yRange: 150, yMin: 0, minDifficulty: 4 },
-  FlyBob:     { anim: 'flybob',     kill: 'bob',        hp: 4,  strength: 100, points: 213, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 6 },
-  FlyRobert:  { anim: 'flyrobert',  kill: 'robert',     hp: 1,  strength: 50,  points: 69,  dur: [4, 6],    yRange: 30, yMin: 40, minDifficulty: 6 },
+  FlyFred:    { anim: 'flyfred',    kill: 'fred',       hp: 4,  strength: 50,  points: 127, dur: [4.5, 6],  yRange: 30, yMin: 0,  minDifficulty: 0, bubble: [-25, 38] },
+  FlySina:    { anim: 'flysina',    kill: 'sina',       hp: 2,  strength: 50,  points: 118, dur: [4, 5],    yRange: 10, yMin: 30, minDifficulty: 0, bubble: [-15, 35] },
+  BugOona:    { anim: 'bugoona',    kill: 'oona',       hp: 4,  strength: 100, points: 207, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 0, bubble: [-25, 30] },
+  BugLina:    { anim: 'buglina',    kill: 'lina',       hp: 6,  strength: 100, points: 575, dur: [4.5, 6],  yRange: 30, yMin: 30, minDifficulty: 0, bubble: [-25, 30] },
+  BugGilbert: { anim: 'buggilbert', kill: 'gilbert',    hp: 2,  strength: 50,  points: 55,  dur: [5, 6.5],  yRange: 0,  yMin: 0,  minDifficulty: 2, follows: true, bubble: [-20, 40] },
+  Bibi:       { anim: 'bibi0',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100] },
+  Bibi2:      { anim: 'bibi1',      kill: 'birdy',      hp: 10, strength: 150, points: 999, dur: [9, 10],   yRange: 80, yMin: 0,  minDifficulty: 2, bird: true, variants: false, bubble: [-20, 100] },
+  Fuckbutton: { anim: 'fuckbutton', kill: 'fuckbutton', hp: 1,  strength: 50,  points: 251, dur: [5, 6.5],  yRange: 30, yMin: 0,  minDifficulty: 4, variantCount: 3, bubble: [0, 0] },
+  LadyBug:    { anim: 'ladybug',    kill: 'ladybug',    hp: 5,  strength: 100, points: 332, dur: [4.5, 5.5], yRange: 150, yMin: 0, minDifficulty: 4, bubble: [-30, 30] },
+  FlyBob:     { anim: 'flybob',     kill: 'bob',        hp: 4,  strength: 100, points: 213, dur: [4.5, 6],  yRange: 30, yMin: 50, minDifficulty: 6, bubble: [-30, 30] },
+  FlyRobert:  { anim: 'flyrobert',  kill: 'robert',     hp: 1,  strength: 50,  points: 69,  dur: [4, 6],    yRange: 30, yMin: 40, minDifficulty: 6, bubble: [-20, 40] },
 };
 
 // legs: 0 = none, 1 = small weapon grip, 2 = big weapon grip

@@ -3,7 +3,7 @@ import {
   SPEED_TABLE, ENEMIES, WEAPONS, ITEMS, INITIAL_ITEMS, UNLOCKS, SKY_BY_HEALTH, TEXT,
 } from './data.js';
 import { Herbert } from './herbert.js';
-import { settings, store, label } from './scenes.js';
+import { settings, store, label, setupCamera, worldPoint } from './ui.js';
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -14,6 +14,8 @@ export class GameScene extends Phaser.Scene {
   constructor() { super('game'); }
 
   create() {
+    setupCamera(this);
+    this.sound.stopAll();
     this.t = TEXT[settings.lang];
     this.health = MAX_HEALTH;
     this.points = 0;
@@ -294,10 +296,18 @@ export class GameScene extends Phaser.Scene {
     if (e.hp <= 0) { this.killEnemy(e, true); return; }
     e.sprite.setTintFill(0xffffff);
     this.time.delayedCall(60, () => e.sprite.active && e.sprite.clearTint());
-    if (Math.random() < 1 / 12) {
-      const b = this.add.image(e.sprite.x - 20, e.sprite.y - e.sprite.height / 2, 'clct_bugsgads', `bubble${Math.floor(rand(0, 3))}`).setDepth(D.fx);
-      this.tweens.add({ targets: b, x: b.x - 120, alpha: 0, delay: 500, duration: 500, onComplete: () => b.destroy() });
+    if (Math.random() < 1 / 12 && !e.bubble) {
+      e.bubble = this.add.image(0, 0, 'clct_bugsgads', `bubble${Math.floor(rand(0, 3))}`).setDepth(D.enemy + 0.5);
+      this.placeBubble(e);
+      this.time.delayedCall(500, () => { e.bubble?.destroy(); e.bubble = null; });
     }
+  }
+
+  // Bubbles are children of the enemy in the original, offset from its bottom-left corner.
+  placeBubble(e) {
+    const [bx, by] = e.def.bubble;
+    const { x, y, width, height } = e.sprite;
+    e.bubble.setPosition(x - width / 2 + bx * S, y + height / 2 - by * S);
   }
 
   killEnemy(e, scored) {
@@ -310,13 +320,67 @@ export class GameScene extends Phaser.Scene {
     }
     const { x, y } = e.sprite;
     e.sprite.destroy();
-    const corpse = this.add.sprite(x, y, 'clct_bugsgads').play(`kill_${e.def.kill}`).setDepth(D.enemy);
-    this.scroll(corpse, 4);
-    corpse.on('animationcomplete', () => this.tweens.add({ targets: corpse, alpha: 0, y: y + 60, duration: 400, onComplete: () => corpse.destroy() }));
-    for (let i = 0; i < 6; i++) {
-      const p = this.add.image(x, y, 'clct_ingame', `particle_${Math.floor(rand(0, 17))}`).setDepth(D.fx);
-      this.tweens.add({ targets: p, x: x + rand(-90, 90), y: y + rand(-90, 90), alpha: 0, scale: 0.3, duration: rand(300, 600), onComplete: () => p.destroy() });
+    e.bubble?.destroy();
+    e.bubble = null;
+    if (e.def.bird) this.birdBreakup(x, y);
+    else this.bugBurst(e.def.kill, x, y);
+  }
+
+  // kill_<name>_0..9 are body parts, not animation frames. The original fired each
+  // part as a one-particle CCParticleExplosion: random direction, speed 100±40 px/s,
+  // gravity 640 px/s², random spin easing to 0, life 2 s.
+  bugBurst(name, x, y) {
+    const parts = Array.from({ length: 10 }, (_, i) => {
+      const a = rand(0, Math.PI * 2);
+      const speed = rand(60, 140);
+      const spin = rand(-563, 563);
+      return {
+        img: this.add.image(x, y, 'clct_bugsgads', `kill_${name}_${i}`).setDepth(D.fx).setAngle(spin),
+        vx: Math.cos(a) * speed + 10, vy: Math.sin(a) * speed, spin,
+      };
+    });
+    this.tweens.addCounter({
+      from: 0, to: 2, duration: 2000,
+      onUpdate: (tw) => {
+        const t = tw.getValue();
+        for (const p of parts) {
+          p.img.setPosition(x + p.vx * t, y + p.vy * t + 320 * t * t);
+          p.img.setAngle(p.spin * (1 - t / 2));
+        }
+      },
+      onComplete: () => parts.forEach((p) => p.img.destroy()),
+    });
+  }
+
+  // Hand-placed bird breakup from DeathAni.m. Offsets are original points (y up);
+  // each part's move vector reuses its start position, a quirk kept for the same motion.
+  birdBreakup(x, y) {
+    const R = rand(100, 150);
+    const node = this.add.container(x, y + R * S).setDepth(D.fx);
+    const pt = (px, py) => [px * S, -py * S];
+    const parts = [
+      [1, -1, R - 56, false, (p) => [p.x - rand(0, 60), p.y - 150], 1000, rand(-50, 90)],
+      [2, 30, R - 46, true, (p) => [p.x + rand(0, 60), p.y - 150], 1000, rand(0, 90)],
+      [3, -9, R + 52, true, (p) => [p.x + R - rand(0, 80), p.y - R - 60 - rand(0, 60)], 2000, rand(0, 80)],
+      [4, 47, R - 37, false, (p) => [p.x + rand(0, 40), p.y - 100 - rand(0, 80)], 1000, -rand(0, 90)],
+      [5, -4, R - 21, true, (p) => [p.x + rand(0, 60), p.y - 20 - rand(0, 20)], 1000, -rand(0, 120)],
+      [6, -35, R - 34, true, (p) => [p.x + 20 - rand(0, 40), p.y - 20 - rand(0, 20)], 1000, 80 + rand(0, 100)],
+      [7, -43, R - 26, false, (p) => [p.x + 20 - rand(0, 40), p.y + rand(0, 40)], 1000, -100 - rand(0, 80)],
+      [8, 38, R - 29, true, (p) => [p.x - 20, p.y - 140], 1000, -50],
+      [9, -16, R - 34, false, (p) => [p.x - 20, p.y + 40], 1000, -180],
+    ];
+    const behind = [], front = [];
+    for (const [i, px, py, inFront, move, ms, rot] of parts) {
+      const img = this.add.image(...pt(px, py), 'clct_bugsgads', `kill_birdy_${i}`);
+      const [dx, dy] = pt(...move({ x: px, y: py }));
+      this.tweens.add({ targets: img, x: img.x + dx, y: img.y + dy, angle: rot, duration: ms });
+      (inFront ? front : behind).push(img);
     }
+    const body = this.add.image(...pt(0, R), 'clct_bugsgads', 'kill_birdy_0');
+    this.tweens.add({ targets: body, angle: rand(-40, 40), scale: 0.8, duration: 1300 });
+    node.add([...behind, body, ...front]);
+    const [mx, my] = pt(50 + rand(0, 80), -300);
+    this.tweens.add({ targets: node, x: node.x + mx, y: node.y + my, angle: -45, duration: 1300, onComplete: () => node.destroy() });
   }
 
   // ---------- items ----------
@@ -480,10 +544,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   fire(pointer) {
+    const aim = worldPoint(this, pointer);
     const type = this.player.weaponType;
     const w = WEAPONS[type];
     const m = this.muzzle();
-    const angle = Phaser.Math.Clamp(Math.atan2(pointer.worldY - m.y, Math.max(20, pointer.worldX - m.x)), -1.3, 1.3);
+    const angle = Phaser.Math.Clamp(Math.atan2(aim.y - m.y, Math.max(20, aim.x - m.x)), -1.3, 1.3);
     const deg = Phaser.Math.RadToDeg(angle);
     const sfx = (k, cfg) => settings.sfx && this.sound.play(k, cfg);
 
@@ -660,9 +725,9 @@ export class GameScene extends Phaser.Scene {
     const p = this.player;
     const up = this.keys.W.isDown || this.keys.UP.isDown;
     const down = this.keys.S.isDown || this.keys.DOWN.isDown;
-    const steer = this.input.manager.pointers.find((pt) => pt.isDown && pt.downX < 140);
+    const steer = this.input.manager.pointers.find((pt) => pt.isDown && worldPoint(this, pt, true).x < 140);
     let target = null;
-    if (steer) target = steer.worldY;
+    if (steer) target = worldPoint(this, steer).y;
     else if (up || down) target = p.y + (down ? 1 : -1) * 400;
     else if (this.tiltY !== null) target = this.tiltY;
 
@@ -679,7 +744,7 @@ export class GameScene extends Phaser.Scene {
 
   handleShooting(dt) {
     this.cooldown -= dt;
-    const shooter = this.input.manager.pointers.find((pt) => pt.isDown && pt.downX >= 140 && pt.worldY > 80);
+    const shooter = this.input.manager.pointers.find((pt) => pt.isDown && worldPoint(this, pt, true).x >= 140 && worldPoint(this, pt).y > 80);
     if (!shooter || this.lsd) {
       if (this.beam?.visible || this.warm) this.stopBeam();
       return;
@@ -725,7 +790,8 @@ export class GameScene extends Phaser.Scene {
         if (sp.y < this.player.y - 20) sp.y += 60 * dt;
         else if (sp.y > this.player.y + 20) sp.y -= 60 * dt;
       }
-      if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); sp.destroy(); continue; }
+      if (e.bubble) this.placeBubble(e);
+      if (sp.x < -sp.width / 2) { e.dead = true; e.wanderTween?.stop(); e.bubble?.destroy(); sp.destroy(); continue; }
 
       const circle = new Phaser.Geom.Circle(sp.x, sp.y, e.radius);
       if (!Phaser.Geom.Intersects.CircleToRectangle(circle, herb)) continue;

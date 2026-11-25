@@ -1,4 +1,6 @@
 import { W, H, LANGS, TEXT } from './data.js';
+import { settings, store, label, setupCamera, ZOOM } from './ui.js';
+import { Herbert } from './herbert.js';
 
 const ATLASES = ['clct_herbert', 'clct_bugsgads', 'clct_ingame', 'clct_mm', 'clct_tutorial'];
 const IMAGES = ['drugmode', 'rainbow_start', 'mm_bg', 'mm_gameover_bg', 'uber-lightning0', 'uber-lightning2', 'uber-lightning3', 'health_life'];
@@ -10,36 +12,11 @@ const SFX = {
   wpns: ['boom', 'bugspray', 'flygun', 'kalaschnikov', 'lasergun', 'minigun', 'pumpgun_load', 'pumpgun_shot', 'rainbowgun', 'rocketlauncher', 'ubergun'],
 };
 
-export const settings = {
-  get lang() { return store.get('lang', 'en'); },
-  set lang(v) { store.set('lang', v); },
-  get music() { return store.get('music', true); },
-  set music(v) { store.set('music', v); },
-  get sfx() { return store.get('sfx', true); },
-  set sfx(v) { store.set('sfx', v); },
-};
-
-export const store = {
-  get(key, fallback) {
-    try {
-      const v = localStorage.getItem(`herbert.${key}`);
-      return v === null ? fallback : JSON.parse(v);
-    } catch { return fallback; }
-  },
-  set(key, value) {
-    try { localStorage.setItem(`herbert.${key}`, JSON.stringify(value)); } catch { /* storage unavailable */ }
-  },
-};
-
-// Glyphs are white with a dark outline, so a tint recolors the fill and keeps the outline dark.
-export function label(scene, x, y, text, size = 40, color = 0xffffff) {
-  return scene.add.bitmapText(x, y, 'akadylan', String(text), size).setOrigin(0.5).setTint(color);
-}
-
 export class BootScene extends Phaser.Scene {
   constructor() { super('boot'); }
 
   preload() {
+    setupCamera(this);
     const bar = this.add.rectangle(W / 2 - 200, H / 2, 0, 16, 0xf5d94a).setOrigin(0, 0.5);
     this.add.rectangle(W / 2, H / 2, 404, 20).setStrokeStyle(2, 0x222222);
     this.load.on('progress', (p) => { bar.width = 400 * p; });
@@ -81,8 +58,6 @@ export class BootScene extends Phaser.Scene {
     this.anim('bibi0', 'clct_bugsgads', 'bibi0_', 1, 8, 8 / 0.6);
     this.anim('bibi1', 'clct_bugsgads', 'bibi1_', 1, 8, 8 / 0.6);
     this.anim('bibi0_shit', 'clct_bugsgads', 'bibi0_shit', 1, 8, 8 / 0.6);
-    ['birdy', 'bob', 'fred', 'fuckbutton', 'gilbert', 'ladybug', 'lina', 'oona', 'robert', 'sina'].forEach((k) =>
-      this.anim(`kill_${k}`, 'clct_bugsgads', `kill_${k}_`, 0, 9, 16, 0));
 
     this.anim('caposhito', 'clct_bugsgads', 'caposhito', 1, 8, 12);
     this.anim('star', 'clct_bugsgads', 'star', 1, 8, 12);
@@ -97,6 +72,7 @@ export class MenuScene extends Phaser.Scene {
   constructor() { super('menu'); }
 
   create() {
+    setupCamera(this);
     this.add.image(W / 2, H / 2, 'mm_bg').setDisplaySize(W, H);
     this.add.image(170, H - 120, 'clct_mm', 'mm_main_cloud_left');
     this.add.image(W - 170, H - 120, 'clct_mm', 'mm_main_cloud_right');
@@ -104,9 +80,8 @@ export class MenuScene extends Phaser.Scene {
     this.add.image(W / 2, 270, 'clct_mm', 'mm_main_logo_misantropical');
     this.tweens.add({ targets: logo, scale: 1.04, duration: 460, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
 
-    const herb = this.add.sprite(W / 2, 400, 'clct_herbert').play('herbert');
-    this.add.sprite(W / 2 + 16, 442, 'clct_herbert').play('herbert_trunk');
-    this.tweens.add({ targets: herb, y: 390, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
+    const herb = new Herbert(this, W / 2 + 10, 380);
+    this.tweens.add({ targets: herb, y: 368, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
 
     const t = TEXT[settings.lang];
     const play = label(this, W / 2, 530, t.play, 44);
@@ -127,7 +102,7 @@ export class MenuScene extends Phaser.Scene {
     });
 
     this.add.text(W / 2, H - 28, 'move: W/S · ↑/↓ · tilt · drag left edge      shoot: click & hold to aim      pause: P', {
-      fontFamily: 'sans-serif', fontSize: '17px', fontStyle: 'bold', color: '#ffffff', stroke: '#222222', strokeThickness: 4,
+      fontFamily: 'sans-serif', fontSize: '17px', fontStyle: 'bold', color: '#ffffff', stroke: '#222222', strokeThickness: 4, resolution: ZOOM,
     }).setOrigin(0.5);
 
     this.playMusic();
@@ -152,6 +127,7 @@ export class GameOverScene extends Phaser.Scene {
   constructor() { super('gameover'); }
 
   create({ points }) {
+    setupCamera(this);
     const best = Math.max(points, store.get('highscore', 0));
     store.set('highscore', best);
     const t = TEXT[settings.lang];

@@ -1,4 +1,5 @@
 import { WEAPONS } from './data.js';
+import { settings } from './ui.js';
 
 // Herbert is a rig of separately animated parts (body, snout, two legs, gun),
 // exactly like the original batch node. Offsets are from Herbert.mm, y-down, 2x.
@@ -16,8 +17,8 @@ export class Herbert extends Phaser.GameObjects.Container {
 
     this.legFront = scene.add.sprite(0, 0, 'clct_herbert');
     this.weapon = scene.add.sprite(0, 0, 'clct_herbert').setVisible(false);
-    this.bodySprite = scene.add.sprite(0, -6, 'clct_herbert').play('herbert');
-    this.snout = scene.add.sprite(16, 36, 'clct_herbert').play('herbert_trunk');
+    this.bodySprite = scene.add.sprite(0, -6, 'clct_herbert');
+    this.snout = scene.add.sprite(16, 36, 'clct_herbert');
     this.snoutShoot = scene.add.sprite(32, 26, 'clct_herbert', 'herbert_shooting').setVisible(false);
     this.legBack = scene.add.sprite(0, 0, 'clct_herbert');
     this.rig.add([this.legFront, this.weapon, this.bodySprite, this.snout, this.snoutShoot, this.legBack]);
@@ -38,17 +39,23 @@ export class Herbert extends Phaser.GameObjects.Container {
     return 'herbert';
   }
 
-  refreshBody() {
+  // Body, snout and legs are separate 8-frame loops whose bounce only lines up
+  // when they run in lockstep, so every change restarts all of them together
+  // (AnimationSprite restartAnimation in the original).
+  refreshBody(force = false) {
     const key = this.bodyAnim;
-    if (this.bodySprite.anims.currentAnim?.key !== key) this.bodySprite.play(key);
+    if (!force && this.bodySprite.anims.currentAnim?.key === key) return;
+    const l = LEGS[this.legGrip];
+    this.bodySprite.play(key);
+    this.snout.play('herbert_trunk');
+    this.legBack.play(l.back.replace(/_$/, '') + '_anim');
+    this.legFront.play(l.front.replace(/_$/, '') + '_anim');
   }
 
   setLegs(type) {
-    const l = LEGS[type];
     this.legGrip = type;
-    this.legBack.play(l.back.replace(/_$/, '') + '_anim', true);
-    this.legFront.play(l.front.replace(/_$/, '') + '_anim', true);
     this.placeLegs();
+    this.refreshBody(true);
   }
 
   placeLegs() {
@@ -60,17 +67,21 @@ export class Herbert extends Phaser.GameObjects.Container {
     this.legFront.setPosition(...f);
   }
 
+  // Like the original, tilt poses only exist for the unarmed, suitless, sober Herbert.
   setTilt(dir) {
+    if (this.weaponType !== 0 || this.hasSuit || this.onDrugs) dir = 0;
     if (dir === this.tilt) return;
     this.tilt = dir;
-    this.refreshBody();
+    if (dir !== 0 && settings.sfx) this.scene.sound.play(dir < 0 ? 'herbert_bzzt1' : 'herbert_bzzt2', { volume: 0.5 });
     this.placeLegs();
+    this.refreshBody();
   }
 
   changeWeapon(type) {
     if (this.onDrugs) return;
     if (this.weaponType !== 0) this.dropWeapon(false);
     this.weaponType = type;
+    this.tilt = 0;
     const w = WEAPONS[type];
     this.setLegs(w.legs);
     if (type === 0) return;
